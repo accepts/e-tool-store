@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +71,7 @@ public class Product extends AbstractEntity{
     }
 
     public Map<String, String> getAttributes() {
-        return Collections.unmodifiableMap(attributes);
+        return attributes;
     }
 
 

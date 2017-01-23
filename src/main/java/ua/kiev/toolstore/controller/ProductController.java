@@ -13,6 +13,7 @@ import ua.kiev.toolstore.model.enums.ProductStatus;
 import ua.kiev.toolstore.repository.dummyrepo.DummyRepo;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 
@@ -71,28 +72,42 @@ public class ProductController {
         }
 
 
+	/*  ------------------------------ Add + Remove rows in attributes MAP -----------------------------------------   */
+
+    @RequestMapping(value = "/createProduct", params = {"addRow"})
+    public  String addRow(Product product, BindingResult bindingResult){
+        product.getAttributes().put("<Key>","<Value>");
+        LOG.info("<---!!!---Test addRow {}", product.getAttributes());
+        return "createProduct";
+    }
+
+    @RequestMapping(value = "/createProduct", params = {"removeRow"})
+    public  String removeRow(Product product, BindingResult bindingResult, HttpServletRequest req){
+        String rowId = req.getParameter("removeRow");
+        product.getAttributes().remove(rowId);
+        return "createProduct";
+    }
 
 
 
-//    @RequestMapping(value = "/personCreate")
-//    public String createPersonGet(Person person){
-//        return "personCreate";
-//    }
+/*
+    @RequestMapping(value = "/personCreate", params={"addRow"})
+    public String addRow(Person person, BindingResult bindingResult){
+        person.getAddresses().add(new Address("Country","City","Street"));
+        return "personCreate";
+    }
+
+    @RequestMapping(value = "/personCreate", params={"removeRow"})
+    public String removeRow(Person person, BindingResult bindingResult, HttpServletRequest req){
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
+        person.getAddresses().remove(rowId.intValue());
+        return "personCreate";
+    }
 
 
-//    @RequestMapping(value = "/personCreate", params={"save"})
-//    public String savePerson(Person person, BindingResult bindingResult, ModelMap model){
-//        if (bindingResult.hasErrors()) {
-//            return "/personCreate";
-//        } else {
-//            if (repository.countByLastName(person.getLastName()) > 0){
-//                bindingResult.reject("error.person.firstName.dublicate");
-//                return "/personCreate";
-//            }
-//            repository.save(person);
-//            model.clear();
-//            return "redirect:/personCreate";
-//        }
-//    }
+    */
+
+
+
 
 }
