@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true"
+                     xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <!-- Settings for console writing logging-->
+    <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+        </layout>
+    </appender>
+
+    <!-- Settings for file writing logging-->
+    <appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="append" value="false" />
+        <param name="maxFileSize" value="10MB" />
+        <param name="maxBackupIndex" value="10" />
+        <param name="file" value="/Java/work/eToolStore/log/my-app-logfile.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+        </layout>
+    </appender>
+
+    <!-- ************* CONSOLE LOGGING: ********************* -->
+    <!--LOG-LEVEL: all, trace, debug, info, warn, error, fatal-->
+    <category name="ua.kiev.toolstore">
+        <level value="DEBUG"/>
+        <appender-ref ref="consoleAppender"/>
+    </category>
+
+    <category name="org.thymeleaf.TemplateEngine">
+        <level value="INFO"/>
+        <appender-ref ref="consoleAppender"/>
+    </category>
+
+    <category name="org.springframework">
+        <level value="INFO"/>
+        <appender-ref ref="consoleAppender"/>
+    </category>
+
+    <!--
+log4j.logger.org.thymeleaf=DEBUG
+log4j.logger.org.thymeleaf.TemplateEngine.CONFIG=DEBUG
+log4j.logger.org.thymeleaf.TemplateEngine.TIMER=DEBUG
+log4j.logger.org.thymeleaf.TemplateEngine.cache.TEMPLATE_CACHE=DEBUG
+log4j.logger.org.thymeleaf.TemplateEngine.cache.FRAGMENT_CACHE=DEBUG
+log4j.logger.org.thymeleaf.TemplateEngine.cache.MESSAGE_CACHE=DEBUG
+log4j.logger.org.thymeleaf.TemplateEngine.cache.EXPRESSION_CACHE=DEBUG
+log4j.logger.thymeleafexamples=DEBUG
+    -->
+
+
+
+    <!-- ************* FILE LOGGING: ********************* -->
+    <!--<category name="com.springapp.mvc">-->
+        <!--<level value="DEBUG"/>-->
+        <!--<appender-ref ref="fileAppender"/>-->
+    <!--</category>-->
+
+</log4j:configuration>

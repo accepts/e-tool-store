@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+
+<div class="main-content">
+
+    <!-- ************************************** Site menu  ****************************************** -->
+
+
+    <table border="2">
+        <tbody>
+        <tr style="background-color: darkgray">
+            <th>Home</th>
+            <th>Product</th>
+            <!--<th>Message</th>-->
+            <!--<th>Angular-Test</th>-->
+            <th>reserv</th>
+        </tr>
+        <tr>
+            <td><a href="#" th:href="@{/home}">Home-page</a></td>
+            <td><a href="#" th:href="@{/createProduct}">Create Product</a></td>
+            <!--<td><a href="#" th:href="@{/mesageCreate}">Create Message</a></td>-->
+            <!--<td><a href="#" th:href="@{/ang-test}">Angular Test</a></td>-->
+            <td>reserv</td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+
+    <!-- ***************************************** Table of all products  ************************************** -->
+
+    <div th:unless="${#lists.isEmpty(allProducts)}">
+
+        <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
+
+        <table border="1">
+            <thead>
+            <tr style="background-color: dodgerblue">
+                <th>Name</th>
+                <th>description</th>
+                <th>manufacturer</th>
+                <th>price</th>
+                <th>unit</th>
+
+                <th>condition</th>
+                <th>category</th>
+                <th>status</th>
+                <th>Attributes</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="p : ${allProducts}">
+                <td th:text="${{p.name}}">name_product</td>
+                <td th:text="${{p.description}}">description_product</td>
+                <td th:text="${{p.manufacturer}}">product_manufact</td>
+                <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>
+                <td th:text="${{p.unitInStock}}">product_quantity</td>
+
+                <td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>
+                <td th:text="#{|product.category.${p.category}|}">prod_category</td>
+                <td th:text="#{|product.status.${p.status}|}">prod_status</td>
+
+                <td >
+                    <table>
+                        <tbody style="background-color: deepskyblue">
+                            <tr th:each="a, rowStat : ${p.attributes}">
+                                <td th:text="${rowStat.count}">1</td>
+                                <td th:text="${a.key}">_key_map_</td>
+                                <td th:text="${a.value}">_value_map_</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+        <br/><br/>
+
+        <!--====================================================== -->
+        <!--<tbody>-->
+        <!--<tr th:each="sb : ${allSeedStarters}">-->
+            <!--<td th:text="${{sb.datePlanted}}">13/01/2011</td>-->
+            <!--<td th:text="#{|bool.${sb.covered}|}">yes</td>-->
+            <!--<td th:text="#{|seedstarter.type.${sb.type}|}">Wireframe</td>-->
+            <!--<td th:text="${#strings.arrayJoin(-->
+                             <!--#messages.arrayMsg(-->
+                               <!--#strings.arrayPrepend(sb.features,'seedstarter.feature.')),-->
+                             <!--', ')}">Electric Heating, Turf</td>-->
+            <!--<td>-->
+                <!--<table>-->
+                    <!--<tbody>-->
+                    <!--<tr th:each="row,rowStat : ${sb.rows}">-->
+                        <!--<td th:text="${rowStat.count}">1</td>-->
+                        <!--<td th:text="${row.variety.name}">Thymus Thymi</td>-->
+                        <!--<td th:text="${row.seedsPerCell}">12</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+        <!--====================================================== -->
+
+    </div>
+
+
+    <!-- ************************************** Form for creating product ************************************** -->
+
+    <form action="#" th:action="@{/createProduct}" th:object="${product}" method="post">
+        <fieldset>
+
+            <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+            </ul>
+
+
+            <div>
+                <label for="name">
+                    <span th:text="#{product.name}">_test_Name_</span>
+                </label>
+                <input type="text" th:field="*{name}" id="name" th:errorclass="fieldError" />
+            </div>
+
+            <div>
+                <label for="description">
+                    <span th:text="#{product.description}">_test_Description_</span>
+                </label>
+                <input type="text" th:field="*{description}" id="description" th:errorclass="fieldError" />
+            </div>
+
+            <div>
+                <label for="manufacturer">
+                    <span th:text="#{product.manufacturer}">_test_manufacturer_</span>
+                </label>
+                <input type="text" th:field="*{manufacturer}" id="manufacturer" th:errorclass="fieldError" />
+            </div>
+
+            <div>
+                <label for="unitInStock">
+                    <span th:text="#{product.unitInStock}">_test_unit_inStock_</span>
+                </label>
+                <input type="number" th:field="*{unitInStock}" id="unitInStock" th:errorclass="fieldError" />
+            </div>
+
+            <div>
+                <label for="price">
+                    <span th:text="#{product.price}">_test_price_</span>
+                </label>
+                <input th:field="*{price}" id="price" th:errorclass="fieldError" />
+            </div>
+
+            <div>
+                <label for="category" th:text="#{product.category}">Category</label>
+                <select th:field="*{category}">
+                    <option th:each="category : ${allProductCategory}" th:value="${category}" id="category" th:text="#{${'product.category.' + category}}">test_category_</option>
+                </select>
+            </div>
+
+            <div th:each="cond : ${allProductConditions}">
+                <input type="radio" th:field="*{condition}" th:value="${cond}" />
+                <label th:for="${#ids.prev('condition')}" th:text="#{${'product.condition.' + cond}}">_test_Condition_</label>
+            </div>
+
+            <div>
+                <label for="status" th:text="#{product.status}">Status</label>
+                <select th:field="*{status}">
+                    <option th:each="status : ${allProductStatus}" th:value="${status}" id="status" th:text="#{${'product.status.' + status}}">test_status_</option>
+                </select>
+            </div>
+
+
+
+            <!--Add and remove row with addresses-->
+
+            <!--<div>-->
+                <!--<label>Rows</label>-->
+                <!--<table>-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th>Row</th>-->
+                        <!--<th>Country</th>-->
+                        <!--<th>City</th>-->
+                        <!--<th>Street</th>-->
+                        <!--<th>-->
+                            <!--<button type="submit" name="addRow">Add row</button>-->
+                        <!--</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr th:each="row,rowStat : *{addresses}">-->
+                        <!--<td th:text="${rowStat.count}">1</td>-->
+                        <!--<td>-->
+                            <!--<input type="text" th:field="*{addresses[__${rowStat.index}__].country}" th:errorclass="fieldError" />-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<input type="text" th:field="*{addresses[__${rowStat.index}__].city}" th:errorclass="fieldError" />-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<input type="text" th:field="*{addresses[__${rowStat.index}__].street}" th:errorclass="fieldError" />-->
+                        <!--</td>-->
+
+                        <!--<td>-->
+                            <!--<button type="submit" name="removeRow" th:value="${rowStat.index}">Remove row</button>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+
+                <!--</table>-->
+            <!--</div>-->
+
+            <!--Save button-->
+
+            <div class="submit">
+                <button type="submit" name="save" >Add product</button>
+            </div>
+
+        </fieldset>
+    </form>
+
+
+
+
+
+
+</div>
+
+
+<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+</body>
+</html>

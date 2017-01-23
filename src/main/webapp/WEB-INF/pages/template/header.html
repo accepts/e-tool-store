@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+    <meta charset="UTF-8">
+
+    <title th:text="#{title.application}">_test_title_</title>
+
+    <!-- CSS styles-->
+    <link rel="stylesheet" type="text/css" media="all" href="../../resources/css/main.css" th:href="@{/css/main.css}" />
+</head>
+
+<body>
+
+
+<div th:fragment="header" class="header">
+    <!--<div>-->
+        <!--<img src="../../resources/images/logo.png" alt="STSM logo" title="STSM logo"-->
+             <!--th:src="@{/pic/logo.png}" th:alt-title="#{title.application}"/>-->
+    <!--</div>-->
+    <p>
+        =====================================<br/>
+        ===== Some HEADer from Thymeleaf ====<br/>
+        =====================================<br/>
+    </p>
+</div>
+
+
+
+
+</body>
+</html>

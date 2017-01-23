@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+
+<div class="main-content">
+<h2>Home HTML file is loaded! <span th:text="${message}">_test_message_</span> </h2>
+<h2 th:text="#{testing.test.message}">_test_text_</h2>
+
+
+    <table border="2">
+        <tbody>
+        <tr style="background-color: darkturquoise">
+            <th>Home</th>
+            <th>Product</th>
+            <!--<th>Message</th>-->
+            <!--<th>Angular-Test</th>-->
+            <th>reserv</th>
+        </tr>
+        <tr>
+            <td><a href="#" th:href="@{/home}">Home-page</a></td>
+            <td><a href="#" th:href="@{/createProduct}">Create Product</a></td>
+            <!--<td><a href="#" th:href="@{/mesageCreate}">Create Message</a></td>-->
+            <!--<td><a href="#" th:href="@{/ang-test}">Angular Test</a></td>-->
+            <td>reserv</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+
+
+<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+</body>
+</html>
