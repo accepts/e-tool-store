@@ -13,19 +13,19 @@
 
     <!-- ************************************** Site menu  ****************************************** -->
 
-
+<div th:replace="template/menu :: tablecontroller" class="table-controller" >
     <table border="2">
         <tbody>
-        <tr style="background-color: darkgray">
-            <th>Home</th>
-            <th>Product</th>
+        <tr style="background-color: darkturquoise">
+            <th>Test_title_1</th>
+            <th>TestTitle_2</th>
             <!--<th>Message</th>-->
             <!--<th>Angular-Test</th>-->
             <th>reserv</th>
         </tr>
         <tr>
-            <td><a href="#" th:href="@{/home}">Home-page</a></td>
-            <td><a href="#" th:href="@{/createProduct}">Create Product</a></td>
+            <td><a href="#">_test_Link1</a></td>
+            <td><a href="#">_test_Link2</a></td>
             <!--<td><a href="#" th:href="@{/mesageCreate}">Create Message</a></td>-->
             <!--<td><a href="#" th:href="@{/ang-test}">Angular Test</a></td>-->
             <td>reserv</td>
@@ -34,8 +34,8 @@
     </table>
     <br/>
     <br/>
-
-    <!-- ***************************************** Table of all products  ************************************** -->
+</div>
+    <!-- ***************************************** Table with all products  ************************************** -->
 
     <div th:unless="${#lists.isEmpty(allProducts)}">
 
@@ -54,6 +54,7 @@
                 <th>category</th>
                 <th>status</th>
                 <th>Attributes</th>
+                <th style="background-color: crimson">Delete</th>
             </tr>
             </thead>
 
@@ -76,12 +77,13 @@
                                 <td th:text="${rowStat.count}">1</td>
                                 <td th:text="${f.title}">_title_</td>
                                 <td th:text="${f.body}">_body_</td>
-                                <!--@thymesVar id="attribute" type=""-->
-                                <td th:text="${f.attribute}">_attributes_map_</td>
+                                <!--<td th:text="${f.attribute}">_attributes_map_</td>-->
                             </tr>
                         </tbody>
                     </table>
                 </td>
+
+                <td><a href="#" th:href="@{/product/delete/{productId} (productId=${p.id}) }">Delete</a></td>
 
             </tr>
             </tbody>
@@ -91,7 +93,7 @@
 
     <!-- ************************************** Form for creating product ************************************** -->
 
-    <form action="#" th:action="@{/createProduct}" th:object="${product}" method="post">
+    <form action="#" th:action="@{/product/create}" th:object="${product}" method="post">
         <fieldset>
 
             <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
@@ -153,14 +155,9 @@
                 </select>
             </div>
 
+            <!--Add and remove row with features-->
 
-
-            <!--Add and remove row with addresses-->
-
-            <br/>
-            <br/>
-            <br/>
-
+            <br/> <br/> <br/>
 
             <div>
                 <label>Attributes</label>
@@ -168,8 +165,9 @@
                     <thead>
                     <tr>
                         <th>Number:</th>
-                        <th>Attribute:</th>
-                        <th>Value:</th>
+                        <th>Title:</th>
+                        <th>Body:</th>
+                        <th>Atribute:</th>
                         <th>
                             <button type="submit" name="addRow">Add row</button>
                         </th>

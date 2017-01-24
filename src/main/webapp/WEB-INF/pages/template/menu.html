@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../resources/css/main.css" th:href="@{/css/main.css}" />
+
+</head>
+<body>
+
+<div th:fragment="tablecontroller" class="table-controller" >
+    <table border="2">
+        <tbody>
+        <tr style="background-color: darkturquoise">
+            <th>Home</th>
+            <th>Product</th>
+            <!--<th>Message</th>-->
+            <!--<th>Angular-Test</th>-->
+            <th>reserv</th>
+        </tr>
+        <tr>
+            <td><a href="#" th:href="@{/home}">Home</a></td>
+            <td><a href="#" th:href="@{/product/create}">ProductDAO</a></td>
+            <!--<td><a href="#" th:href="@{/mesageCreate}">Create Message</a></td>-->
+            <!--<td><a href="#" th:href="@{/ang-test}">Angular Test</a></td>-->
+            <td>reserv</td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+</div>
+
+
+
+</body>
+</html>

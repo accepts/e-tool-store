@@ -81,15 +81,15 @@ public class ProductDaoCollection implements ProductDao {
 
 
     public List<Product> findAllProducts() {
-        System.out.println("<===[DAO-REPO]=============(findAllProducts)");
+        LOG.debug("<===[ProductDao]=============(findAllProducts)");
         return productList;
     }
 
 
     public Product findById(Long id) {
-        System.out.println("<===[DAO-REPO]=============(findById)");
+        LOG.debug("<===[ProductDao]=============(findById)");
         for(Product p : productList){
-            if(p.getId() == id){
+            if(p.getId().equals(id)){
                 return p;
             }
         }
@@ -98,7 +98,7 @@ public class ProductDaoCollection implements ProductDao {
 
 
     public void saveProduct(Product product) {
-        System.out.println("<===[DAO-REPO]=============(saveProduct)");
+        LOG.debug("<===[ProductDao]=============(saveProduct)");
         product.setId(counter.incrementAndGet());
         LOG.info("<--[!!!!!!]-----Saving product with contetnt {}", product);
         productList.add(product);
@@ -106,7 +106,7 @@ public class ProductDaoCollection implements ProductDao {
 
 
     public void updateProduct(Product product) {
-        System.out.println("<===[DAO-REPO]=============(updateProduct)");
+        LOG.debug("<===[ProductDao]=============(updateProduct)");
         int index = productList.indexOf(product);
         productList.set(index, product);
     }
@@ -114,11 +114,11 @@ public class ProductDaoCollection implements ProductDao {
 
 
     public void deleteProductById(Long id) {
-        System.out.println("<===[DAO-REPO]=============(deleteProductById)");
+        LOG.debug("<===[ProductDao]=============(deleteProductById)");
 
         for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext(); ) {
             Product product = iterator.next();
-            if (product.getId() == id) {
+            if (product.getId().equals(id)) {
                 iterator.remove();
             }
         }

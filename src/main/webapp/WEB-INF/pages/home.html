@@ -13,26 +13,26 @@
 <h2>Home HTML file is loaded! <span th:text="${message}">_test_message_</span> </h2>
 <h2 th:text="#{testing.test.message}">_test_text_</h2>
 
-
+<div th:replace="template/menu :: tablecontroller" class="table-controller" >
     <table border="2">
         <tbody>
-        <tr style="background-color: darkturquoise">
+        <tr style="background-color: cornflowerblue">
             <th>Home</th>
             <th>Product</th>
             <!--<th>Message</th>-->
-            <!--<th>Angular-Test</th>-->
             <th>reserv</th>
         </tr>
         <tr>
-            <td><a href="#" th:href="@{/home}">Home-page</a></td>
-            <td><a href="#" th:href="@{/createProduct}">Create Product</a></td>
+            <td><a href="#" >Home</a></td>
+            <td><a href="#">_test_dao</a></td>
             <!--<td><a href="#" th:href="@{/mesageCreate}">Create Message</a></td>-->
-            <!--<td><a href="#" th:href="@{/ang-test}">Angular Test</a></td>-->
             <td>reserv</td>
         </tr>
         </tbody>
     </table>
-
+    <br/>
+    <br/>
+</div>
 
 </div>
 

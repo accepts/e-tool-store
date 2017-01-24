@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.kiev.toolstore.model.Feature;
 import ua.kiev.toolstore.model.Product;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/product")
 public class ProductController {
 
     protected static final LoggerWrapper LOG = LoggerWrapper.get(ProductController.class);
@@ -28,7 +30,7 @@ public class ProductController {
     private ProductService productService;
 
 
-    // ----------------------------  Enum values for Thymeleaf view ---------------------------
+    // --------------------  Enum values necessary for Thymeleaf view -----------------------
     @ModelAttribute("allProductCategory")
     public List<ProductCategory> populateProductCategory() {
         return Arrays.asList(ProductCategory.ALL);
@@ -48,21 +50,21 @@ public class ProductController {
     public List<Product> populateProduct() {
         return this.productService.findAllProducts();
     }
-    //  -----------------------------------------------------------------------------------------
+    //  ---------------------------------------------------------------------------------------
 
 
 
-    @RequestMapping(value = "/createProduct")
+    @RequestMapping(value = "/create")
     public String createProduct(Product product){
-        return "createProduct";
+        return "productCreate";
     }
 
 
     //  **************************** CREATE Product ****************************
-    @RequestMapping(value = "/createProduct", params = {"save"})
+    @RequestMapping(value = "/create", params = {"save"})
     public String saveProduct(Product product, BindingResult bindingResult, ModelMap model){
         if (bindingResult.hasErrors()) {
-            return "/createProduct";
+            return "productCreate";
         }
 //        else {
 //            if (productService.countByLastName(person.getLastName()) > 0){
@@ -70,28 +72,34 @@ public class ProductController {
 //                return "/createProduct";
 //            }
             productService.saveProduct(product);
+            LOG.info("<-------Save product: {}", product);
             model.clear();
-            return "redirect:/createProduct";
+            return "redirect:/product/create";
         }
 
 	/*  ----Add + Remove rows in List<features> when CREATE Product ---   */
-    @RequestMapping(value = "/createProduct", params = {"addRow"})
+    @RequestMapping(value = "/create", params = {"addRow"})
     public  String addRow(Product product, BindingResult bindingResult){
         product.getFeatures().add(new Feature("<Title>", "<Body>", "<Attribute>"));
-        LOG.info("<---!!!---Test addRow {}", product.getFeatures());
-        return "createProduct";
+        LOG.info("<------Test addRow {}", product.getFeatures());
+        return "productCreate";
     }
 
-    @RequestMapping(value = "/createProduct", params = {"removeRow"})
+    @RequestMapping(value = "/create", params = {"removeRow"})
     public  String removeRow(Product product, BindingResult bindingResult, HttpServletRequest req){
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         product.getFeatures().remove(rowId.intValue());
-        return "createProduct";
+        return "productCreate";
     }
 
-    // TODO delete method
-    @RequestMapping(value = "/deleteProduct/{id}")
-    public String
+
+
+    //  **************************** DELETE Product ****************************
+    @RequestMapping(value = "/delete/{id}")
+    public String deleteProduct(@PathVariable Long id, Product product){
+        productService.deleteProductById(id);
+        return "productCreate";
+    }
 
 
 
