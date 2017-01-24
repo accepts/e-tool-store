@@ -5,14 +5,13 @@ import ua.kiev.toolstore.model.enums.ProductCategory;
 import ua.kiev.toolstore.model.enums.ProductCondition;
 import ua.kiev.toolstore.model.enums.ProductStatus;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "product")
 public class Product extends AbstractEntity{
 
     @Column(nullable = false)
@@ -29,8 +28,12 @@ public class Product extends AbstractEntity{
 
     private int unitInStock;
 
-    @ElementCollection
-    private Map<String, String> attributes = new HashMap<String, String>();
+//    @ElementCollection
+//    private Map<String, String> attributes = new HashMap<String, String>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "product_id")
+    private List<Feature> features = new ArrayList<Feature>();
 
 
 //    @Transient
@@ -60,20 +63,32 @@ public class Product extends AbstractEntity{
 
     //------------------- Addition method -----------------------------------------
 
-    public void setAttribute(String name, String value) {
-        Assert.hasText(name);
-
-        if (value == null) {
-            this.attributes.remove(value);
-        } else {
-            this.attributes.put(name, value);
-        }
+    public void addFeature(Feature feature) {
+        Assert.notNull(feature);
+        this.features.add(feature);
     }
 
-    public Map<String, String> getAttributes() {
-        return attributes;
+    public List<Feature> getFeatures() {
+        return features;
+//        return Collections.unmodifiableSet(addresses);
     }
 
+
+
+//    public void setAttribute(String name, String value) {
+//        Assert.hasText(name);
+//
+//        if (value == null) {
+//            this.attributes.remove(value);
+//        } else {
+//            this.attributes.put(name, value);
+//        }
+//    }
+//
+//    public Map<String, String> getAttributes() {
+//        return attributes;
+//    }
+//
 
     //------------------- Getters + Setter's ---------------------------------------
 

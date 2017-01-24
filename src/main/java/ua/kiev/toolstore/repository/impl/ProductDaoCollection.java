@@ -1,10 +1,12 @@
-package ua.kiev.toolstore.repository.dummyrepo;
+package ua.kiev.toolstore.repository.impl;
 
 import org.springframework.stereotype.Repository;
+import ua.kiev.toolstore.model.Feature;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.ProductCategory;
 import ua.kiev.toolstore.model.enums.ProductCondition;
 import ua.kiev.toolstore.model.enums.ProductStatus;
+import ua.kiev.toolstore.repository.ProductDao;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
 import java.math.BigDecimal;
@@ -14,11 +16,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class DummyRepo {
+public class ProductDaoCollection implements ProductDao {
 
     private static final AtomicLong counter = new AtomicLong();
 
-    protected static final LoggerWrapper LOG = LoggerWrapper.get(DummyRepo.class);
+    protected static final LoggerWrapper LOG = LoggerWrapper.get(ProductDaoCollection.class);
 
     private static List<Product> productList;
 
@@ -41,8 +43,8 @@ public class DummyRepo {
         product1.setCategory(ProductCategory.HAND_TOOL);
         product1.setCondition(ProductCondition.NEW);
         product1.setStatus(ProductStatus.IN_STOCK);
-        product1.setAttribute("Shaft","Maple tree");
-        product1.setAttribute("Steel","CPM-90");
+        product1.addFeature(new Feature("Shaft", "Maple tree", "handwork"));
+        product1.addFeature(new Feature("Head", "Steel CPM-90", "hardness"));
 
 
         Product product2 = new Product();
@@ -55,9 +57,9 @@ public class DummyRepo {
         product2.setCategory(ProductCategory.ELECTRIC);
         product2.setCondition(ProductCondition.NEW);
         product2.setStatus(ProductStatus.SEVERAL_LEFT);
-        product2.setAttribute("Power","1200W");
-        product2.setAttribute("Currency","220V");
-        product2.setAttribute("Frequency","50Hz");
+        product2.addFeature(new Feature("Power", "1200W", null));
+        product2.addFeature(new Feature("Currency", "220V", null));
+        product2.addFeature(new Feature("Frequency", "50Hz", "50~60 Hz"));
 
         Product product3 = new Product();
         product3.setId(counter.incrementAndGet());
@@ -84,7 +86,7 @@ public class DummyRepo {
     }
 
 
-    public Product findById(long id) {
+    public Product findById(Long id) {
         System.out.println("<===[DAO-REPO]=============(findById)");
         for(Product p : productList){
             if(p.getId() == id){
@@ -110,7 +112,8 @@ public class DummyRepo {
     }
 
 
-    public void deleteProductById(long id) {
+
+    public void deleteProductById(Long id) {
         System.out.println("<===[DAO-REPO]=============(deleteProductById)");
 
         for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext(); ) {

@@ -72,10 +72,12 @@
                 <td >
                     <table>
                         <tbody style="background-color: deepskyblue">
-                            <tr th:each="a, rowStat : ${p.attributes}">
+                            <tr th:each="f, rowStat : ${p.features}">
                                 <td th:text="${rowStat.count}">1</td>
-                                <td th:text="${a.key}">_key_map_</td>
-                                <td th:text="${a.value}">_value_map_</td>
+                                <td th:text="${f.title}">_title_</td>
+                                <td th:text="${f.body}">_body_</td>
+                                <!--@thymesVar id="attribute" type=""-->
+                                <td th:text="${f.attribute}">_attributes_map_</td>
                             </tr>
                         </tbody>
                     </table>
@@ -174,64 +176,17 @@
                     </tr>
                     </thead>
 
-
-                    <!-- TODO solve problem with map iterating-->
                     <tbody>
-                    <tr th:each="attr, rowStat : *{attributes}">
+                    <tr th:each="row,rowStat : *{features}">
                         <td th:text="${rowStat.count}">1</td>
                         <td>
-                            <!--<span th:text="${attr.key}"></span>-->
-                            <input type="text" th:text="${attr['__${entry.key}__']}" th:errorclass="fieldError" />
-
+                            <input type="text" th:field="*{features[__${rowStat.index}__].title}" th:errorclass="fieldError" />
                         </td>
                         <td>
-                            <!--<span th:text="${attr.value}"></span>-->
-                            <!--<input type="text" th:text="*{attributes.value}" th:errorclass="fieldError" />-->
-                        </td>
-
-
-                    <!--<tr th:each="a, rowStat : ${p.attributes}">-->
-                        <!--<td th:text="${rowStat.count}">1</td>-->
-                        <!--<td th:text="${a.key}">_key_map_</td>-->
-                        <!--<td th:text="${a.value}">_value_map_</td>-->
-                    <!--</tr>-->
-
-
-                        <td>
-                            <button type="submit" name="removeRow" >Remove row</button>
-                        </td>
-                    </tr>
-                    </tbody>
-
-                </table>
-            </div>
-
-
-            <!-- ======================================================================= -->
-            <!--
-                           <table>
-                    <thead>
-                    <tr>
-                        <th>Row</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th>Street</th>
-                        <th>
-                            <button type="submit" name="addRow">Add row</button>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="row,rowStat : *{addresses}">
-                        <td th:text="${rowStat.count}">1</td>
-                        <td>
-                            <input type="text" th:field="*{addresses[__${rowStat.index}__].country}" th:errorclass="fieldError" />
+                            <input type="text" th:field="*{features[__${rowStat.index}__].body}" th:errorclass="fieldError" />
                         </td>
                         <td>
-                            <input type="text" th:field="*{addresses[__${rowStat.index}__].city}" th:errorclass="fieldError" />
-                        </td>
-                        <td>
-                            <input type="text" th:field="*{addresses[__${rowStat.index}__].street}" th:errorclass="fieldError" />
+                            <input type="text" th:field="*{features[__${rowStat.index}__].attribute}" th:errorclass="fieldError" />
                         </td>
 
                         <td>
@@ -241,18 +196,7 @@
                     </tbody>
 
                 </table>
-
-            -->
-
-
-            <!-- ======================================================================= -->
-
-
-
-
-
-
-
+            </div>
 
 
             <!--Save button-->
@@ -263,9 +207,6 @@
 
         </fieldset>
     </form>
-
-
-
 
 
 

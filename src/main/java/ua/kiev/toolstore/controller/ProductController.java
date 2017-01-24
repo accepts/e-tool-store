@@ -6,11 +6,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ua.kiev.toolstore.model.Feature;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.ProductCategory;
 import ua.kiev.toolstore.model.enums.ProductCondition;
 import ua.kiev.toolstore.model.enums.ProductStatus;
-import ua.kiev.toolstore.repository.dummyrepo.DummyRepo;
+import ua.kiev.toolstore.services.ProductService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class ProductController {
 
 
     @Autowired
-    private DummyRepo repository;
+    private ProductService productService;
 
 
     // ----------------------------  Enum values for Thymeleaf view ---------------------------
@@ -45,7 +46,7 @@ public class ProductController {
 
     @ModelAttribute("allProducts")
     public List<Product> populateProduct() {
-        return this.repository.findAllProducts();
+        return this.productService.findAllProducts();
     }
     //  -----------------------------------------------------------------------------------------
 
@@ -56,56 +57,42 @@ public class ProductController {
         return "createProduct";
     }
 
+
+    //  **************************** CREATE Product ****************************
     @RequestMapping(value = "/createProduct", params = {"save"})
     public String saveProduct(Product product, BindingResult bindingResult, ModelMap model){
         if (bindingResult.hasErrors()) {
             return "/createProduct";
         }
 //        else {
-//            if (repository.countByLastName(person.getLastName()) > 0){
+//            if (productService.countByLastName(person.getLastName()) > 0){
 //                bindingResult.reject("error.person.firstName.dublicate");
 //                return "/createProduct";
 //            }
-            repository.saveProduct(product);
+            productService.saveProduct(product);
             model.clear();
             return "redirect:/createProduct";
         }
 
-
-	/*  ------------------------------ Add + Remove rows in attributes MAP -----------------------------------------   */
-
+	/*  ----Add + Remove rows in List<features> when CREATE Product ---   */
     @RequestMapping(value = "/createProduct", params = {"addRow"})
     public  String addRow(Product product, BindingResult bindingResult){
-        product.getAttributes().put("<Key>","<Value>");
-        LOG.info("<---!!!---Test addRow {}", product.getAttributes());
+        product.getFeatures().add(new Feature("<Title>", "<Body>", "<Attribute>"));
+        LOG.info("<---!!!---Test addRow {}", product.getFeatures());
         return "createProduct";
     }
 
     @RequestMapping(value = "/createProduct", params = {"removeRow"})
     public  String removeRow(Product product, BindingResult bindingResult, HttpServletRequest req){
-        String rowId = req.getParameter("removeRow");
-        product.getAttributes().remove(rowId);
+        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
+        product.getFeatures().remove(rowId.intValue());
         return "createProduct";
     }
 
+    // TODO delete method
+    @RequestMapping(value = "/deleteProduct/{id}")
+    public String
 
-
-/*
-    @RequestMapping(value = "/personCreate", params={"addRow"})
-    public String addRow(Person person, BindingResult bindingResult){
-        person.getAddresses().add(new Address("Country","City","Street"));
-        return "personCreate";
-    }
-
-    @RequestMapping(value = "/personCreate", params={"removeRow"})
-    public String removeRow(Person person, BindingResult bindingResult, HttpServletRequest req){
-        final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
-        person.getAddresses().remove(rowId.intValue());
-        return "personCreate";
-    }
-
-
-    */
 
 
 
