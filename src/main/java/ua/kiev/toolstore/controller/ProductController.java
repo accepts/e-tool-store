@@ -2,6 +2,7 @@ package ua.kiev.toolstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -56,6 +57,7 @@ public class ProductController {
 
     @RequestMapping(value = "/create")
     public String createProduct(Product product){
+//        product.setCondition(ProductCondition.NEW);
         return "productCreate";
     }
 
@@ -71,9 +73,16 @@ public class ProductController {
 //                bindingResult.reject("error.person.firstName.dublicate");
 //                return "/createProduct";
 //            }
-            productService.saveProduct(product);
-            LOG.info("<-------Save product: {}", product);
-            model.clear();
+            if (product.getId() != null){
+                LOG.info("<===!!!!=========Edit product {}", product);
+                productService.updateProduct(product);
+                model.clear();
+            } else {
+                productService.saveProduct(product);
+                LOG.info("<-------Save product: {}", product);
+                model.clear();
+            }
+
             return "redirect:/product/create";
         }
 
@@ -98,11 +107,19 @@ public class ProductController {
     @RequestMapping(value = "/delete/{id}")
     public String deleteProduct(@PathVariable Long id, Product product){
         productService.deleteProductById(id);
+        LOG.info("<------Delete product with ID: || " + id);
         return "productCreate";
     }
 
 
-
+    //  **************************** EDIT Product ****************************
+    @RequestMapping(value = "/edit/{id}")
+    public String editProduct(@PathVariable Long id, Model model){
+        Product product = productService.findById(id);
+        model.addAttribute(product);
+        LOG.info("<------Edit product {}", product);
+        return "productCreate";
+    }
 
 
 }

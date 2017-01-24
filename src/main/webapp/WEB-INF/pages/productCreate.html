@@ -55,6 +55,7 @@
                 <th>status</th>
                 <th>Attributes</th>
                 <th style="background-color: crimson">Delete</th>
+                <th style="background-color: #99cc33">Edit</th>
             </tr>
             </thead>
 
@@ -84,6 +85,7 @@
                 </td>
 
                 <td><a href="#" th:href="@{/product/delete/{productId} (productId=${p.id}) }">Delete</a></td>
+                <td><a href="#" th:href="@{/product/edit/{productId} (productId=${p.id}) }">Edit</a></td>
 
             </tr>
             </tbody>
@@ -100,6 +102,7 @@
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
             </ul>
 
+            <input type="hidden" th:field="*{id}" />
 
             <div>
                 <label for="name">
@@ -143,10 +146,36 @@
                 </select>
             </div>
 
-            <div th:each="cond : ${allProductConditions}">
-                <input type="radio" th:field="*{condition}" th:value="${cond}" />
-                <label th:for="${#ids.prev('condition')}" th:text="#{${'product.condition.' + cond}}">_test_Condition_</label>
+            <!-- TODO default
+            https://github.com/thymeleaf/thymeleaf-tests/blob/20131101/src/test-common/resources/engine/springintegration/form/form07.thtest
+            http://forum.thymeleaf.org/radio-button-not-binding-correctly-td4026964.html
+
+            #ids.next('covered')
+            -->
+            <div >
+                <label th:text="#{product.condition}">_test_Condition_</label>
+                <input  th:field="*{condition}" type="radio" th:each="condition : ${allProductConditions}"
+                        th:value="${condition}" th:text="#{${'product.condition.' + condition}}" />
             </div>
+
+
+            <!--Good warinant-->
+            <!--<div >-->
+                <!--<label for="condition" th:text="#{product.condition}">_test_Condition_</label>-->
+                <!--<input type="radio" th:each="cond : ${allProductConditions}" id="condition"-->
+                       <!--th:text="#{${'product.condition.' + cond}}" th:field="*{condition}" th:value="${product.condition}" />-->
+            <!--</div>-->
+
+
+
+
+
+
+
+            <!--<div th:each="cond : ${allProductConditions}">-->
+                <!--<input type="radio" th:field="*{condition}" th:value="${cond}" />-->
+                <!--<label th:for="${#ids.prev('condition')}" th:text="#{${'product.condition.' + cond}}" th:value="${condition}">_test_Condition_</label>-->
+            <!--</div>-->
 
             <div>
                 <label for="status" th:text="#{product.status}">Status</label>
@@ -199,6 +228,7 @@
 
             <!--Save button-->
 
+            <!-- TODO add\edit change value-->
             <div class="submit">
                 <button type="submit" name="save" >Add product</button>
             </div>
