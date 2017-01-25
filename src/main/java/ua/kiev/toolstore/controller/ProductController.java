@@ -121,5 +121,13 @@ public class ProductController {
         return "productCreate";
     }
 
+    //  **************************** EDIT Product ****************************
+    @RequestMapping(value = "/view/{id}")
+    public String getProductById(@PathVariable Long id, Model model){
+        model.addAttribute("productDetailed", productService.findById(id));
+        return "productDetail";
+    }
+
+
 
 }

@@ -19,15 +19,11 @@
         <tr style="background-color: darkturquoise">
             <th>Test_title_1</th>
             <th>TestTitle_2</th>
-            <!--<th>Message</th>-->
-            <!--<th>Angular-Test</th>-->
             <th>reserv</th>
         </tr>
         <tr>
             <td><a href="#">_test_Link1</a></td>
             <td><a href="#">_test_Link2</a></td>
-            <!--<td><a href="#" th:href="@{/mesageCreate}">Create Message</a></td>-->
-            <!--<td><a href="#" th:href="@{/ang-test}">Angular Test</a></td>-->
             <td>reserv</td>
         </tr>
         </tbody>
@@ -46,7 +42,7 @@
             <tr style="background-color: dodgerblue">
                 <th>Name</th>
                 <th>description</th>
-                <th>manufacturer</th>
+                <th>manufact</th>
                 <th>price</th>
                 <th>unit</th>
 
@@ -56,6 +52,7 @@
                 <th>Attributes</th>
                 <th style="background-color: crimson">Delete</th>
                 <th style="background-color: #99cc33">Edit</th>
+                <th style="background-color: blueviolet">View</th>
             </tr>
             </thead>
 
@@ -86,6 +83,7 @@
 
                 <td><a href="#" th:href="@{/product/delete/{productId} (productId=${p.id}) }">Delete</a></td>
                 <td><a href="#" th:href="@{/product/edit/{productId} (productId=${p.id}) }">Edit</a></td>
+                <td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>
 
             </tr>
             </tbody>
