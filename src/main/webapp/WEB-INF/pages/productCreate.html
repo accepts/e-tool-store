@@ -78,7 +78,7 @@
                                 <td th:text="${rowStat.count}">1</td>
                                 <td th:text="${f.title}">_title_</td>
                                 <td th:text="${f.body}">_body_</td>
-                                <!--<td th:text="${f.attribute}">_attributes_map_</td>-->
+                                <!--<td th:text="${f.attrib ute}">_attributes_map_</td>-->
                             </tr>
                         </tbody>
                     </table>
@@ -146,36 +146,11 @@
                 </select>
             </div>
 
-            <!-- TODO default
-            https://github.com/thymeleaf/thymeleaf-tests/blob/20131101/src/test-common/resources/engine/springintegration/form/form07.thtest
-            http://forum.thymeleaf.org/radio-button-not-binding-correctly-td4026964.html
-
-            #ids.next('covered')
-            -->
             <div >
                 <label th:text="#{product.condition}">_test_Condition_</label>
                 <input  th:field="*{condition}" type="radio" th:each="condition : ${allProductConditions}"
                         th:value="${condition}" th:text="#{${'product.condition.' + condition}}" />
             </div>
-
-
-            <!--Good warinant-->
-            <!--<div >-->
-                <!--<label for="condition" th:text="#{product.condition}">_test_Condition_</label>-->
-                <!--<input type="radio" th:each="cond : ${allProductConditions}" id="condition"-->
-                       <!--th:text="#{${'product.condition.' + cond}}" th:field="*{condition}" th:value="${product.condition}" />-->
-            <!--</div>-->
-
-
-
-
-
-
-
-            <!--<div th:each="cond : ${allProductConditions}">-->
-                <!--<input type="radio" th:field="*{condition}" th:value="${cond}" />-->
-                <!--<label th:for="${#ids.prev('condition')}" th:text="#{${'product.condition.' + cond}}" th:value="${condition}">_test_Condition_</label>-->
-            <!--</div>-->
 
             <div>
                 <label for="status" th:text="#{product.status}">Status</label>
@@ -228,9 +203,8 @@
 
             <!--Save button-->
 
-            <!-- TODO add\edit change value-->
             <div class="submit">
-                <button type="submit" name="save" >Add product</button>
+                <button type="submit" name="save" th:text="${product.id == null} ? 'Save!': 'Edit' " >Add product</button>
             </div>
 
         </fieldset>

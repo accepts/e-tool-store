@@ -57,7 +57,7 @@ public class ProductController {
 
     @RequestMapping(value = "/create")
     public String createProduct(Product product){
-//        product.setCondition(ProductCondition.NEW);
+        product.setCondition(ProductCondition.NEW);
         return "productCreate";
     }
 
