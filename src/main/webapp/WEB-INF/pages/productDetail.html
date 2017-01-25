@@ -27,8 +27,8 @@
             </tr>
             </tbody>
         </table>
-        <br/>
-        <br/>
+
+        <br/> <br/>
     </div>
 
     <div>
@@ -47,8 +47,6 @@
                 <th>Attributes</th>
             </tr>
             </thead>
-
-
 
             <tbody>
             <tr th:object="${productDetailed}"  >
@@ -77,39 +75,9 @@
 
             </tr>
             </tbody>
-
-            <!--<tbody>-->
-            <!--<tr th:each="p : ${productDetailed}">-->
-                <!--<td th:text="${p.name}">name_product</td>-->
-                <!--<td th:text="${{p.description}}">description_product</td>-->
-                <!--<td th:text="${{p.manufacturer}}">product_manufact</td>-->
-                <!--<td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>-->
-                <!--<td th:text="${{p.unitInStock}}">product_quantity</td>-->
-
-                <!--<td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>-->
-                <!--<td th:text="#{|product.category.${p.category}|}">prod_category</td>-->
-                <!--<td th:text="#{|product.status.${p.status}|}">prod_status</td>-->
-
-                <!--<td >-->
-                    <!--<table>-->
-                        <!--<tbody style="background-color: deepskyblue">-->
-                        <!--<tr th:each="f, rowStat : ${p.features}">-->
-                            <!--<td th:text="${rowStat.count}">1</td>-->
-                            <!--<td th:text="${f.title}">_title_</td>-->
-                            <!--<td th:text="${f.body}">_body_</td>-->
-                            <!--<td th:text="${f.attribute}">_attributes_map_</td>-->
-                        <!--</tr>-->
-                        <!--</tbody>-->
-                    <!--</table>-->
-                <!--</td>-->
-
-            <!--</tr>-->
-            <!--</tbody>-->
         </table>
 
-
     </div>
-
 
 
 </div>

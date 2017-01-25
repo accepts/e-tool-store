@@ -3,7 +3,7 @@ package ua.kiev.toolstore.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.kiev.toolstore.model.Product;
-import ua.kiev.toolstore.repository.impl.ProductDaoCollection;
+import ua.kiev.toolstore.repository.ProductDao;
 import ua.kiev.toolstore.services.ProductService;
 
 import java.util.List;
@@ -12,25 +12,26 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    private ProductDaoCollection productDaoCollection;
+    private ProductDao repository;
+//    private ProductRepository repository;
 
-    public List<Product> findAllProducts() {
-        return productDaoCollection.findAllProducts();
+    public List<Product> findAll() {
+        return repository.findAll();
     }
 
     public Product findById(Long id) {
-        return productDaoCollection.findById(id);
+        return repository.findById(id);
     }
 
-    public void saveProduct(Product product) {
-        productDaoCollection.saveProduct(product);
+    public void save(Product product) {
+        repository.save(product);
     }
 
-    public void updateProduct(Product product) {
-        productDaoCollection.updateProduct(product);
-    }
+    //public void updateProduct(Product product) {
+//        repository.save(product);
+//    }
 
-    public void deleteProductById(Long id) {
-        productDaoCollection.deleteProductById(id);
+    public void delete(Long id) {
+        repository.delete(id);
     }
 }

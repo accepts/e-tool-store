@@ -80,8 +80,8 @@ public class ProductDaoCollection implements ProductDao {
     }
 
 
-    public List<Product> findAllProducts() {
-        LOG.debug("<===[ProductDao]=============(findAllProducts)");
+    public List<Product> findAll() {
+        LOG.debug("<===[ProductDao]=============(findAll)");
         return productList;
     }
 
@@ -97,24 +97,22 @@ public class ProductDaoCollection implements ProductDao {
     }
 
 
-    public void saveProduct(Product product) {
-        LOG.debug("<===[ProductDao]=============(saveProduct)");
-        product.setId(counter.incrementAndGet());
-        LOG.info("<--[!!!!!!]-----Saving product with contetnt {}", product);
-        productList.add(product);
+    public void save(Product product) {
+        LOG.debug("<===[ProductDao]=============(save)");
+        if (product.getId() == null){
+            product.setId(counter.incrementAndGet());
+            LOG.info("<--[!!!!!!]-----Saving product with contetnt {}", product);
+            productList.add(product);
+        } else {
+            LOG.debug("<===[ProductDao]=============(update)");
+            int index = productList.indexOf(product);
+            productList.set(index, product);
+        }
     }
 
 
-    public void updateProduct(Product product) {
-        LOG.debug("<===[ProductDao]=============(updateProduct)");
-        int index = productList.indexOf(product);
-        productList.set(index, product);
-    }
-
-
-
-    public void deleteProductById(Long id) {
-        LOG.debug("<===[ProductDao]=============(deleteProductById)");
+    public void delete(Long id) {
+        LOG.debug("<===[ProductDao]=============(delete)");
 
         for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext(); ) {
             Product product = iterator.next();

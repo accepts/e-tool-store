@@ -137,6 +137,16 @@
                 <input th:field="*{price}" id="price" th:errorclass="fieldError" />
             </div>
 
+
+
+
+            <!--
+
+            <input th:field="*{price}" id="price" th:errorclass="fieldError" />
+*{#numbers.formatDecimal(price, 0, 2)}
+            ${#numbers.formatDecimal(p.price, 0, 2)}
+            -->
+
             <div>
                 <label for="category" th:text="#{product.category}">Category</label>
                 <select th:field="*{category}">

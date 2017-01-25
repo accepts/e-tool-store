@@ -49,28 +49,25 @@
 
 
 
-        <!-- Database-->
+        <!-- Database: Spring DATA JPA, PostgreSQL-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
-        <!-- PostgreSQL DB connector-->
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.1-901-1.jdbc4</version>
         </dependency>
 
-        <!-- Spring DATA JPA basic package-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.9.0.RELEASE</version>
         </dependency>
 
-        <!-- For supporting annotation into entity methods-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
@@ -111,6 +108,16 @@
             <artifactId>gson</artifactId>
             <version>2.7</version>
         </dependency>
+
+
+
+        <!-- JSON for REST -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.7.5</version>
+        </dependency>
+
 
 
         <!-- Test -->

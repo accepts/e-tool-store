@@ -28,10 +28,7 @@ public class Product extends AbstractEntity{
 
     private int unitInStock;
 
-//    @ElementCollection
-//    private Map<String, String> attributes = new HashMap<String, String>();
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private List<Feature> features = new ArrayList<Feature>();
 

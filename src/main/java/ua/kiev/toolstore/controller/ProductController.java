@@ -49,7 +49,7 @@ public class ProductController {
 
     @ModelAttribute("allProducts")
     public List<Product> populateProduct() {
-        return this.productService.findAllProducts();
+        return this.productService.findAll();
     }
     //  ---------------------------------------------------------------------------------------
 
@@ -75,10 +75,10 @@ public class ProductController {
 //            }
             if (product.getId() != null){
                 LOG.info("<===!!!!=========Edit product {}", product);
-                productService.updateProduct(product);
+                productService.save(product);
                 model.clear();
             } else {
-                productService.saveProduct(product);
+                productService.save(product);
                 LOG.info("<-------Save product: {}", product);
                 model.clear();
             }
@@ -102,11 +102,10 @@ public class ProductController {
     }
 
 
-
     //  **************************** DELETE Product ****************************
     @RequestMapping(value = "/delete/{id}")
     public String deleteProduct(@PathVariable Long id, Product product){
-        productService.deleteProductById(id);
+        productService.delete(id);
         LOG.info("<------Delete product with ID: || " + id);
         return "productCreate";
     }
@@ -121,13 +120,11 @@ public class ProductController {
         return "productCreate";
     }
 
-    //  **************************** EDIT Product ****************************
+    //  **************************** VIEW Product ****************************
     @RequestMapping(value = "/view/{id}")
     public String getProductById(@PathVariable Long id, Model model){
         model.addAttribute("productDetailed", productService.findById(id));
         return "productDetail";
     }
-
-
 
 }

@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface ProductDao {
 
-    List<Product> findAllProducts();
+    List<Product> findAll();
 
     Product findById(Long id);
 
-    void saveProduct(Product product);
+    void save(Product product);
 
-    void updateProduct(Product product);
+//    void update(Product product);
 
-    void deleteProductById(Long id);
+    void delete(Long id);
 
 }
