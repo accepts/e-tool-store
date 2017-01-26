@@ -31,7 +31,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-
+    @Autowired
     private FileManager fileManager;
 
     // --------------------  Enum values necessary for Thymeleaf view -----------------------
@@ -78,13 +78,14 @@ public class ProductController {
 //            }
             if (product.getId() != null){
                 LOG.info("<===!!!!=========Edit product {}", product);
+                //TODO operation with picture
                 productService.save(product);
                 model.clear();
             } else {
 
                 //MultipartFile uploadedImage = product.getProductImage();
 
-                String picture = FileManager.saveFileToLocalStorage(product.getProductImage());
+                String picture = fileManager.saveFileToLocalStorage(product.getProductImage());
                 if (picture != null){
                     product.setPicture(picture);
                 }

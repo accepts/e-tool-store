@@ -21,5 +21,6 @@
         <property name="maxUploadSize" value="1024000" />
     </bean>
 
+    <context:property-placeholder location="classpath*:messages.properties"/>
 
 </beans>

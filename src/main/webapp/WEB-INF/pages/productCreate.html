@@ -60,7 +60,10 @@
             <tbody>
             <tr th:each="p : ${allProducts}">
                 <td>
-                    <img src="#" alt="STSM logo" title="STSM logo" />
+                    <!--<img src="#" alt="STSM logo" title="STSM logo" th:src="#{path.to.photo.storage} + ${p.picture}" />-->
+
+
+                    <img src="#" alt="STSM logo" title="STSM logo" th:src="#{path.to.photo.storage} + ${p.picture}" />
                 </td>
                 <td th:text="${{p.name}}">name_product</td>
                 <td th:text="${{p.description}}">description_product</td>
@@ -105,6 +108,7 @@
             </ul>
 
             <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{picture}" />
 
             <div>
                 <label for="name">
