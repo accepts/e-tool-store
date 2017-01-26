@@ -23,6 +23,7 @@ public class Product extends AbstractEntity{
     private ProductCondition condition;
     private ProductStatus status;
 
+//    TODO wrong data format
     @Column(nullable = false)
     private BigDecimal price;
 
