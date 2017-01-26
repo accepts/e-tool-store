@@ -14,6 +14,7 @@ import ua.kiev.toolstore.model.enums.ProductCategory;
 import ua.kiev.toolstore.model.enums.ProductCondition;
 import ua.kiev.toolstore.model.enums.ProductStatus;
 import ua.kiev.toolstore.services.ProductService;
+import ua.kiev.toolstore.util.FileManager;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+
+    private FileManager fileManager;
 
     // --------------------  Enum values necessary for Thymeleaf view -----------------------
     @ModelAttribute("allProductCategory")
@@ -64,7 +67,7 @@ public class ProductController {
 
     //  **************************** CREATE Product ****************************
     @RequestMapping(value = "/create", params = {"save"})
-    public String saveProduct(Product product, BindingResult bindingResult, ModelMap model){
+    public String saveProduct(Product product, BindingResult bindingResult, ModelMap model) {
         if (bindingResult.hasErrors()) {
             return "productCreate";
         }
@@ -78,6 +81,17 @@ public class ProductController {
                 productService.save(product);
                 model.clear();
             } else {
+
+                //MultipartFile uploadedImage = product.getProductImage();
+
+                String picture = FileManager.saveFileToLocalStorage(product.getProductImage());
+                if (picture != null){
+                    product.setPicture(picture);
+                }
+
+
+
+               // LOG.debug("<------ TRansfere file to: " + fileDest);
                 productService.save(product);
                 LOG.info("<-------Save product: {}", product);
                 model.clear();

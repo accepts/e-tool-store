@@ -3,7 +3,7 @@ package ua.kiev.toolstore.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.kiev.toolstore.model.Product;
-import ua.kiev.toolstore.repository.ProductDao;
+import ua.kiev.toolstore.repository.ProductRepository;
 import ua.kiev.toolstore.services.ProductService;
 
 import java.util.List;
@@ -12,8 +12,9 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    private ProductDao repository;
-//    private ProductRepository repository;
+    private ProductRepository repository;
+    //    private ProductDao repository;
+
 
     public List<Product> findAll() {
         return repository.findAll();

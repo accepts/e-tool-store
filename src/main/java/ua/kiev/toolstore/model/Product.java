@@ -1,6 +1,7 @@
 package ua.kiev.toolstore.model;
 
 import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
 import ua.kiev.toolstore.model.enums.ProductCategory;
 import ua.kiev.toolstore.model.enums.ProductCondition;
 import ua.kiev.toolstore.model.enums.ProductStatus;
@@ -23,7 +24,6 @@ public class Product extends AbstractEntity{
     private ProductCondition condition;
     private ProductStatus status;
 
-//    TODO wrong data format
     @Column(nullable = false)
     private BigDecimal price;
 
@@ -33,6 +33,10 @@ public class Product extends AbstractEntity{
     @JoinColumn(name = "product_id")
     private List<Feature> features = new ArrayList<Feature>();
 
+    @Transient
+    private MultipartFile productImage;
+
+    private String picture;
 
 //    @Transient
 //    private MultipartFile productImage;
@@ -68,28 +72,26 @@ public class Product extends AbstractEntity{
 
     public List<Feature> getFeatures() {
         return features;
-//        return Collections.unmodifiableSet(addresses);
     }
-
-
-
-//    public void setAttribute(String name, String value) {
-//        Assert.hasText(name);
-//
-//        if (value == null) {
-//            this.attributes.remove(value);
-//        } else {
-//            this.attributes.put(name, value);
-//        }
-//    }
-//
-//    public Map<String, String> getAttributes() {
-//        return attributes;
-//    }
-//
 
     //------------------- Getters + Setter's ---------------------------------------
 
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public MultipartFile getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(MultipartFile productImage) {
+        this.productImage = productImage;
+    }
 
     public String getName() {
         return name;

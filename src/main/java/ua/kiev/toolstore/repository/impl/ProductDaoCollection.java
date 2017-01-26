@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Repository
 public class ProductDaoCollection implements ProductDao {
 
     private static final AtomicLong counter = new AtomicLong();
