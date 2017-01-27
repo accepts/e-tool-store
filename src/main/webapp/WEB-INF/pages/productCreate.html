@@ -60,10 +60,7 @@
             <tbody>
             <tr th:each="p : ${allProducts}">
                 <td>
-                    <!--<img src="#" alt="STSM logo" title="STSM logo" th:src="#{path.to.photo.storage} + ${p.picture}" />-->
-
-
-                    <img src="#" alt="STSM logo" title="STSM logo" th:src="#{path.to.photo.storage} + ${p.picture}" />
+                    <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/file/} + ${p.picture}" style="width: 80px" />
                 </td>
                 <td th:text="${{p.name}}">name_product</td>
                 <td th:text="${{p.description}}">description_product</td>
