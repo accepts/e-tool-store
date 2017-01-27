@@ -12,8 +12,8 @@ public interface ProductService {
 
     void save(Product product);
 
-//    void updateProduct(Product product);
-
     void delete(Long id);
+
+    String findPictureByProductId(Long id);
 
 }

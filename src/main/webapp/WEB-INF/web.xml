@@ -30,14 +30,14 @@
 
 
 
-	<servlet>
-		<servlet-name>fileServlet</servlet-name>
-		<servlet-class>ua.kiev.toolstore.controller.FileServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>fileServlet</servlet-name>
-		<url-pattern>/file/*</url-pattern>
-	</servlet-mapping>
+	<!--<servlet>-->
+		<!--<servlet-name>fileServlet</servlet-name>-->
+		<!--<servlet-class>ua.kiev.toolstore.controller.FileServlet</servlet-class>-->
+	<!--</servlet>-->
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>fileServlet</servlet-name>-->
+		<!--<url-pattern>/file/*</url-pattern>-->
+	<!--</servlet-mapping>-->
 
 
 

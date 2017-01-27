@@ -28,11 +28,12 @@ public class ProductServiceImpl implements ProductService {
         repository.save(product);
     }
 
-    //public void updateProduct(Product product) {
-//        repository.save(product);
-//    }
-
     public void delete(Long id) {
+        //TODO delete file when deleting picture
         repository.delete(id);
+    }
+
+    public String findPictureByProductId(Long id) {
+        return repository.findPictureByProductId(id);
     }
 }

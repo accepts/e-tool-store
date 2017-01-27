@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
+import java.util.Date;
+
 @Controller
 public class HomeController {
 
@@ -14,15 +16,8 @@ public class HomeController {
 	@RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
 		model.addAttribute("message", "Hello from Controller!");
-		LOG.info("<------ Logging is testing {}");
+		LOG.info("<------ Home page is Loaded " + (new Date().toString()));
 		return "home";
 	}
-
-
-
-
-
-
-
 
 }
