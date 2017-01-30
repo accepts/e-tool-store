@@ -26,10 +26,8 @@ public class FileManager {
     private ProductService productService;
 
 
-    public String saveFileToLocalStorage(MultipartFile uploadedFile){
 
-        //TODO validate file
-
+    public String saveFileToLocalStorage(MultipartFile uploadedFile) throws IllegalArgumentException, IOException{
         String uniqueID = UUID.randomUUID().toString() + "__";
         File fileDest = new File(storageFolder + uniqueID + uploadedFile.getOriginalFilename());
         fileDest.mkdirs();
@@ -42,40 +40,7 @@ public class FileManager {
             e.printStackTrace();
             return null;
         }
-
     }
-
-
-
-
-
-
-
-    private static class CustomValidator {
-        /*
-        * Name + correct extension
-        * http://stackoverflow.com/questions/18208359/how-to-check-if-the-file-is-an-image
-        * https://www.mkyong.com/regular-expressions/how-to-validate-image-file-extension-with-regular-expression/
-        * http://stackoverflow.com/questions/4169713/how-to-check-a-uploaded-file-whether-it-is-a-image-or-other-file
-        *
-        * Size
-        * http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/multipart/MultipartFile.html
-        *
-        * */
-
-
-        // TODO size validator
-        //TODO validate name + extension
-        //   Assert = nameValidator(file);
-        //TODO validate file type
-
-    }
-
-
-
-
-
-
 
 
     // ******************  Retrieve picture file from DB and HDD ******************************
@@ -88,30 +53,30 @@ public class FileManager {
             contentType = "application/octet-stream";
         }
 
-        LOG.debug("<==== getContentType  {} : " + "(File ID): " + id + "(File contentType): " + contentType);
+        LOG.debug("<---getContentType  {} : " + "(File ID): " + id + "(File contentType): " + contentType);
         return contentType;
     }
 
 
     public long getFileLength(Long id){
         File file = new File(storageFolder + productService.findPictureByProductId(id));
-        LOG.debug("<==== getFileLength  {} : " + "(File ID): " + id + "(File length): " + file.length());
+        LOG.debug("<---getFileLength  {} : " + "(File ID): " + id + "(File length): " + file.length());
         return file.length();
     }
 
 
     public InputStreamResource getFileBody(Long id) throws IOException {
-        LOG.debug("<==== getFileBody {}" + id);
+        LOG.debug("<---getFileBody {}" + id);
         File file = new File(storageFolder + productService.findPictureByProductId(id));
         return new InputStreamResource( FileUtils.openInputStream(file));
     }
 
-    // *********************  Delete file from HDD storage   ***************************************
 
+    // ********************  Delete photo file from HDD storage   **********************************
 
     public boolean deleteFile(Long id){
         File file = new File(storageFolder + productService.findPictureByProductId(id));
-        LOG.debug("<====Deleting file from HDD {}:" + file);
+        LOG.debug("<---Deleting file from HDD {}:" + file);
         return file.delete();
     }
 

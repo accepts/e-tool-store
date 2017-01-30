@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,10 @@ import ua.kiev.toolstore.model.enums.ProductStatus;
 import ua.kiev.toolstore.services.ProductService;
 import ua.kiev.toolstore.util.FileManager;
 import ua.kiev.toolstore.util.LoggerWrapper;
+import ua.kiev.toolstore.util.validator.ProductValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,6 +36,9 @@ public class ProductController {
 
     @Autowired
     private FileManager fileManager;
+
+    @Autowired
+    private ProductValidator productValidator;
 
     // --------------------  Enum values necessary for Thymeleaf view -----------------------
     @ModelAttribute("allProductCategory")
@@ -58,7 +64,7 @@ public class ProductController {
 
 
     @RequestMapping(value = "/create")
-    public String createProduct(Product product){
+    public String createProduct(Product product) {
         product.setCondition(ProductCondition.NEW);
         return "productCreate";
     }
@@ -67,55 +73,66 @@ public class ProductController {
     //  **************************** CREATE (+ Edit) Product ****************************
 
     @RequestMapping(value = "/create", params = {"save"})
-    public String saveProduct(Product product, BindingResult bindingResult, ModelMap model) {
+    public String saveProduct(Product product, BindingResult bindingResult, ModelMap model) throws IOException, IllegalArgumentException {
+
         if (bindingResult.hasErrors()) {
             return "productCreate";
         }
-//        else {
-        //TODO validate fields + picture file
-//            if (productService.countByLastName(person.getLastName()) > 0){
-//                bindingResult.reject("error.person.firstName.dublicate");
-//                return "/createProduct";
-//            }
 
+        // Validate Product fields
+        if (!productValidator.productFieldsValidator(product)) {
+            LOG.info("<-------Validation of the PRODUCT is occur! Fields has errors!");
+            bindingResult.reject("validation.error.product.fields.message");
+            return "productCreate";
+        }
 
-            // EDIT
-            if (product.getId() != null){
-                if (!product.getProductImage().isEmpty()){
-                    fileManager.deleteFile(product.getId());
-                    String picture = fileManager.saveFileToLocalStorage(product.getProductImage());
-                    product.setPicture(picture);
-                }
-                productService.save(product);
-                LOG.debug("<------Edit product {}", product);
-                model.clear();
-            }
+        // Validate attached picture file
+        if (!product.getProductImage().isEmpty() &&
+                (!productValidator.photoSizeValidate(product.getProductImage()) ||
+                !productValidator.photoNameValidate(product.getProductImage()))) {
 
-            // SAVE
-            else {
-                String picture = fileManager.saveFileToLocalStorage(product.getProductImage());
-                if (picture != null){
-                    product.setPicture(picture);
-                }
-                productService.save(product);
-                LOG.debug("<------Save product: {}", product);
-                model.clear();
-            }
-
-            return "redirect:/product/create";
+            LOG.info("<-------Validation of the photo file is occur! File is Wrong!");
+            bindingResult.reject("validation.error.photo.file.message");
+            return "productCreate";
         }
 
 
-	/*  ----Add + Remove rows in List<features> when CREATE Product ---   */
+        // EDIT block
+        if (product.getId() != null) {
+            if (!product.getProductImage().isEmpty()) {
+                fileManager.deleteFile(product.getId());
+                String picture = fileManager.saveFileToLocalStorage(product.getProductImage());
+                product.setPicture(picture);
+            }
+            productService.save(product);
+            LOG.debug("<------Edit product {}", product);
+            model.clear();
+        }
+        // SAVE block
+        else {
+            String picture = fileManager.saveFileToLocalStorage(product.getProductImage());
+            if (picture != null) {
+                product.setPicture(picture);
+            }
+            productService.save(product);
+            LOG.debug("<------Save product: {}", product);
+            model.clear();
+        }
+
+        return "redirect:/product/create";
+    }
+
+
+    /*  ----Add + Remove rows in List<features> when CREATE Product ---   */
     @RequestMapping(value = "/create", params = {"addRow"})
-    public  String addRow(Product product, BindingResult bindingResult){
+    public String addRow(Product product, BindingResult bindingResult) {
         product.getFeatures().add(new Feature("<Title>", "<Body>", "<Attribute>"));
         LOG.debug("<------Test addRow {}", product.getFeatures());
         return "productCreate";
     }
 
     @RequestMapping(value = "/create", params = {"removeRow"})
-    public  String removeRow(Product product, BindingResult bindingResult, HttpServletRequest req){
+    public String removeRow(Product product, BindingResult bindingResult, HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         product.getFeatures().remove(rowId.intValue());
         return "productCreate";
@@ -124,7 +141,7 @@ public class ProductController {
 
     //  **************************** DELETE Product ****************************
     @RequestMapping(value = "/delete/{id}")
-    public String deleteProduct(@PathVariable Long id, Product product, ModelMap model){
+    public String deleteProduct(@PathVariable Long id, Product product, ModelMap model) {
         productService.delete(id);
         LOG.debug("<------Delete product with ID: || " + id);
         model.clear();
@@ -134,7 +151,7 @@ public class ProductController {
 
     //  **************************** EDIT Product ****************************
     @RequestMapping(value = "/edit/{id}")
-    public String editProduct(@PathVariable Long id, Model model){
+    public String editProduct(@PathVariable Long id, Model model) {
         Product product = productService.findById(id);
         model.addAttribute(product);
         LOG.debug("<------Edit product {}", product);
@@ -144,9 +161,27 @@ public class ProductController {
 
     //  **************************** VIEW Product ****************************
     @RequestMapping(value = "/view/{id}")
-    public String getProductById(@PathVariable Long id, Model model){
+    public String getProductById(@PathVariable Long id, Model model) {
         model.addAttribute("productDetailed", productService.findById(id));
         return "productDetail";
     }
+
+
+
+
+    // TODO ************************** Exception handler *************************************
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleClientErrors(Exception e) {
+        LOG.warn("<====E==== IllegalArgumentEXCEPTION occur {}" + e.getMessage());
+        return "redirect:/product/create";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String handleServerErrors(Exception e) {
+        LOG.warn("<====E==== Exception occur {}" + e.getMessage());
+        return "redirect:/product/create";
+    }
+
 
 }

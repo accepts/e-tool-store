@@ -17,10 +17,8 @@
     <mvc:resources mapping="/resources/**" location="/WEB-INF/resources/"    />
     <mvc:resources mapping="/pic/**" location="/WEB-INF/resources/images/" />
 
-    <!--<mvc:resources mapping="/photos/**" location="file:///c:/apache-tomcat-7.0.56/photos/" />-->
-
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="1024000" />
+        <property name="maxUploadSize" value="2097152" />
     </bean>
 
     <context:property-placeholder location="classpath*:messages.properties"/>
