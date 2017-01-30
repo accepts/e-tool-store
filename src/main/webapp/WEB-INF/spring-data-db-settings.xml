@@ -9,9 +9,9 @@
        <!--DB connection-->
        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
               <property name="driverClassName" value="org.postgresql.Driver" />
-              <property name="url" value="jdbc:postgresql://localhost:5432/tool-store" />
-              <property name="username" value="postgres"/>
-              <property name="password" value="postgres" />
+              <property name="url" value="${db.url}" />
+              <property name="username" value="${db.username}"/>
+              <property name="password" value="${db.password}" />
        </bean>
 
        <!-- JPA repository-->

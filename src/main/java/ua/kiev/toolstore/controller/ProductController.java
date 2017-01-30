@@ -57,7 +57,6 @@ public class ProductController {
     //  ---------------------------------------------------------------------------------------
 
 
-
     @RequestMapping(value = "/create")
     public String createProduct(Product product){
         product.setCondition(ProductCondition.NEW);
@@ -65,47 +64,53 @@ public class ProductController {
     }
 
 
-    //  **************************** CREATE Product ****************************
+    //  **************************** CREATE (+ Edit) Product ****************************
+
     @RequestMapping(value = "/create", params = {"save"})
     public String saveProduct(Product product, BindingResult bindingResult, ModelMap model) {
         if (bindingResult.hasErrors()) {
             return "productCreate";
         }
 //        else {
+        //TODO validate fields + picture file
 //            if (productService.countByLastName(person.getLastName()) > 0){
 //                bindingResult.reject("error.person.firstName.dublicate");
 //                return "/createProduct";
 //            }
+
+
+            // EDIT
             if (product.getId() != null){
-                LOG.info("<===!!!!=========Edit product {}", product);
-                //TODO operation with picture
+                if (!product.getProductImage().isEmpty()){
+                    fileManager.deleteFile(product.getId());
+                    String picture = fileManager.saveFileToLocalStorage(product.getProductImage());
+                    product.setPicture(picture);
+                }
                 productService.save(product);
+                LOG.debug("<------Edit product {}", product);
                 model.clear();
-            } else {
+            }
 
-                //MultipartFile uploadedImage = product.getProductImage();
-
+            // SAVE
+            else {
                 String picture = fileManager.saveFileToLocalStorage(product.getProductImage());
                 if (picture != null){
                     product.setPicture(picture);
                 }
-
-
-
-               // LOG.debug("<------ TRansfere file to: " + fileDest);
                 productService.save(product);
-                LOG.info("<-------Save product: {}", product);
+                LOG.debug("<------Save product: {}", product);
                 model.clear();
             }
 
             return "redirect:/product/create";
         }
 
+
 	/*  ----Add + Remove rows in List<features> when CREATE Product ---   */
     @RequestMapping(value = "/create", params = {"addRow"})
     public  String addRow(Product product, BindingResult bindingResult){
         product.getFeatures().add(new Feature("<Title>", "<Body>", "<Attribute>"));
-        LOG.info("<------Test addRow {}", product.getFeatures());
+        LOG.debug("<------Test addRow {}", product.getFeatures());
         return "productCreate";
     }
 
@@ -119,10 +124,11 @@ public class ProductController {
 
     //  **************************** DELETE Product ****************************
     @RequestMapping(value = "/delete/{id}")
-    public String deleteProduct(@PathVariable Long id, Product product){
+    public String deleteProduct(@PathVariable Long id, Product product, ModelMap model){
         productService.delete(id);
-        LOG.info("<------Delete product with ID: || " + id);
-        return "productCreate";
+        LOG.debug("<------Delete product with ID: || " + id);
+        model.clear();
+        return "redirect:/product/create";
     }
 
 
@@ -131,9 +137,10 @@ public class ProductController {
     public String editProduct(@PathVariable Long id, Model model){
         Product product = productService.findById(id);
         model.addAttribute(product);
-        LOG.info("<------Edit product {}", product);
+        LOG.debug("<------Edit product {}", product);
         return "productCreate";
     }
+
 
     //  **************************** VIEW Product ****************************
     @RequestMapping(value = "/view/{id}")

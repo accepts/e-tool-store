@@ -49,6 +49,35 @@ public class FileManager {
 
 
 
+
+
+    private static class CustomValidator {
+        /*
+        * Name + correct extension
+        * http://stackoverflow.com/questions/18208359/how-to-check-if-the-file-is-an-image
+        * https://www.mkyong.com/regular-expressions/how-to-validate-image-file-extension-with-regular-expression/
+        * http://stackoverflow.com/questions/4169713/how-to-check-a-uploaded-file-whether-it-is-a-image-or-other-file
+        *
+        * Size
+        * http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/multipart/MultipartFile.html
+        *
+        * */
+
+
+        // TODO size validator
+        //TODO validate name + extension
+        //   Assert = nameValidator(file);
+        //TODO validate file type
+
+    }
+
+
+
+
+
+
+
+
     // ******************  Retrieve picture file from DB and HDD ******************************
 
     public String getContentType(Long id){
@@ -77,41 +106,13 @@ public class FileManager {
         return new InputStreamResource( FileUtils.openInputStream(file));
     }
 
-    // ****************************************************************************************
+    // *********************  Delete file from HDD storage   ***************************************
 
 
-
-
-
-
-
-
-
-
-
-
-    private static class CustomValidator {
-        /*
-        * Name + correct extension
-        * http://stackoverflow.com/questions/18208359/how-to-check-if-the-file-is-an-image
-        * https://www.mkyong.com/regular-expressions/how-to-validate-image-file-extension-with-regular-expression/
-        * http://stackoverflow.com/questions/4169713/how-to-check-a-uploaded-file-whether-it-is-a-image-or-other-file
-        *
-        * Size
-        * http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/multipart/MultipartFile.html
-        *
-        * */
-
-
-        // TODO size validator
-        //TODO validate name + extension
-        //   Assert = nameValidator(file);
-        //TODO validate file type
-
+    public boolean deleteFile(Long id){
+        File file = new File(storageFolder + productService.findPictureByProductId(id));
+        LOG.debug("<====Deleting file from HDD {}:" + file);
+        return file.delete();
     }
-
-
-
-
 
 }
