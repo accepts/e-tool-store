@@ -96,8 +96,7 @@ public class ProductController {
             return "productCreate";
         }
 
-
-        // EDIT block
+        // EDIT PRODUCT entity block
         if (product.getId() != null) {
             if (!product.getProductImage().isEmpty()) {
                 fileManager.deleteFile(product.getId());
@@ -108,7 +107,7 @@ public class ProductController {
             LOG.debug("<------Edit product {}", product);
             model.clear();
         }
-        // SAVE block
+        // SAVE PRODUCT entity block
         else {
             String picture = fileManager.saveFileToLocalStorage(product.getProductImage());
             if (picture != null) {
