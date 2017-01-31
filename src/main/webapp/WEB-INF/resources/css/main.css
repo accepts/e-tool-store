@@ -47,6 +47,12 @@ h1{
 h2{
     color: darkslategrey;
     font-style: italic;
+    text-align: center;
+}
+
+.msg-for-customer{
+    font-size: 16px;
+    color: maroon;
 }
 
 

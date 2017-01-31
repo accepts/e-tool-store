@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "product")
-public class Product extends AbstractEntity{
+@Table(name = "products")
+public class Product extends AbstractEntity {
 
     @Column(nullable = false)
     private String name;
@@ -38,9 +38,8 @@ public class Product extends AbstractEntity{
 
     private String picture;
 
-//    @Transient
-//    private MultipartFile productImage;
-//
+
+
 //    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JsonIgnore
 //    private List<CartItem> cartItemList;

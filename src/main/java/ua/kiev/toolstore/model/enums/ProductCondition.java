@@ -39,14 +39,4 @@ public enum ProductCondition {
         return getName();
     }
 
-
 }
-
-
-
-/*
-
-
-
-
- */

@@ -1,6 +1,5 @@
 package ua.kiev.toolstore.repository.impl;
 
-import org.springframework.stereotype.Repository;
 import ua.kiev.toolstore.model.Feature;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.ProductCategory;

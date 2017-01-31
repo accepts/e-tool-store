@@ -1,5 +1,7 @@
 package ua.kiev.toolstore.model;
 
+import ua.kiev.toolstore.model.AbstractEntity;
+
 import javax.persistence.Entity;
 
 @Entity
