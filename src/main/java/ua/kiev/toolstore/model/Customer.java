@@ -13,8 +13,11 @@ public class Customer extends AbstractEntity {
 
     private String firstName, lastName, phone;
 
+
+    // TODO correct cascading
+    // _http://stackoverflow.com/questions/29600464/how-does-hibernate-work-with-onetoone-and-cascade-all-using-spring
     @OneToOne
-    @JoinColumn(name = "shippingAddress_id")
+    @JoinColumn(name = "shippingaddress_id")
     private ShippingAddress address;
 
     @OneToOne
