@@ -22,9 +22,25 @@ public class User extends AbstractEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @OneToOne
-    @JoinColumn(name = "customer_id")
+
+
+    //*************************************
+
+    //
+    // @OneToOne(mappedBy = "user")
+
+
+
+//    @OneToOne @JoinTable(name="users",joinColumns=@JoinColumn(name="user_id",unique=true),
+//            inverseJoinColumns=@JoinColumn(name="customer_id",unique=true))
+    @OneToOne(mappedBy = "user")
     private Customer customer;
+
+    //TODO delete customer from user, or use working variant
+
+    //*************************************
+
+
 
 
     public User() {

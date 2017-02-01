@@ -115,52 +115,52 @@
 
             <!-- ********** CUSTOMER Address block (country, state, city, street, apartment, zipCode)************** -->
 
-            <fieldset>
+            <!--<fieldset>-->
 
-                <span th:text="#{customer.address.msg}" class="msg-for-customer">_test_address_message_</span>
-                <br/><br/>
+                <!--<span th:text="#{customer.shippingAddress.msg}" class="msg-for-customer">_test_address_message_</span>-->
+                <!--<br/><br/>-->
 
-                <div>
-                    <label>Address: </label>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th th:text="#{customer.country}">_test_country:</th>
-                            <th th:text="#{customer.state}">_test_state:</th>
-                            <th th:text="#{customer.city}">_test_city:</th>
-                            <th th:text="#{customer.street}">_test_street:</th>
-                            <th th:text="#{customer.apartment}">_test_apartment:</th>
-                            <th th:text="#{customer.zipCode}">_test_zipCode:</th>
-                        </tr>
-                        </thead>
+                <!--<div>-->
+                    <!--<label>Address: </label>-->
+                    <!--<table>-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th th:text="#{customer.country}">_test_country:</th>-->
+                            <!--<th th:text="#{customer.state}">_test_state:</th>-->
+                            <!--<th th:text="#{customer.city}">_test_city:</th>-->
+                            <!--<th th:text="#{customer.street}">_test_street:</th>-->
+                            <!--<th th:text="#{customer.apartment}">_test_apartment:</th>-->
+                            <!--<th th:text="#{customer.zipCode}">_test_zipCode:</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
 
-                        <tbody>
-                        <tr th:object="${customer.address}">
-                            <td>
-                                <input type="text" th:field="*{country}" th:errorclass="fieldError" />
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{state}" th:errorclass="fieldError" />
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{city}" th:errorclass="fieldError" />
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{street}" th:errorclass="fieldError" />
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{apartment}" th:errorclass="fieldError" />
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{zipCode}" th:errorclass="fieldError" />
-                            </td>
-                        </tr>
-                        </tbody>
+                        <!--<tbody>-->
+                        <!--<tr th:object="${customer.shippingAddress}">-->
+                            <!--<td>-->
+                                <!--<input type="text" th:field="*{country}" th:errorclass="fieldError" />-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<input type="text" th:field="*{state}" th:errorclass="fieldError" />-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<input type="text" th:field="*{city}" th:errorclass="fieldError" />-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<input type="text" th:field="*{street}" th:errorclass="fieldError" />-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<input type="text" th:field="*{apartment}" th:errorclass="fieldError" />-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<input type="text" th:field="*{zipCode}" th:errorclass="fieldError" />-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
 
-                    </table>
-                </div>
+                    <!--</table>-->
+                <!--</div>-->
 
-            </fieldset>
+            <!--</fieldset>-->
 
             <br/><br/>
 
