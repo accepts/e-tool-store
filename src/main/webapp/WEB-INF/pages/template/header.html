@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head">
     <meta charset="UTF-8">
@@ -8,6 +8,16 @@
 
     <!-- CSS styles-->
     <link rel="stylesheet" type="text/css" media="all" href="../../resources/css/main.css" th:href="@{/css/main.css}" />
+
+    <!-- AngularJS -->
+    <script src="../../resources/js/angular.js" th:src="@{/js/angular.js}">
+    </script>
+
+    <script src="../../resources/js/formApp.js" th:src="@{/js/formApp.js}">
+    </script>
+
+    <script src="../../resources/js/validate.js" th:src="@{/js/validate.js}">
+    </script>
 </head>
 
 <body>
@@ -24,8 +34,6 @@
         =====================================<br/>
     </p>
 </div>
-
-
 
 
 </body>

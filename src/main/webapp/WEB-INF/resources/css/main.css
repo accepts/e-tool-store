@@ -22,6 +22,7 @@ body {
     width: 1050px;
 }
 
+/*  ----------- Error field Spring + Thymeleaf --------------   */
 
 .fieldError {
     border: 1px solid red;
@@ -41,7 +42,44 @@ ul.errorlist li {
 }
 
 
+/*------------  Angular preValidation  ----------------  */
 
+.username.ng-valid {
+    background-color: lightgreen;
+}
+.username.ng-dirty.ng-invalid-required {
+    background-color: red;
+}
+.username.ng-dirty.ng-invalid-minlength {
+    background-color: yellow;
+}
+
+.email.ng-valid {
+    background-color: lightgreen;
+}
+.email.ng-dirty.ng-invalid-required {
+    background-color: red;
+}
+.email.ng-dirty.ng-invalid-email {
+    background-color: yellow;
+}
+
+
+.password.ng-valid {
+    background-color: lightgreen;
+}
+.password.ng-dirty.ng-invalid-required {
+    background-color: red;
+}
+.password.ng-dirty.ng-invalid-password {
+    background-color: yellow;
+}
+
+
+
+
+
+/* ======================= Some trash del for Clear work ===========================  */
 
 h1{
     color: darkred;

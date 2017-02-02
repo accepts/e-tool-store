@@ -3,7 +3,7 @@ package ua.kiev.toolstore.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.kiev.toolstore.model.User;
-import ua.kiev.toolstore.repository.tempDao.UserRepository;
+import ua.kiev.toolstore.repository.UserRepository;
 import ua.kiev.toolstore.services.UserService;
 
 @Service
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User saveAndFlush(User user) {
-        return repository.saveAndFlush(user);
+        return repository.save(user);
     }
 
 

@@ -26,7 +26,6 @@ public class FileManager {
     private ProductService productService;
 
 
-
     public String saveFileToLocalStorage(MultipartFile uploadedFile) throws IllegalArgumentException, IOException{
         String uniqueID = UUID.randomUUID().toString() + "__";
         File fileDest = new File(storageFolder + uniqueID + uploadedFile.getOriginalFilename());
@@ -46,6 +45,7 @@ public class FileManager {
     // ******************  Retrieve picture file from DB and HDD ******************************
 
     public String getContentType(Long id){
+
         File file = new File(storageFolder + productService.findPictureByProductId(id));
         String contentType = new MimetypesFileTypeMap().getContentType(file);
 
@@ -62,6 +62,7 @@ public class FileManager {
         File file = new File(storageFolder + productService.findPictureByProductId(id));
         LOG.debug("<---getFileLength  {} : " + "(File ID): " + id + "(File length): " + file.length());
         return file.length();
+
     }
 
 

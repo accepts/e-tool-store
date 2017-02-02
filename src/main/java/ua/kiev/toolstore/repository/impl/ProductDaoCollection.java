@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+// Obsolete DAO. Stay just like an example of local Repository
 public class ProductDaoCollection implements ProductDao {
 
     private static final AtomicLong counter = new AtomicLong();

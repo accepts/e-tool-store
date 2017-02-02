@@ -30,6 +30,11 @@
         <appender-ref ref="consoleAppender"/>
     </category>
 
+    <category name="ua.kiev.toolstore.util">
+        <level value="trace"/>
+        <appender-ref ref="consoleAppender"/>
+    </category>
+
     <category name="org.thymeleaf.TemplateEngine">
         <level value="INFO"/>
         <appender-ref ref="consoleAppender"/>

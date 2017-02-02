@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends AbstractEntity {
 
-    // TODO USER
+    // ---------------------------  System user info fields --------------------
 
     private String name, email, password;
 
@@ -23,31 +23,26 @@ public class User extends AbstractEntity {
     private Set<Role> roles;
 
 
+    // ------------------------  Customer fields  -------------------------
+    private String firstName, lastName, phone;
 
-    //*************************************
-
-    //
-    // @OneToOne(mappedBy = "user")
-
-
-
-//    @OneToOne @JoinTable(name="users",joinColumns=@JoinColumn(name="user_id",unique=true),
-//            inverseJoinColumns=@JoinColumn(name="customer_id",unique=true))
-    @OneToOne(mappedBy = "user")
-    private Customer customer;
-
-    //TODO delete customer from user, or use working variant
-
-    //*************************************
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name="shippingAddress_id")
+    private ShippingAddress shippingAddress;
+    //https://vladmihalcea.com/2015/03/05/a-beginners-guide-to-jpa-and-hibernate-cascade-types/
+    //http://internetka.in.ua/hibernate-one-to-one/
+    //https://spring.io/blog/2011/04/26/advanced-spring-data-jpa-specifications-and-querydsl
+    //https://spring.io/blog/2011/02/10/getting-started-with-spring-data-jpa/
+    //https://www.petrikainulainen.net/spring-data-jpa-tutorial/
 
 
 
+
+
+//    Constructors, Getter + Setter
 
     public User() {
     }
-
-
-    //---------------------- Getter + Setter ---------------------------------
 
     public String getName() {
         return name;
@@ -89,11 +84,35 @@ public class User extends AbstractEntity {
         this.roles = roles;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public ShippingAddress getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(ShippingAddress shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 }

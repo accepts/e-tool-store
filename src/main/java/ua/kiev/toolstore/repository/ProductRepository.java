@@ -16,6 +16,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     //long countByLastName(String lastName);
 
-    @Query(value = "SELECT p.picture FROM product p WHERE p.id = ?1", nativeQuery = true)
+    @Query(value = "SELECT p.picture FROM products p WHERE p.id = ?1", nativeQuery = true)
     String findPictureByProductId(Long id);
 }
