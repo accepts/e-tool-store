@@ -24,9 +24,9 @@ public class UserServiceImpl implements UserService {
         repository.delete(id);
     }
 
-    public User saveAndFlush(User user) {
-        return repository.save(user);
-    }
 
+    public long countByEmail(String email) {
+        return repository.countByEmail(email);
+    }
 
 }

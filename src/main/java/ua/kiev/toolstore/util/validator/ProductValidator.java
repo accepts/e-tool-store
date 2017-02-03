@@ -17,7 +17,6 @@ public class ProductValidator {
 
     private static final String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)";
 
-
     protected static final LoggerWrapper LOG = LoggerWrapper.get(ProductValidator.class);
 
 

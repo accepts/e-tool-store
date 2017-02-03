@@ -11,8 +11,6 @@
     <script src="../resources/js/formApp.js" th:src="@{/js/formApp.js}">
     </script>
 
-    <script src="../resources/js/validate.js" th:src="@{/js/validate.js}">
-    </script>
 </head>
 <body>
 <div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
@@ -109,45 +107,15 @@
                     <input type="password" th:field="*{password}" id="password" th:errorclass="fieldError"
                            ng-model="ctrl.user.password" class="password" placeholder="Enter your Password"
                            name="password" pattern="^(?=.*\d)(?=.*[a-z]).{3,15}$" required/>
-
                     <span ng-show="myForm.$dirty && myForm.password.$error.required">Enter Password!</span>
                     <span ng-show="myForm.$dirty && myForm.password.$error.pattern">No secure: (from 3 to 15 symbol, with 1 number)</span>
                     <span ng-show="myForm.$dirty && myForm.password.$invalid ">!!! Password is invalid </span><br/><br/>
-
                 </div>
 
-
-
-                <input type="password" name="confirmPassword"
-                       ng-model="ctrl.user.confirmPassword" compare-to="ctrl.user.password" />
-
-                <span ng-show="myForm.confirmPassword.$error">BZZZZZZZZZZZZZZZ!!!</span>
-
-
-
-
-
-
-                <!--<input type="password" name="confirmPassword"-->
-                       <!--ng-model="registration.user.confirmPassword"-->
-                       <!--required-->
-                       <!--compare-to="registration.user.password" />-->
-
-                <!--<div ng-messages="registrationForm.confirmPassword.$error"-->
-                     <!--ng-messages-include="messages.html"></div>-->
-
-
-<!--
-!!http://odetocode.com/blogs/scott/archive/2014/10/13/confirm-password-validation-in-angularjs.aspx
-
-
-
+                <!--
+http://odetocode.com/blogs/scott/archive/2014/10/13/confirm-password-validation-in-angularjs.aspx
 -->
-
-
-
             </fieldset>
-
             <br/>
 
             <!-- ******* USER (Customer) personal info block (firstName, lastName, phone)************* -->

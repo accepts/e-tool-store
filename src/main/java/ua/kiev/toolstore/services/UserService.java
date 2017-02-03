@@ -10,5 +10,6 @@ public interface UserService {
 
     void delete(Long id);
 
-    User saveAndFlush(User user);
+    long countByEmail(String email);
+
 }
