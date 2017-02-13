@@ -44,7 +44,7 @@
         <span th:text="#{user.register.title}">_test_title_</span>
     </h2>
 
-    <!-- ************************************** Form for creating product ************************************** -->
+    <!-- ************************************** Form for user register ************************************** -->
 
     <form action="#" th:action="@{/user/create}" th:object="${user}" method="post"
           ng-controller="AppController as ctrl" name="myForm">
@@ -140,7 +140,7 @@ http://odetocode.com/blogs/scott/archive/2014/10/13/confirm-password-validation-
                 </div>
 
                 <div>
-                    <label for="lastName">
+                    <label for="phone">
                         <span th:text="#{user.phone}">_test_phone_</span>
                     </label>
                     <input type="text" th:field="*{phone}" id="phone" th:errorclass="fieldError"/>
@@ -172,7 +172,7 @@ http://odetocode.com/blogs/scott/archive/2014/10/13/confirm-password-validation-
                         </thead>
 
                         <tbody>
-                        <tr th:object="${user.shippingAddress}">
+                        <tr th:object="${user.address}">
                             <td>
                                 <input type="text" th:field="*{country}" th:errorclass="fieldError"/>
                             </td>
@@ -212,32 +212,6 @@ http://odetocode.com/blogs/scott/archive/2014/10/13/confirm-password-validation-
 
 
 </div>
-
-
-
-<!--<script>-->
-    <!--var compareTo = function() {-->
-        <!--return {-->
-            <!--require: "ngModel",-->
-            <!--scope: {-->
-                <!--otherModelValue: "=compareTo"-->
-            <!--},-->
-            <!--link: function(scope, element, attributes, ngModel) {-->
-
-                <!--ngModel.$validators.compareTo = function(modelValue) {-->
-                    <!--return modelValue == scope.otherModelValue;-->
-                <!--};-->
-
-                <!--scope.$watch("otherModelValue", function() {-->
-                    <!--ngModel.$validate();-->
-                <!--});-->
-            <!--}-->
-        <!--};-->
-    <!--};-->
-
-    <!--module.directive("compareTo", compareTo);-->
-<!--</script>-->
-
 
 
 

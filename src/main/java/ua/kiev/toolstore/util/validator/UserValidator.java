@@ -2,8 +2,8 @@ package ua.kiev.toolstore.util.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.kiev.toolstore.model.User;
 import ua.kiev.toolstore.model.enums.Role;
+import ua.kiev.toolstore.model.security.User;
 import ua.kiev.toolstore.services.UserService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
@@ -23,6 +23,7 @@ public class UserValidator {
     // Validate USER fields (name + email)
     public boolean userFieldsValidator(User user){
         LOG.debug("<--- Start Validate USER: {}", user);
+        //TODO move this option into Service layer
         if (user.getRoles() == null || user.getRoles().isEmpty()){
             user.setRoles(EnumSet.of(Role.ROLE_CUSTOMER));
         }

@@ -36,11 +36,11 @@
     </category>
 
     <category name="org.thymeleaf.TemplateEngine">
-        <level value="INFO"/>
+        <level value="WARN"/>
         <appender-ref ref="consoleAppender"/>
     </category>
 
-    <category name="org.springframework">
+    <category name="org.springframework.security">
         <level value="INFO"/>
         <appender-ref ref="consoleAppender"/>
     </category>

@@ -1,23 +1,25 @@
 package ua.kiev.toolstore.model;
 
+import ua.kiev.toolstore.model.security.User;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
-public class ShippingAddress extends AbstractEntity {
+public class Address extends AbstractEntity {
 
 
     private String country, state, city, street, apartment, zipCode;
 
-
-    @OneToOne(mappedBy = "shippingAddress")
+    //TODO delete this binding? look on spring-data-book-jpa
+    @OneToOne(mappedBy = "address")
     private User user;
 
 
 
     // ------------------------ Getter + Setter------------------------
 
-    public ShippingAddress() {
+    public Address() {
     }
 
     public String getCountry() {
