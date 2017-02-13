@@ -9,22 +9,23 @@
     <http auto-config="true">
         <intercept-url pattern="/" access="permitAll" />
         <intercept-url pattern="/home" access="permitAll" />
-        <intercept-url pattern="/register" access="permitAll" />
+        <intercept-url pattern="/user/register" access="permitAll" />
         <!--<intercept-url pattern="/customers" access="isAuthenticated()" />-->
-        <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/**/product/**" access="hasRole('ROLE_ADMIN')" />
         <!--<intercept-url pattern="/userAndAdmin/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />-->
         <access-denied-handler error-page="/denied"/>
 
     <form-login
             login-page="/login"
             default-target-url="/home"
-            authentication-failure-url="/denied"
+            authentication-failure-url="/login?error"
             username-parameter="username"
             password-parameter="password" />
 
     <logout logout-success-url="/home" />
     </http>
 
+    <!-- TODO custom login error-->
 
     <authentication-manager >
         <authentication-provider user-service-ref="userService"/>

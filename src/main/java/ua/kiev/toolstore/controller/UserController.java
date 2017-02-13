@@ -1,26 +1,21 @@
 package ua.kiev.toolstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import ua.kiev.toolstore.model.Address;
 import ua.kiev.toolstore.model.enums.Role;
 import ua.kiev.toolstore.model.security.AuthorizedUser;
 import ua.kiev.toolstore.model.security.User;
 import ua.kiev.toolstore.services.UserService;
 import ua.kiev.toolstore.util.LoggerWrapper;
-import ua.kiev.toolstore.util.validator.UserValidator;
+import ua.kiev.toolstore.util.validator.UserUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
-import java.util.EnumSet;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -32,7 +27,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private UserValidator userValidator;
+    private UserUtil userValidator;
 
 
 
@@ -78,61 +73,59 @@ public class UserController {
     //=====================  REGISTER  ==========================================
 
     @RequestMapping(value = "/register")
-    public String createUser(User user, ModelMap model) {
-        LOG.debug("<<---CREATE-PERSONS page is requested");
-        model.addAttribute("user_roles", user)
-                .addAttribute("user_name", getUserName());
-        return "registerCustomer";
+    public String userRegister(User user, ModelMap model) {
+        LOG.info("<===USER-register form:");
+        Address address = new Address();
+        user.setAddress(address);
+        model.addAttribute("user", user);
+        return "userRegister";
     }
 
 
     @RequestMapping(value = "/register", params = {"save"})
-    public String createUserPost(User user, BindingResult bindingResult, ModelMap model) {
+    public String registerCustomer(User user, BindingResult bindingResult, ModelMap model) {
         if (bindingResult.hasErrors()) {
-            return "registerCustomer";
+            return "userRegister";
         }
-//        TODO set Role into Service layer
-        user.setRoles(EnumSet.of(Role.ROLE_CUSTOMER));
-        LOG.debug("<<---SAVE TO REPOSITORY {}", user);
+        //Validate user's inputs
+        if (!userValidator.userFieldsValidator(user)){
+            LOG.info("<---Validation of the USER is occur! Fields has errors!");
+            bindingResult.reject("validation.error.user.fields.message");
+            return "userRegister";
+        }
+        // Validate duplicate (on email)
+        if (!userValidator.userDuplicateValidator(user)){
+            LOG.info("<---Validation of the USER is occur! Fields has errors!");
+            bindingResult.reject("validation.error.user.duplicate.message");
+            return "userRegister";
+        }
+        LOG.info("<===SAVE USER to REPOSITORY {}:", user);
         userService.save(user);
         model.clear();
-        //TODO set new user credentials into coresponding fields
-        return "redirect:/login";
+        //TODO set new user credentials into corresponding fields
+        return "redirect:/user/login";
     }
 
 
 
 
-    //==================== LOGIN + LOGOUT + DENIED ==============================
 
-    @RequestMapping(value = "/login")
-    public String login(){
-        //TODO error message on wrong login
-        return "login";
-    }
-
-//    @RequestMapping("/login-error")
-//    public String loginError(Model model) {
-//        model.addAttribute("loginError", true);
-//        return "login";
+//    @RequestMapping(value = "/register", params = {"save"})
+//    public String createUserPost(User user, BindingResult bindingResult, ModelMap model) {
+//        if (bindingResult.hasErrors()) {
+//            return "registerCustomer";
+//        }
+//        user.setRoles(EnumSet.of(Role.ROLE_CUSTOMER));
+//        LOG.debug("<<---SAVE TO REPOSITORY {}", user);
+//        userService.save(user);
+//        model.clear();
+//        return "redirect:/login";
 //    }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
-        LOG.debug("<<--- LOGOUT page is requested");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        return "home";
-    }
 
-    @RequestMapping(value = "/denied", method = RequestMethod.GET)
-    public String accessDeniedPage(ModelMap model) {
-        model.addAttribute("user_roles", getRoles());
-        model.addAttribute("user_name", getUserName());
-        return "accessDenied";
-    }
+
+
+
 
     //*********************************************************************************************
     //******************************* Addition Methods ********************************************

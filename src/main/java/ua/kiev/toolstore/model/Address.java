@@ -11,7 +11,6 @@ public class Address extends AbstractEntity {
 
     private String country, state, city, street, apartment, zipCode;
 
-    //TODO delete this binding? look on spring-data-book-jpa
     @OneToOne(mappedBy = "address")
     private User user;
 

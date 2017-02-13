@@ -1,5 +1,6 @@
 package ua.kiev.toolstore.model.security;
 
+import ua.kiev.toolstore.model.Address;
 import ua.kiev.toolstore.model.enums.Role;
 
 import javax.persistence.*;
@@ -24,9 +25,15 @@ public class User extends AbstractEntity {
 
 
     // ------------------------  Customer fields  -------------------------
-    private String firstName, lastName;
+    private String firstName, lastName, phone;
 
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "customer_id")
+//    private Set<Address> addresses = new HashSet<Address>();
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name="address_id")
+    private Address address;
 
 
 
@@ -91,8 +98,19 @@ public class User extends AbstractEntity {
         this.lastName = lastName;
     }
 
+    public String getPhone() {
+        return phone;
+    }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
+    public Address getAddress() {
+        return address;
+    }
 
-
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }

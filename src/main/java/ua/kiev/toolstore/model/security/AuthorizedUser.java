@@ -2,7 +2,7 @@ package ua.kiev.toolstore.model.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import ua.kiev.securexample.util.UserUtil;
+import ua.kiev.toolstore.util.validator.UserUtil;
 
 import static java.util.Objects.requireNonNull;
 

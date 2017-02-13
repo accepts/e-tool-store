@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="template/header :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
@@ -12,6 +13,13 @@
 <div class="main-content">
 <h2>Home HTML file is loaded! <span th:text="${message}">_test_message_</span> </h2>
 <h2 th:text="#{testing.test.message}">_test_text_</h2>
+
+    <div sec:authorize="isAuthenticated()">
+        <p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+        Hello, <span sec:authentication="name" style="color: red">_temp_roles_</span> !
+        Roles: <span sec:authentication="principal.authorities">_temp_roles_</span>,
+        <p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+    </div>
 
 <div th:replace="template/menu :: tablecontroller" class="table-controller" >
     <table border="2">

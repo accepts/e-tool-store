@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -8,23 +9,30 @@
 </head>
 <body>
 
+
+
 <div th:fragment="tablecontroller" class="table-controller" >
     <table border="2">
         <tbody>
         <tr style="background-color: darkturquoise">
+            <div sec:authorize="isAuthenticated()">
+                <th>Logout</th>
+            </div>
+
             <th>Home</th>
             <th>Product</th>
-            <th>Customer</th>
-            <!--<th>Message</th>-->
-            <!--<th>Angular-Test</th>-->
+            <th>Register</th>
+            <th>Login</th>
             <th>reserv</th>
         </tr>
         <tr>
+            <div sec:authorize="isAuthenticated()">
+                <td><a href="#" th:href="@{/logout}">Logout</a></td>
+            </div>
             <td><a href="#" th:href="@{/home}">Home</a></td>
             <td><a href="#" th:href="@{/product/create}">ProductDAO</a></td>
-            <td><a href="#" th:href="@{/user/create}">User REG!</a></td>
-            <!--<td><a href="#" th:href="@{/mesageCreate}">Create Message</a></td>-->
-            <!--<td><a href="#" th:href="@{/ang-test}">Angular Test</a></td>-->
+            <td><a href="#" th:href="@{/user/register}">Register</a></td>
+            <td><a href="#" th:href="@{/login}">Login</a></td>
             <td>reserv</td>
         </tr>
         </tbody>
@@ -35,5 +43,29 @@
 
 
 
+
+
+
 </body>
 </html>
+
+
+
+<!--
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <p class="msg-controller"> Your role is ROLE_ADMIN</p>
+    <p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+</div>
+
+<div sec:authorize="hasRole('ROLE_CUSTOMER')">
+    <p class="msg-controller"> Your role is ROLE_CUSTOMER</p>
+    <p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+</div>
+
+<div sec:authorize="isAuthenticated()">
+    <p class="msg-controller"> Visible for Authenticated user || Текст на русском из страницы </p><br/>
+    Roles: <span sec:authentication="principal.authorities">_temp_roles_</span> |
+    <p th:text="#{test.cyrillic.text}">_темп_текст_</p>
+    <p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+</div>
+-->

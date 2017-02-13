@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="template/header :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
@@ -46,7 +47,7 @@
 
     <!-- ************************************** Form for user register ************************************** -->
 
-    <form action="#" th:action="@{/user/create}" th:object="${user}" method="post"
+    <form action="#" th:action="@{/user/register}" th:object="${user}" method="post"
           ng-controller="AppController as ctrl" name="myForm">
         <fieldset>
 
@@ -54,11 +55,11 @@
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
             </ul>
 
-            <div class='msg-block' ng-show='myForm.$error'>
-                    <span class='msg-error' ng-show='myForm.password-confirm.$error.pwmatch'>
-                            Passwords don't match.
-                    </span>
-            </div>
+            <!--<div class='msg-block' ng-show='myForm.$error'>-->
+                    <!--<span class='msg-error' ng-show='myForm.password-confirm.$error.pwmatch'>-->
+                            <!--Passwords don't match.-->
+                    <!--</span>-->
+            <!--</div>-->
 
 
             <!-- **************** USER system fields block (name, email, password )*********************** -->
@@ -86,7 +87,6 @@
                 <!--<input type="text" th:field="*{name}" id="name" th:errorclass="fieldError"/>-->
                 <!--</div>-->
 
-
                 <div>
                     <label for="email">
                         <span th:text="#{user.email}">_test_email_</span>
@@ -112,10 +112,8 @@
                     <span ng-show="myForm.$dirty && myForm.password.$invalid ">!!! Password is invalid </span><br/><br/>
                 </div>
 
-                <!--
-http://odetocode.com/blogs/scott/archive/2014/10/13/confirm-password-validation-in-angularjs.aspx
--->
             </fieldset>
+
             <br/>
 
             <!-- ******* USER (Customer) personal info block (firstName, lastName, phone)************* -->
@@ -154,7 +152,7 @@ http://odetocode.com/blogs/scott/archive/2014/10/13/confirm-password-validation-
 
             <fieldset>
 
-                <span th:text="#{user.shippingAddress.msg}" class="msg-for-customer">_test_address_message_</span>
+                <span th:text="#{user.address.msg}" class="msg-for-customer">_test_address_message_</span>
                 <br/><br/>
 
                 <div>

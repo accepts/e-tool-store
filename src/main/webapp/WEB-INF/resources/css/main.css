@@ -28,13 +28,13 @@ body {
     border: 1px solid red;
 }
 
-ul.errorlist {
+ul.errorlist, p.errorlist {
     border: 1px dotted #333;
     margin: 10px 10px 50px 10px;
     padding: 10px;
 }
 
-ul.errorlist li {
+ul.errorlist li, p.errorlist {
     list-style: none;
     background-color: #f2d768;
     padding: 5px;

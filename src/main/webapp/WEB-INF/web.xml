@@ -5,18 +5,6 @@
 		 version="3.1">
 
 	<display-name>eTool Store</display-name>
-	<filter>
-		<filter-name>filterChainProxy</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>filterChainProxy</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -28,17 +16,23 @@
 		</param-value>
 	</context-param>
 
-	<!-- Spring MVC settings -->
-    <servlet>
+	<!-- Spring MVC -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/mvc-dispatcher-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
 
 
 	<!-- Spring Security -->
@@ -72,3 +66,62 @@
 </web-app>
 
 
+
+
+
+
+
+<!--<listener>-->
+<!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+<!--</listener>-->
+
+<!--<context-param>-->
+<!--<param-name>contextConfigLocation</param-name>-->
+<!--<param-value>-->
+	<!--classpath:spring/mvc-dispatcher-servlet.xml,-->
+	<!--classpath:spring/view-thymeleaf-settings.xml,-->
+	<!--classpath:spring/spring-data-db-settings.xml,-->
+	<!--classpath:spring/spring-security.xml-->
+<!--</param-value>-->
+<!--</context-param>-->
+
+		<!--&lt;!&ndash; Spring MVC settings &ndash;&gt;-->
+<!--<servlet>-->
+<!--<servlet-name>mvc-dispatcher</servlet-name>-->
+<!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
+<!--<load-on-startup>1</load-on-startup>-->
+<!--</servlet>-->
+<!--<servlet-mapping>-->
+<!--<servlet-name>mvc-dispatcher</servlet-name>-->
+<!--<url-pattern>/</url-pattern>-->
+<!--</servlet-mapping>-->
+
+
+
+		<!--&lt;!&ndash; Spring Security &ndash;&gt;-->
+<!--<filter>-->
+<!--<filter-name>springSecurityFilterChain</filter-name>-->
+<!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+<!--</filter>-->
+<!--<filter-mapping>-->
+<!--<filter-name>springSecurityFilterChain</filter-name>-->
+<!--<url-pattern>/*</url-pattern>-->
+<!--</filter-mapping>-->
+
+		<!--&lt;!&ndash; Encoding filter&ndash;&gt;-->
+<!--<filter>-->
+<!--<filter-name>encodingFilter</filter-name>-->
+<!--<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>-->
+<!--<init-param>-->
+	<!--<param-name>encoding</param-name>-->
+	<!--<param-value>UTF-8</param-value>-->
+<!--</init-param>-->
+<!--<init-param>-->
+	<!--<param-name>forceEncoding</param-name>-->
+	<!--<param-value>true</param-value>-->
+<!--</init-param>-->
+<!--</filter>-->
+<!--<filter-mapping>-->
+<!--<filter-name>encodingFilter</filter-name>-->
+<!--<url-pattern>/*</url-pattern>-->
+<!--</filter-mapping>-->

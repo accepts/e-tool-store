@@ -11,8 +11,9 @@
        <!--  Standard Spring MessageSource implementation                    -->
        <!-- **************************************************************** -->
 
-       <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-              <property name="basename" value="messages" />
+       <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+              <property name="basename" value="classpath:messages" />
+              <property name="defaultEncoding" value="UTF-8"/>
        </bean>
 
        <!-- Thymeleaf View Resolver - implementation of Spring's ViewResolver interface -->
@@ -21,11 +22,13 @@
               <property name="characterEncoding" value="UTF-8" />
        </bean>
 
-       <!-- Thymeleaf Template Engine (Spring4-specific version) -->
+
+       <!--Thymeleaf Template Engine (Spring4-specific version) -->
        <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
-              <property name="templateResolvers">
+              <property name="templateResolvers" ref="templateResolver"/>
+              <property name="additionalDialects">
                      <set>
-                            <ref bean="templateResolver" />
+                            <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
                      </set>
               </property>
        </bean>
@@ -37,3 +40,32 @@
        </bean>
 
 </beans>
+
+
+
+
+
+<!--<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">-->
+<!--<property name="basename" value="messages" />-->
+<!--</bean>-->
+
+        <!--&lt;!&ndash; Thymeleaf View Resolver - implementation of Spring's ViewResolver interface &ndash;&gt;-->
+<!--<bean id="viewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">-->
+<!--<property name="templateEngine" ref="templateEngine" />-->
+<!--<property name="characterEncoding" value="UTF-8" />-->
+<!--</bean>-->
+
+        <!--&lt;!&ndash; Thymeleaf Template Engine (Spring4-specific version) &ndash;&gt;-->
+<!--<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">-->
+<!--<property name="templateResolvers">-->
+       <!--<set>-->
+              <!--<ref bean="templateResolver" />-->
+       <!--</set>-->
+<!--</property>-->
+<!--</bean>-->
+
+<!--<bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">-->
+<!--<property name="templateMode" value="HTML" />-->
+<!--<property name="prefix" value="/WEB-INF/pages/" />-->
+<!--<property name="suffix" value=".html"/>-->
+<!--</bean>-->
