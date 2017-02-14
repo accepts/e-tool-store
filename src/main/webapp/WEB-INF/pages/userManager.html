@@ -1,24 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="template/header :: head">
     <meta charset="UTF-8">
-    <title th:text="#{title.application}">test_Title</title>
-
-    <!-- CSS files -->
+    <title th:text="#{title.application}">_test_title_</title>
     <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
-
 </head>
 <body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
-<div class="content">
-    <h2>Persons.html</h2>
 
-    <div th:replace="frame/table :: tablecontroller">_table</div>
+<div class="main-content">
 
-    <div>
-        <img src="../resources/images/persons.jpg" alt="STSM logo" title="STSM logo"
-             th:src="@{/pic/persons.jpg}" th:alt-title="#{title.application}"/>
+    <!-- ************************************** Site menu  ****************************************** -->
+
+    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
+        <table border="2">
+            <tbody>
+            <tr style="background-color: darkturquoise">
+                <th>Test_title_1</th>
+                <th>TestTitle_2</th>
+                <th>reserv</th>
+            </tr>
+            <tr>
+                <td><a href="#">_test_Link1</a></td>
+                <td><a href="#">_test_Link2</a></td>
+                <td>reserv</td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <br/>
     </div>
+
 
     <p>-----------------USER (ALL)-------------------</p>
 
@@ -34,14 +48,15 @@
             <th>ROLES</th>
             <th>first Name</th>
             <th>last name</th>
-            <th>Lock-Unlock</th>
+            <th>Switch</th>
+            <th>Delete</th>
         </tr>
-        <tr th:each="u : ${userList}">
+        <tr th:each="u : ${users}">
             <td th:text="${u.id}">testID</td>
             <td th:text="${u.name}">name</td>
             <td th:text="${u.email}">email</td>
             <td th:text="${u.password}">pass</td>
-            <td th:text="${u.enabled}">enabl</td>
+            <td th:text="#{|user.active.${u.enabled}|}">prod_status</td>
             <td>
                 <table>
                     <tbody style="background-color: deeppink">
@@ -58,18 +73,18 @@
             <td th:switch="${u.enabled}" style="align-content: center">
                 <p th:case="true">
                     <a href="#"
-                       th:href="@{/admin/reset_user/{id}/false (id=${u.id})}"
+                       th:href="@{/user/admin/manager/reset_user/{id}/false (id=${u.id})}"
                        class="button-lock">Lock</a></p>
 
                 <p th:case="false"><a href="#"
-                       th:href="@{/admin/reset_user/{id}/true (id=${u.id})}"
+                       th:href="@{/user/admin/manager/reset_user/{id}/true (id=${u.id})}"
                        class="button-unlock">Unlock</a></p>
+            </td>
 
-                <!--/admin/reset_user/{personId}/{value}-->
-                <!--/admin/reset_user/{id}/{value}-->
-
-                <!--<p th:case="true" th:text="#{messages.true}">_temp_enabled_</p>-->
-                <!--<p th:case="false" th:text="#{messages.false}">_temp_disabled_</p>-->
+            <td>
+                <p><a href="#"
+                       th:href="@{/user/admin/manager/delete_user/{id} (id=${u.id})}"
+                       class="button-delete">Delete</a></p>
             </td>
 
 
@@ -80,12 +95,19 @@
     <br/>
     <br/>
 
-    <p>------------------ ID --------------------------</p>
-    <p th:text="${id_logged_user}">_temp_ID_</p>
-
-    <!--<p th:each="ur : ${user_roles}">The ROLES: is <span th:text="${ur}">_test_role_</span></p>-->
-
 
 </div>
+<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
 </body>
 </html>
+
+
+
+
+
+
+<!--/admin/reset_user/{personId}/{value}-->
+<!--/admin/reset_user/{id}/{value}-->
+
+<!--<p th:case="true" th:text="#{messages.true}">_temp_enabled_</p>-->
+<!--<p th:case="false" th:text="#{messages.false}">_temp_disabled_</p>-->

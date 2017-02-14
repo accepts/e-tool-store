@@ -41,6 +41,35 @@ ul.errorlist li, p.errorlist {
     margin: 3px 1px;
 }
 
+/* ------------------- Button LOCK \ UNLOCK -------------------   */
+
+.button-lock {
+    font: bold 12px Arial;
+    text-decoration: none;
+    background-color: crimson;
+    color: gold;
+    padding: 2px 6px 2px 6px;
+    border: 1px solid #333333;
+}
+
+.button-unlock {
+    font: bold 12px Arial;
+    text-decoration: none;
+    background-color: darkgreen;
+    color: aliceblue;
+    padding: 2px 6px 2px 6px;
+    border: 1px solid #333333;
+}
+
+.button-delete {
+    font: bold 12px Arial;
+    text-decoration: none;
+    background-color: darkred;
+    color: gold;
+    padding: 2px 6px 2px 6px;
+    border: 1px solid #333333;
+}
+
 
 /*------------  Angular preValidation  ----------------  */
 

@@ -23,16 +23,19 @@
             <th>Product</th>
             <th>Register</th>
             <th>Login</th>
+            <th>UserManager</th>
             <th>reserv</th>
         </tr>
         <tr>
             <div sec:authorize="isAuthenticated()">
                 <td><a href="#" th:href="@{/logout}">Logout</a></td>
             </div>
+
             <td><a href="#" th:href="@{/home}">Home</a></td>
             <td><a href="#" th:href="@{/product/create}">ProductDAO</a></td>
             <td><a href="#" th:href="@{/user/register}">Register</a></td>
             <td><a href="#" th:href="@{/login}">Login</a></td>
+            <td><a href="#" th:href="@{/user/admin/manager}">UserManager</a></td>
             <td>reserv</td>
         </tr>
         </tbody>
@@ -40,10 +43,6 @@
     <br/>
     <br/>
 </div>
-
-
-
-
 
 
 </body>

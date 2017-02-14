@@ -71,7 +71,8 @@ public class ProductController {
 
 //    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/create", params = {"save"})
-    public String saveProduct(Product product, BindingResult bindingResult, ModelMap model) throws IOException, IllegalArgumentException {
+    public String saveProduct(Product product, BindingResult bindingResult,
+                              ModelMap model) throws IOException, IllegalArgumentException {
 
         if (bindingResult.hasErrors()) {
             return "productCreate";

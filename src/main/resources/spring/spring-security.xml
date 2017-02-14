@@ -11,8 +11,8 @@
         <intercept-url pattern="/home" access="permitAll" />
         <intercept-url pattern="/user/register" access="permitAll" />
         <!--<intercept-url pattern="/customers" access="isAuthenticated()" />-->
-        <intercept-url pattern="/**/product/**" access="hasRole('ROLE_ADMIN')" />
-        <!--<intercept-url pattern="/userAndAdmin/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />-->
+        <intercept-url pattern="/**/product/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
+        <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')" />
         <access-denied-handler error-page="/denied"/>
         <csrf disabled="true"/>
 

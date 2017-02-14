@@ -10,6 +10,12 @@
 <body>
 
 <div class="content">
+
+    <div>
+        <img src="../resources/images/roles.jpg" alt="STSM logo" title="STSM logo"
+             th:src="@{/pic/roles.jpg}" th:alt-title="#{title.application}"/>
+    </div>
+
     <h2>Log in</h2>
 
 <p th:if="${loginError}" class="errorlist" th:text="${loginError}">_temp_Wrong_e-mail_or_password!_ </p>

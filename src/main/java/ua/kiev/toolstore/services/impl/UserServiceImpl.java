@@ -51,4 +51,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new AuthorizedUser(user);
     }
 
+
+    public void delete(Long id){
+        repository.delete(id);
+    }
 }

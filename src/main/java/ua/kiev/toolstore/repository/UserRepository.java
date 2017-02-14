@@ -24,8 +24,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query(value = "UPDATE users SET enabled = ?2 WHERE id=?1", nativeQuery = true)
     void resetUser(Long id, boolean value);
 
-//    @Query(value = "SELECT p.picture FROM products p WHERE p.id = ?1", nativeQuery = true)
-//    String findPictureByProductId(Long id);
-
-//    UPDATE users SET enabled = false WHERE id=3;
+    void delete(Long id);
 }

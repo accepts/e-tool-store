@@ -17,4 +17,6 @@ public interface UserService {
 
     void resetUser(Long id, boolean value);
 
+    void delete(Long id);
+
 }
