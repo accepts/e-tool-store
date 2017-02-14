@@ -102,28 +102,8 @@ public class UserController {
         LOG.info("<===SAVE USER to REPOSITORY {}:", user);
         userService.save(user);
         model.clear();
-        //TODO set new user credentials into corresponding fields
-        return "redirect:/user/login";
+        return "redirect:/login";
     }
-
-
-
-
-
-//    @RequestMapping(value = "/register", params = {"save"})
-//    public String createUserPost(User user, BindingResult bindingResult, ModelMap model) {
-//        if (bindingResult.hasErrors()) {
-//            return "registerCustomer";
-//        }
-//        user.setRoles(EnumSet.of(Role.ROLE_CUSTOMER));
-//        LOG.debug("<<---SAVE TO REPOSITORY {}", user);
-//        userService.save(user);
-//        model.clear();
-//        return "redirect:/login";
-//    }
-
-
-
 
 
 
@@ -181,8 +161,8 @@ public class UserController {
     }
 
 
-/*
 
+/*
     @RequestMapping(value = "/create")
     public String userRegister(User user, ModelMap model) {
         LOG.info("<==============USER-register form:");
@@ -199,36 +179,23 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "userRegister";
         }
-
         //Validate user
         if (!userValidator.userFieldsValidator(user)){
             LOG.info("<-------Validation of the USER is occur! Fields has errors!");
             bindingResult.reject("validation.error.user.fields.message");
             return "userRegister";
         }
-
         // Validate duplicate
         if (!userValidator.userDuplicateValidator(user)){
             LOG.info("<-------Validation of the USER is occur! Fields has errors!");
             bindingResult.reject("validation.error.user.duplicate.message");
             return "userRegister";
         }
-
         LOG.info("<====!!!======SAVE USER  ======= {}:", user);
         userService.save(user);
         model.clear();
         return "redirect:/user/create";
     }
-
-
-
-
-
-
-
-
-
-
  */
 
 

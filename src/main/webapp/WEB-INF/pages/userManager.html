@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">test_Title</title>
+
+    <!-- CSS files -->
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+
+</head>
+<body>
+
+<div class="content">
+    <h2>Persons.html</h2>
+
+    <div th:replace="frame/table :: tablecontroller">_table</div>
+
+    <div>
+        <img src="../resources/images/persons.jpg" alt="STSM logo" title="STSM logo"
+             th:src="@{/pic/persons.jpg}" th:alt-title="#{title.application}"/>
+    </div>
+
+    <p>-----------------USER (ALL)-------------------</p>
+
+
+    <table border="2">
+        <tbody>
+        <tr style="background-color: limegreen">
+            <th>ID</th>
+            <th>name</th>
+            <th>E-MAil</th>
+            <th>password</th>
+            <th>enabled</th>
+            <th>ROLES</th>
+            <th>first Name</th>
+            <th>last name</th>
+            <th>Lock-Unlock</th>
+        </tr>
+        <tr th:each="u : ${userList}">
+            <td th:text="${u.id}">testID</td>
+            <td th:text="${u.name}">name</td>
+            <td th:text="${u.email}">email</td>
+            <td th:text="${u.password}">pass</td>
+            <td th:text="${u.enabled}">enabl</td>
+            <td>
+                <table>
+                    <tbody style="background-color: deeppink">
+                    <tr th:each="r, rowStat : ${u.roles}">
+                        <td th:text="${rowStat.count}">1</td>
+                        <td th:text="${r}">_title_</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td th:text="${u.firstName}">firstname</td>
+            <td th:text="${u.lastName}">testLAstName</td>
+
+            <td th:switch="${u.enabled}" style="align-content: center">
+                <p th:case="true">
+                    <a href="#"
+                       th:href="@{/admin/reset_user/{id}/false (id=${u.id})}"
+                       class="button-lock">Lock</a></p>
+
+                <p th:case="false"><a href="#"
+                       th:href="@{/admin/reset_user/{id}/true (id=${u.id})}"
+                       class="button-unlock">Unlock</a></p>
+
+                <!--/admin/reset_user/{personId}/{value}-->
+                <!--/admin/reset_user/{id}/{value}-->
+
+                <!--<p th:case="true" th:text="#{messages.true}">_temp_enabled_</p>-->
+                <!--<p th:case="false" th:text="#{messages.false}">_temp_disabled_</p>-->
+            </td>
+
+
+        </tr>
+        </tbody>
+    </table>
+
+    <br/>
+    <br/>
+
+    <p>------------------ ID --------------------------</p>
+    <p th:text="${id_logged_user}">_temp_ID_</p>
+
+    <!--<p th:each="ur : ${user_roles}">The ROLES: is <span th:text="${ur}">_test_role_</span></p>-->
+
+
+</div>
+</body>
+</html>

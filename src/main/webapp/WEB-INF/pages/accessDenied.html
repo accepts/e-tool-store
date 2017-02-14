@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+
+<div class="main-content">
+
+    <!-- ************************************** Site menu  ****************************************** -->
+
+<div class="content">
+    <h2>accessDenied.html</h2>
+    <br/>
+
+    <h1 style="color: firebrick">ACCESS DENIED</h1>
+
+    <p>
+    Dear <span th:text="${user_name}" style="color: firebrick">visitor</span> You are not authorized to access this page
+    <a href="#" th:href="@{/home}"> Back to Home page! </a>
+    </p>
+
+</div>
+
+
+</div>
+</body>
+</html>

@@ -6,7 +6,7 @@
 //@Table(name = "customers")
 //public class Customer extends AbstractEntity {
 //
-//    //TODO Customer
+//
 //
 //    private String firstName, lastName, phone;
 //

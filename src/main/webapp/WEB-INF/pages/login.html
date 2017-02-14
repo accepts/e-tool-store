@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
+</head>
+
+<body>
+
+<div class="content">
+    <h2>Log in</h2>
+
+<p th:if="${loginError}" class="errorlist" th:text="${loginError}">_temp_Wrong_e-mail_or_password!_ </p>
+<br/>
+<form th:action="@{/login}" method="post">
+    <label for="username">Email: </label>:
+    <input type="text" id="username" name="username" autofocus="autofocus"/> <br />
+    <label for="password">Password: </label>:
+    <input type="password" id="password" name="password" /> <br />
+    <input type="submit" value="Login" />
+</form>
+
+
+<p><a href="#" th:href="@{/home}">Back to home </a></p>
+<p><a href="#" th:href="@{/user/register}">Register</a></p>
+
+    </div>
+</body>
+</html>

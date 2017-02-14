@@ -5,10 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ua.kiev.toolstore.model.Feature;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.ProductCategory;
@@ -63,7 +60,7 @@ public class ProductController {
     //  ---------------------------------------------------------------------------------------
 
 
-    @RequestMapping(value = "/create")
+    @RequestMapping(value = "/create", method = {RequestMethod.GET,RequestMethod.POST})
     public String createProduct(Product product) {
         product.setCondition(ProductCondition.NEW);
         return "productCreate";
@@ -72,6 +69,7 @@ public class ProductController {
 
     //  **************************** CREATE (+ Edit) Product ****************************
 
+//    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/create", params = {"save"})
     public String saveProduct(Product product, BindingResult bindingResult, ModelMap model) throws IOException, IllegalArgumentException {
 
@@ -123,19 +121,20 @@ public class ProductController {
 
 
     /*  ----Add + Remove rows in List<features> when CREATE Product ---   */
-    @RequestMapping(value = "/create", params = {"addRow"})
+    @RequestMapping(value = "/create", params = {"addRow"}, method = {RequestMethod.POST})
     public String addRow(Product product, BindingResult bindingResult) {
         product.getFeatures().add(new Feature("<Title>", "<Body>", "<Attribute>"));
         LOG.debug("<------Test addRow {}", product.getFeatures());
         return "productCreate";
     }
 
-    @RequestMapping(value = "/create", params = {"removeRow"})
+    @RequestMapping(value = "/create", params = {"removeRow"}, method = {RequestMethod.POST})
     public String removeRow(Product product, BindingResult bindingResult, HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         product.getFeatures().remove(rowId.intValue());
         return "productCreate";
     }
+
 
 
     //  **************************** DELETE Product ****************************
