@@ -86,8 +86,8 @@
                     </table>
                 </td>
 
-                <td><a href="#" th:href="@{/product/delete/{productId} (productId=${p.id}) }">Delete</a></td>
-                <td><a href="#" th:href="@{/product/edit/{productId} (productId=${p.id}) }">Edit</a></td>
+                <td><a href="#" th:href="@{/product/manage/delete/{productId} (productId=${p.id}) }">Delete</a></td>
+                <td><a href="#" th:href="@{/product/manage/edit/{productId} (productId=${p.id}) }">Edit</a></td>
                 <td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>
 
             </tr>
@@ -98,7 +98,7 @@
 
     <!-- ************************************** Form for creating product ************************************** -->
 
-    <form action="#" th:action="@{/product/create}" th:object="${product}" method="post" enctype="multipart/form-data">
+    <form action="#" th:action="@{/product/manage/create}" th:object="${product}" method="post" enctype="multipart/form-data">
         <fieldset>
 
             <ul th:if="${#fields.hasErrors('*')}" class="errorlist">

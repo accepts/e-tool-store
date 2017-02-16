@@ -20,7 +20,6 @@
 
             <th>Home</th>
             <th>Product</th>
-            <th>ProductCAT</th>
             <th>Register</th>
             <th>Login</th>
             <th>UserManager</th>
@@ -32,8 +31,7 @@
             </div>
 
             <td><a href="#" th:href="@{/home}">Home</a></td>
-            <td><a href="#" th:href="@{/product/create}">ProductDAO</a></td>
-            <td><a href="#" th:href="@{/product/sort/hand_tool}">ProductCAT</a></td>
+            <td><a href="#" th:href="@{/product/manage/create}">ProductDAO</a></td>
             <td><a href="#" th:href="@{/user/register}">Register</a></td>
             <td><a href="#" th:href="@{/login}">Login</a></td>
             <td><a href="#" th:href="@{/user/admin/manager}">UserManager</a></td>
@@ -42,10 +40,27 @@
         </tbody>
     </table>
     <br/>
-
-
-
 </div>
+
+<div th:fragment="productmenu" class="product-menu">
+<table border="2">
+    <tbody>
+    <tr th:each="category : ${allProductCategory}" style="background-color: greenyellow">
+        <td>
+            <a href="#" th:href="@{/product/sort/{category} (category=${category})}"
+               th:text="#{${'product.category.' + category}}">_test_Show!</a>
+        </td>
+    </tr>
+    <tr style="background-color: lime">
+        <td>
+            <a href="#" th:href="@{/product/sort/all}">Show All!</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+</div>
+
 
 </body>
 </html>

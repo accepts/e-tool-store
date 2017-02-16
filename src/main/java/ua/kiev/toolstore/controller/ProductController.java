@@ -59,7 +59,7 @@ public class ProductController {
     //  ---------------------------------------------------------------------------------------
 
 
-    @RequestMapping(value = "/create", method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/manage/create", method = {RequestMethod.GET,RequestMethod.POST})
     public String createProduct(Product product) {
         product.setCondition(ProductCondition.NEW);
         return "productCreate";
@@ -69,7 +69,7 @@ public class ProductController {
     //  **************************** CREATE (+ Edit) Product ****************************
 
 //    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/create", params = {"save"})
+    @RequestMapping(value = "/manage/create", params = {"save"})
     public String saveProduct(Product product, BindingResult bindingResult,
                               ModelMap model) throws IOException, IllegalArgumentException {
 
@@ -116,19 +116,19 @@ public class ProductController {
             model.clear();
         }
 
-        return "redirect:/product/create";
+        return "redirect:/product/manage/create";
     }
 
 
     /*  ----Add + Remove rows in List<features> when CREATE Product ---   */
-    @RequestMapping(value = "/create", params = {"addRow"}, method = {RequestMethod.POST})
+    @RequestMapping(value = "/manage/create", params = {"addRow"}, method = {RequestMethod.POST})
     public String addRow(Product product, BindingResult bindingResult) {
         product.getFeatures().add(new Feature("<Title>", "<Body>", "<Attribute>"));
         LOG.debug("<------Test addRow {}", product.getFeatures());
         return "productCreate";
     }
 
-    @RequestMapping(value = "/create", params = {"removeRow"}, method = {RequestMethod.POST})
+    @RequestMapping(value = "/manage/create", params = {"removeRow"}, method = {RequestMethod.POST})
     public String removeRow(Product product, BindingResult bindingResult, HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         product.getFeatures().remove(rowId.intValue());
@@ -138,7 +138,7 @@ public class ProductController {
 
 
     //  **************************** DELETE Product ****************************
-    @RequestMapping(value = "/delete/{id}")
+    @RequestMapping(value = "/manage/delete/{id}")
     public String deleteProduct(@PathVariable Long id, Product product, ModelMap model) {
         productService.delete(id);
         LOG.debug("<------Delete product with ID: || " + id);
@@ -148,7 +148,7 @@ public class ProductController {
 
 
     //  **************************** EDIT Product ****************************
-    @RequestMapping(value = "/edit/{id}")
+    @RequestMapping(value = "/manage/edit/{id}")
     public String editProduct(@PathVariable Long id, ModelMap model) {
         Product product = productService.findById(id);
         model.addAttribute(product);
@@ -165,14 +165,16 @@ public class ProductController {
     }
 
 
-    // -------------------- Find by Category ---------------------
+    // -------------------- Find Product by Category ---------------------
 
     @RequestMapping(value = "/sort/{category}")
     public String selectByCategory(@PathVariable String category, ModelMap model){
-
-//        if (!Arrays.asList(ProductCategory.ALL_TO_STRING).contains(category.toUpperCase())){
-
-        if (!Arrays.asList(ProductCategory.ALL).contains(ProductCategory.valueOf(category.toUpperCase()))){
+        if ("all".equals(category)){
+            model.addAttribute("productsByCategory", productService.findAll());
+            return "productList";
+        }
+        if (category.trim().isEmpty()
+                || !Arrays.asList(ProductCategory.ALL).contains(ProductCategory.valueOf(category.toUpperCase()))){
             LOG.info("<---PRODUCT (SELECT CATEGORY) ERORR! {} ", category);
             return "home";
         }
@@ -180,18 +182,17 @@ public class ProductController {
         LOG.info("<---PRODUCT (SELECT CATEGORY) OK! {} ", category);
         model.addAttribute("productsByCategory", productService.findByCategory(ProductCategory.forName(category.toUpperCase())));
         return "productList";
-
-
-
-        //ProductCategory.valueOf(category).
-
-/*
-String[] a= {"tube", "are", "fun"};
-Arrays.asList(a).contains("any");
-*/
     }
 
 
+
+
+/*
+ProductCategory.valueOf(category).
++++
+String[] a= {"tube", "are", "fun"};
+Arrays.asList(a).contains("any");
+*/
 
 
 
