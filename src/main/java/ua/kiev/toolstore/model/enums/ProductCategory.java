@@ -11,7 +11,6 @@ public enum ProductCategory {
 
         public static final ProductCategory[] ALL = { ELECTRIC, HYDRAULIC, PNEUMATIC, HAND_TOOL, OTHER };
 
-
         private final String name;
 
 

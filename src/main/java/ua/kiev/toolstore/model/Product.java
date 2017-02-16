@@ -20,8 +20,13 @@ public class Product extends AbstractEntity {
 
     private String description, manufacturer;
 
+    @Enumerated(EnumType.STRING)
     private ProductCategory category;
+
+    @Enumerated(EnumType.STRING)
     private ProductCondition condition;
+
+    @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
     @Column(nullable = false)

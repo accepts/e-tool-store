@@ -1,4 +1,4 @@
-package ua.kiev.toolstore.repository;
+package ua.kiev.toolstore.repository.localrepo;
 
 import ua.kiev.toolstore.model.Product;
 

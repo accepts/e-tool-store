@@ -42,6 +42,19 @@
     <br/>
 </div>
 
+
+    <table border="2">
+        <tbody th:each="category : ${allProductCategory}">
+        <tr style="background-color: greenyellow">
+            <td>
+                <a href="#" th:href="@{/product/sort/{category} (category=${category})}"
+                   th:text="#{${'product.category.' + category}}">_test_Show!</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+
 </div>
 
 

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+<div class="main-content">
+
+    <!-- ************************************** Site menu  ****************************************** -->
+
+    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
+        <table border="2">
+            <tbody>
+            <tr style="background-color: darkturquoise">
+                <th>Test_title_1</th>
+                <th>TestTitle_2</th>
+                <th>reserv</th>
+            </tr>
+            <tr>
+                <td><a href="#">_test_Link1</a></td>
+                <td><a href="#">_test_Link2</a></td>
+                <td>reserv</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br/> <br/>
+    </div>
+
+
+    <div th:unless="${#lists.isEmpty(productsByCategory)}">
+
+        <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
+
+        <table border="1">
+            <thead>
+            <tr style="background-color: dodgerblue">
+                <th>Pic</th>
+                <th>Name</th>
+                <th>description</th>
+                <th>manufact</th>
+                <th>price</th>
+                <th>unit</th>
+
+                <th>condition</th>
+                <th>category</th>
+                <th>status</th>
+
+                <th style="background-color: blueviolet">View</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="p : ${productsByCategory}">
+                <td>
+                    <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 80px" />
+                </td>
+                <td th:text="${{p.name}}">name_product</td>
+                <td th:text="${{p.description}}">description_product</td>
+                <td th:text="${{p.manufacturer}}">product_manufact</td>
+                <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>
+                <td th:text="${{p.unitInStock}}">product_quantity</td>
+
+                <td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>
+                <td th:text="#{|product.category.${p.category}|}">prod_category</td>
+                <td th:text="#{|product.status.${p.status}|}">prod_status</td>
+
+
+                <td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/><br/>
+
+
+
+
+
+
+</div>
+</body>
+</html>

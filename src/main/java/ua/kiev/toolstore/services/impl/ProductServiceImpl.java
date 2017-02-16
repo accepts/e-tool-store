@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ua.kiev.toolstore.model.Product;
+import ua.kiev.toolstore.model.enums.ProductCategory;
 import ua.kiev.toolstore.repository.ProductRepository;
 import ua.kiev.toolstore.services.ProductService;
 import ua.kiev.toolstore.util.FileManager;
@@ -43,5 +44,10 @@ public class ProductServiceImpl implements ProductService {
 
     public String findPictureByProductId(Long id) {
         return repository.findPictureByProductId(id);
+    }
+
+
+    public List<Product> findByCategory(ProductCategory category) {
+        return repository.findByCategory(category);
     }
 }

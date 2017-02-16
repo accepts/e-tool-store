@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" media="all" href="../../resources/css/main.css" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../resources/css/main.css" th:href="@{/css/main.css}"/>
 
 </head>
 <body>
 
 
-
-<div th:fragment="tablecontroller" class="table-controller" >
+<div th:fragment="tablecontroller" class="table-controller">
     <table border="2">
         <tbody>
         <tr style="background-color: darkturquoise">
@@ -21,6 +20,7 @@
 
             <th>Home</th>
             <th>Product</th>
+            <th>ProductCAT</th>
             <th>Register</th>
             <th>Login</th>
             <th>UserManager</th>
@@ -33,6 +33,7 @@
 
             <td><a href="#" th:href="@{/home}">Home</a></td>
             <td><a href="#" th:href="@{/product/create}">ProductDAO</a></td>
+            <td><a href="#" th:href="@{/product/sort/hand_tool}">ProductCAT</a></td>
             <td><a href="#" th:href="@{/user/register}">Register</a></td>
             <td><a href="#" th:href="@{/login}">Login</a></td>
             <td><a href="#" th:href="@{/user/admin/manager}">UserManager</a></td>
@@ -41,13 +42,13 @@
         </tbody>
     </table>
     <br/>
-    <br/>
-</div>
 
+
+
+</div>
 
 </body>
 </html>
-
 
 
 <!--

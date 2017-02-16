@@ -2,7 +2,6 @@ package ua.kiev.toolstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -150,7 +149,7 @@ public class ProductController {
 
     //  **************************** EDIT Product ****************************
     @RequestMapping(value = "/edit/{id}")
-    public String editProduct(@PathVariable Long id, Model model) {
+    public String editProduct(@PathVariable Long id, ModelMap model) {
         Product product = productService.findById(id);
         model.addAttribute(product);
         LOG.debug("<------Edit product {}", product);
@@ -160,10 +159,51 @@ public class ProductController {
 
     //  **************************** VIEW Product ****************************
     @RequestMapping(value = "/view/{id}")
-    public String getProductById(@PathVariable Long id, Model model) {
+    public String getProductById(@PathVariable Long id, ModelMap model) {
         model.addAttribute("productDetailed", productService.findById(id));
         return "productDetail";
     }
+
+
+    // -------------------- Find by Category ---------------------
+
+    @RequestMapping(value = "/sort/{category}")
+    public String selectByCategory(@PathVariable String category, ModelMap model){
+
+//        if (!Arrays.asList(ProductCategory.ALL_TO_STRING).contains(category.toUpperCase())){
+
+        if (!Arrays.asList(ProductCategory.ALL).contains(ProductCategory.valueOf(category.toUpperCase()))){
+            LOG.info("<---PRODUCT (SELECT CATEGORY) ERORR! {} ", category);
+            return "home";
+        }
+
+        LOG.info("<---PRODUCT (SELECT CATEGORY) OK! {} ", category);
+        model.addAttribute("productsByCategory", productService.findByCategory(ProductCategory.forName(category.toUpperCase())));
+        return "productList";
+
+
+
+        //ProductCategory.valueOf(category).
+
+/*
+String[] a= {"tube", "are", "fun"};
+Arrays.asList(a).contains("any");
+*/
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -173,7 +213,8 @@ public class ProductController {
     @ExceptionHandler(IllegalArgumentException.class)
     public String handleClientErrors(Exception e) {
         LOG.warn("<====E==== IllegalArgumentEXCEPTION occur {}" + e.getMessage());
-        return "redirect:/product/create";
+//        return "redirect:/product/create";
+        return "redirect:/home";
     }
 
     @ExceptionHandler(Exception.class)

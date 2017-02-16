@@ -1,6 +1,7 @@
 package ua.kiev.toolstore.services;
 
 import ua.kiev.toolstore.model.Product;
+import ua.kiev.toolstore.model.enums.ProductCategory;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface ProductService {
     void delete(Long id);
 
     String findPictureByProductId(Long id);
+
+    List<Product> findByCategory(ProductCategory category);
 
 }

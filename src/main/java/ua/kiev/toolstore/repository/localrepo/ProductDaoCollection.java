@@ -1,11 +1,10 @@
-package ua.kiev.toolstore.repository.impl;
+package ua.kiev.toolstore.repository.localrepo;
 
 import ua.kiev.toolstore.model.Feature;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.ProductCategory;
 import ua.kiev.toolstore.model.enums.ProductCondition;
 import ua.kiev.toolstore.model.enums.ProductStatus;
-import ua.kiev.toolstore.repository.ProductDao;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
 import java.math.BigDecimal;
