@@ -14,17 +14,15 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     Product findById(Long id);
 
-    //long count();
-
-    //long countByLastName(String lastName);
-
     @Async
     @Query(value = "SELECT p.picture FROM products p WHERE p.id = ?1", nativeQuery = true)
     String findPictureByProductId(Long id);
 
-//    @Query("SELECT p FROM Products p WHERE p.condition = 'title'")
     List<Product> findByCategory(ProductCategory category);
 
 
+
+    //long count();
+    //long countByLastName(String lastName);
 
 }

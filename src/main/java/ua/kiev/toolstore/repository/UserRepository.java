@@ -15,7 +15,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     long countByEmail(String email);
 
     List<User> findAllByOrderByIdAsc();
-//    List<User> findAll();
 
     User findByEmail(String email);
 
@@ -25,4 +24,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     void resetUser(Long id, boolean value);
 
     void delete(Long id);
+
+
+
+    //    List<User> findAll();
 }
