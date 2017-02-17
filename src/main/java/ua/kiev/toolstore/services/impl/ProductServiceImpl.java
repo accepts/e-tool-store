@@ -1,6 +1,9 @@
 package ua.kiev.toolstore.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -17,10 +20,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository repository;
-    //    private ProductDao repository;
 
     @Autowired
     private FileManager fileManager;
+
+    @Value("${product.item.per.page}")
+    private int PAGE_SIZE;
 
 
     public List<Product> findAll() {
@@ -49,5 +54,10 @@ public class ProductServiceImpl implements ProductService {
 
     public List<Product> findByCategory(ProductCategory category) {
         return repository.findByCategory(category);
+    }
+
+    public Page<Product> findAll(Integer pageNumber) {
+        PageRequest request = new PageRequest(pageNumber - 1, PAGE_SIZE);
+        return repository.findAll(request);
     }
 }

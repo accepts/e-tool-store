@@ -1,5 +1,7 @@
 package ua.kiev.toolstore.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.scheduling.annotation.Async;
@@ -11,6 +13,8 @@ import java.util.List;
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
     List<Product> findAll();
+
+    Page<Product> findAll(Pageable pageable);
 
     Product findById(Long id);
 

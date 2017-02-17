@@ -1,5 +1,6 @@
 package ua.kiev.toolstore.services;
 
+import org.springframework.data.domain.Page;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.ProductCategory;
 
@@ -18,5 +19,8 @@ public interface ProductService {
     String findPictureByProductId(Long id);
 
     List<Product> findByCategory(ProductCategory category);
+
+    Page<Product> findAll(Integer pageNumber);
+
 
 }

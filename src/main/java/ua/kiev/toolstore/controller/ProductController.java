@@ -1,6 +1,7 @@
 package ua.kiev.toolstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -184,6 +185,66 @@ public class ProductController {
         return "productList";
     }
 
+
+
+
+
+
+
+
+
+    @RequestMapping(value = "/page/{pageNumber}")
+    public String pageView(@PathVariable Integer pageNumber,ModelMap model){
+
+        Page<Product> productsPages = productService.findAll(pageNumber);
+
+        int current = productsPages.getNumber() + 1;
+        int begin = Math.max(1, current - 2);
+        int end = Math.min(begin + 4, productsPages.getTotalPages());
+
+
+
+
+//        int current = page.getNumber() + 1;
+//        int begin = Math.max(1, current - 5);
+//        int end = Math.min(begin + 10, page.getTotalPages());
+
+        model.addAttribute("productsByCategory", productsPages.getContent())
+        .addAttribute("beginIndex", begin)
+        .addAttribute("endIndex", end)
+        .addAttribute("currentIndex", current);
+
+
+
+
+//        List<Product> productsByCategory = productsPages.getContent();
+//
+//        LOG.info("<---PEGABLE--- Elements: {}" + productsPages.getTotalElements());
+//        LOG.info("<---PEGABLE--- Pages {}" + productsPages.getTotalPages());
+//        LOG.info("<---PEGABLE--- Content: {}", productsByCategory);
+//        model.addAttribute("productsByCategory", productsByCategory);
+
+        return "productListPegable";
+    }
+
+
+
+
+
+
+//    @RequestMapping(value = "/gatall")
+//    public String pegableView(ModelMap model){
+//
+//        Page<Product> members = productService.findAll(new PageRequest(0, 3));
+//        List<Product> productsByCategory = members.getContent();
+//
+//        LOG.info("<---PEGABLE--- Elements: {}" + members.getTotalElements());
+//        LOG.info("<---PEGABLE--- Pages {}" + members.getTotalPages());
+//        LOG.info("<---PEGABLE--- Content: {}", productsByCategory);
+//        model.addAttribute("productsByCategory", productsByCategory);
+//
+//        return "productListPegable";
+//    }
 
 
 
