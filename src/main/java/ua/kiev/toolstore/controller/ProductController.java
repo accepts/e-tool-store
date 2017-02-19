@@ -196,11 +196,11 @@ public class ProductController {
     @RequestMapping(value = "/page/{pageNumber}")
     public String pageView(@PathVariable Integer pageNumber,ModelMap model){
 
-        Page<Product> productsPages = productService.findAll(pageNumber);
+        Page<Product> page = productService.findAll(pageNumber);
 
-        int current = productsPages.getNumber() + 1;
-        int begin = Math.max(1, current - 2);
-        int end = Math.min(begin + 4, productsPages.getTotalPages());
+//        int current = page.getNumber() + 1;
+//        int begin = Math.max(1, current - 2);
+//        int end = Math.min(begin + 4, page.getTotalPages());
 
 
 
@@ -209,10 +209,10 @@ public class ProductController {
 //        int begin = Math.max(1, current - 5);
 //        int end = Math.min(begin + 10, page.getTotalPages());
 
-        model.addAttribute("productsByCategory", productsPages.getContent())
-        .addAttribute("beginIndex", begin)
-        .addAttribute("endIndex", end)
-        .addAttribute("currentIndex", current);
+        model.addAttribute("productsPage", page);
+//        .addAttribute("beginIndex", begin)
+//        .addAttribute("endIndex", end)
+//        .addAttribute("currentIndex", current);
 
 
 
@@ -254,38 +254,6 @@ ProductCategory.valueOf(category).
 String[] a= {"tube", "are", "fun"};
 Arrays.asList(a).contains("any");
 */
-
-
-
-
-
-//    @RequestMapping(value = "/sort/{category}")
-//    public String selectByCategory(@PathVariable String category, ModelMap model){
-//        if ("all".equals(category)){
-//            model.addAttribute("productsByCategory", productService.findAll());
-//            return "productList";
-//        }
-//        if (category.trim().isEmpty()
-//                || !Arrays.asList(ProductCategory.ALL).contains(ProductCategory.valueOf(category.toUpperCase()))){
-//            LOG.info("<---PRODUCT (SELECT CATEGORY) ERORR! {} ", category);
-//            return "home";
-//        }
-//
-//        LOG.info("<---PRODUCT (SELECT CATEGORY) OK! {} ", category);
-//        model.addAttribute("productsByCategory", productService.findByCategory(ProductCategory.forName(category.toUpperCase())));
-//        return "productList";
-//    }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

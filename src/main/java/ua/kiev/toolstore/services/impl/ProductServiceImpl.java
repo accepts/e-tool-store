@@ -57,7 +57,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Page<Product> findAll(Integer pageNumber) {
-        PageRequest request = new PageRequest(pageNumber - 1, PAGE_SIZE);
+//        PageRequest request = new PageRequest(pageNumber - 1, PAGE_SIZE);
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE);
         return repository.findAll(request);
     }
 }

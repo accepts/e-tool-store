@@ -125,5 +125,30 @@ h2{
     color: maroon;
 }
 
+.page-list-container {
+    width:100%;
+    height:100%;
+    text-align:center;
+    font-size:12px;
+    white-space:nowrap;
+    font-style: normal;
+    border: double;
+}
 
+.page-list-container a, u{
+    text-decoration: none;
+}
 
+.button-disabled{
+    color: #cccccc;
+}
+
+.button-active{
+    color: chartreuse;
+    background-color: darkgreen;
+}
+
+/*.button-active  {*/
+    /**/
+    /*color: chartreuse;*/
+/*}*/
