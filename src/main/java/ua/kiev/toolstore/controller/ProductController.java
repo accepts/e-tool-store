@@ -202,28 +202,11 @@ public class ProductController {
 //        int begin = Math.max(1, current - 2);
 //        int end = Math.min(begin + 4, page.getTotalPages());
 
-
-
-
 //        int current = page.getNumber() + 1;
 //        int begin = Math.max(1, current - 5);
 //        int end = Math.min(begin + 10, page.getTotalPages());
 
         model.addAttribute("productsPage", page);
-//        .addAttribute("beginIndex", begin)
-//        .addAttribute("endIndex", end)
-//        .addAttribute("currentIndex", current);
-
-
-
-
-//        List<Product> productsByCategory = productsPages.getContent();
-//
-//        LOG.info("<---PEGABLE--- Elements: {}" + productsPages.getTotalElements());
-//        LOG.info("<---PEGABLE--- Pages {}" + productsPages.getTotalPages());
-//        LOG.info("<---PEGABLE--- Content: {}", productsByCategory);
-//        model.addAttribute("productsByCategory", productsByCategory);
-
         return "productListPegable";
     }
 

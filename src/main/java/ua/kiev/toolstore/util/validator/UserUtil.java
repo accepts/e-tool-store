@@ -1,7 +1,10 @@
 package ua.kiev.toolstore.util.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import ua.kiev.toolstore.model.security.AuthorizedUser;
 import ua.kiev.toolstore.model.security.User;
 import ua.kiev.toolstore.model.security.UserWrapper;
 import ua.kiev.toolstore.services.UserService;
@@ -44,4 +47,14 @@ public class UserUtil {
         return new UserWrapper(user.getId(), user.getName(), user.getEmail(), user.getPassword());
     }
 
+    public Long getUserId() {
+        Long id = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            id = ((AuthorizedUser)principal).id();
+            return id;
+        } else {
+            return null;
+        }
+    }
 }

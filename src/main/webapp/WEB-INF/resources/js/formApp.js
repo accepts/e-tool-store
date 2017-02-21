@@ -5,10 +5,7 @@ angular.module('myApp', [])
             $log.log('<----START Sending data to Server! ');
             console.log('Form is submitted with following user', self.user);
         };
-
-
-    }]);
-
+}]);
 
 
 

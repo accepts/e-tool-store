@@ -9,7 +9,7 @@
 <body>
 <div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
-<div class="main-content">
+<div class="main-content" ng-app="orderApp" >
 
     <!-- ************************************** Site menu  ****************************************** -->
 
@@ -52,12 +52,11 @@
                 <th>manufact</th>
                 <th>price</th>
                 <th>unit</th>
-
                 <th>condition</th>
                 <th>category</th>
                 <th>status</th>
-
                 <th style="background-color: blueviolet">View</th>
+
                 <th>ADD</th>
             </tr>
             </thead>
@@ -72,15 +71,32 @@
                 <td th:text="${{p.manufacturer}}">product_manufact</td>
                 <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>
                 <td th:text="${{p.unitInStock}}">product_quantity</td>
-
                 <td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>
                 <td th:text="#{|product.category.${p.category}|}">prod_category</td>
                 <td th:text="#{|product.status.${p.status}|}">prod_status</td>
-
-
                 <td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>
 
-                <td></td>
+                <div sec:authorize="isAuthenticated()" ng-controller="orderCtrl as ctrl">
+                    <td>
+                        <!--<a href="#"-->
+                           <!--th:href="@{/order/add/{productId} (productId=${p.id})}"-->
+                           <!--class="button-buy">Buy!</a>        -->
+
+                        <a href="#"
+                           th:attr="ng-click='addToCart('+ ${p.id} +')'"
+                           class="button-buy">Buy!</a>
+
+                    </td>
+                </div>
+
+                <div sec:authorize="isAnonymous()">
+                    <td>
+                        <a href="#"
+                           th:href="@{/login}"
+                           class="button-sign-in">SignIN!</a>
+                    </td>
+                </div>
+
             </tr>
             </tbody>
         </table>
@@ -139,9 +155,6 @@
         </span>
     </span>
 
-
-
-
         <!-- Next + Last arrows -->
     <span >
         <span th:if="${productsPage.hasNext()}">
@@ -161,21 +174,6 @@
         </span>
     </span>
     </div>
-
-
-
-
-
-
-    <h2>~~~~~~~~~~~~~~~~  LIST of ALL PAGES  ~~~~~~~~~~~~~~</h2>
-
-
-
-
-
-
-
-
 
 </div>
 </body>

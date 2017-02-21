@@ -70,6 +70,24 @@ ul.errorlist li, p.errorlist {
     border: 1px solid #333333;
 }
 
+.button-sign-in{
+    font: bold 12px Arial;
+    text-decoration: none;
+    background-color: #cccccc;
+    color: black;
+    padding: 2px 6px 2px 6px;
+    border: 1px solid #333333;
+}
+
+.button-buy{
+    font: bold 12px Arial;
+    text-decoration: none;
+    background-color: #99cc33;
+    color: aliceblue;
+    padding: 2px 6px 2px 6px;
+    border: 1px solid #333333;
+}
+
 
 /*------------  Angular preValidation  ----------------  */
 
@@ -144,8 +162,8 @@ h2{
 }
 
 .button-active{
-    color: chartreuse;
-    background-color: darkgreen;
+    color: #f0f0f0;
+    background-color: royalblue;
 }
 
 /*.button-active  {*/
