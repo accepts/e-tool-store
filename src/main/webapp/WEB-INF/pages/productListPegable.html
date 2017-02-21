@@ -32,11 +32,8 @@
         <br/> <br/>
     </div>
 
-    <!--<div th:replace="template/menu :: productmenu" class="product-menu" ></div>-->
 
 <h1>~~~~~~~~~~~~~~~~  PEGABLE  ~~~~~~~~~~~~~~</h1>
-
-    <!--<td><a href="#" th:href="@{/product/gatall?page=0&size=3}">PAGABLE_GET!</a></td>-->
 
 
     <div th:unless="${#lists.isEmpty(productsPage)}" ng-app="orderApp">
@@ -78,14 +75,9 @@
 
                 <div sec:authorize="isAuthenticated()" >
                     <td>
-                        <!--<a href="#"-->
-                           <!--th:href="@{/order/add/{productId} (productId=${p.id})}"-->
-                           <!--class="button-buy">Buy!</a>        -->
-
                         <a href="#"
                            th:attr="ng-click='addToCart('+ ${p.id} +')'"
                            class="button-buy">Buy!</a>
-
                     </td>
                 </div>
 
@@ -115,9 +107,6 @@
     <strong>isLast(): </strong>      <span th:text="${productsPage.isLast()}">_test_</span><br/>
     <strong>hasNext(): </strong>      <span th:text="${productsPage.hasNext()}">_test_</span><br/>
     <strong>hasPrevious(): </strong>      <span th:text="${productsPage.hasPrevious()}">_test_</span><br/>
-
-
-
 
 
     <h2>~~~~~~~~~~~~~~~~  PAGE value list  ~~~~~~~~~~~~~~</h2>

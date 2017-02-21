@@ -13,6 +13,7 @@
     </script>
 
 </head>
+
 <body>
 <div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
@@ -53,13 +54,6 @@
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
             </ul>
 
-            <!--<div class='msg-block' ng-show='myForm.$error'>-->
-                    <!--<span class='msg-error' ng-show='myForm.password-confirm.$error.pwmatch'>-->
-                            <!--Passwords don't match.-->
-                    <!--</span>-->
-            <!--</div>-->
-
-
             <!-- **************** USER system fields block (name, email, password )*********************** -->
 
             <fieldset>
@@ -78,12 +72,7 @@
                     <span ng-show="myForm.$dirty && myForm.uname.$error.minlength">Minimum length required is 4</span>
                     <span ng-show="myForm.$dirty && myForm.uname.$invalid">This field is invalid </span><br/><br/>
                 </div>
-                <!--<div>-->
-                <!--<label for="name">-->
-                <!--<span th:text="#{user.nickname}">_test_nick-Name_</span>-->
-                <!--</label>-->
-                <!--<input type="text" th:field="*{name}" id="name" th:errorclass="fieldError"/>-->
-                <!--</div>-->
+
 
                 <div>
                     <label for="email">
