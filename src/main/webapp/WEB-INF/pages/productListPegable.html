@@ -9,7 +9,7 @@
 <body>
 <div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
-<div class="main-content" ng-app="orderApp" >
+<div class="main-content"  >
 
     <!-- ************************************** Site menu  ****************************************** -->
 
@@ -39,7 +39,7 @@
     <!--<td><a href="#" th:href="@{/product/gatall?page=0&size=3}">PAGABLE_GET!</a></td>-->
 
 
-    <div th:unless="${#lists.isEmpty(productsPage)}">
+    <div th:unless="${#lists.isEmpty(productsPage)}" ng-app="orderApp">
 
         <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
@@ -61,7 +61,7 @@
             </tr>
             </thead>
 
-            <tbody>
+            <tbody ng-controller="orderCtrl">
             <tr th:each="p : ${productsPage.content}">
                 <td>
                     <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 80px" />
@@ -76,7 +76,7 @@
                 <td th:text="#{|product.status.${p.status}|}">prod_status</td>
                 <td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>
 
-                <div sec:authorize="isAuthenticated()" ng-controller="orderCtrl as ctrl">
+                <div sec:authorize="isAuthenticated()" >
                     <td>
                         <!--<a href="#"-->
                            <!--th:href="@{/order/add/{productId} (productId=${p.id})}"-->

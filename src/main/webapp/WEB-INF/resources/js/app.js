@@ -1,5 +1,6 @@
 'use strict';
-var App = angular.module('myApp',[]);
+var myApp = angular.module('myApp',[]);
+var orderApp = angular.module('orderApp',[]);
 
 
 
