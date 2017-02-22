@@ -21,9 +21,9 @@
 <p th:if="${loginError}" class="errorlist" th:text="${loginError}">_temp_Wrong_e-mail_or_password!_ </p>
 <br/>
 <form th:action="@{/login}" method="post">
-    <label for="username">Email: </label>:
+    <label for="username">Email </label>:
     <input type="text" id="username" name="username" autofocus="autofocus"/> <br />
-    <label for="password">Password: </label>:
+    <label for="password">Password </label>:
     <input type="password" id="password" name="password" /> <br />
     <input type="submit" value="Login" />
 </form>

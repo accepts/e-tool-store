@@ -24,13 +24,13 @@ public class PhotoController {
 
     @RequestMapping(value = "/photo/{id}", method = RequestMethod.GET)
     public ResponseEntity<InputStreamResource> getImage(@PathVariable Long id) throws IOException {
-        LOG.info("<---GET PHOTO {}" + id);
+//        LOG.info("<---GET PHOTO {}" + id);
         long fileLength = fileManager.getFileLength(id);
-        LOG.info("<---GET PHOTO (fileLength): {}" + fileLength);
+//        LOG.info("<---GET PHOTO (fileLength): {}" + fileLength);
         String contentType = fileManager.getContentType(id);
-        LOG.info("<---GET PHOTO (contentType): {}" + contentType);
+//        LOG.info("<---GET PHOTO (contentType): {}" + contentType);
         InputStreamResource resource = fileManager.getFileBody(id);
-        LOG.info("<---Retrieve image from PostgreSQL and  HDD {}" + id);
+//        LOG.info("<---Retrieve image from PostgreSQL and  HDD {}" + id);
 
         return ResponseEntity.ok()
                 .contentLength(fileLength)

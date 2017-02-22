@@ -53,21 +53,21 @@ public class FileManager {
             contentType = "application/octet-stream";
         }
 
-        LOG.debug("<---getContentType  {} : " + "(File ID): " + id + "(File contentType): " + contentType);
+//        LOG.debug("<---getContentType  {} : " + "(File ID): " + id + "(File contentType): " + contentType);
         return contentType;
     }
 
 
     public long getFileLength(Long id){
         File file = new File(storageFolder + productService.findPictureByProductId(id));
-        LOG.debug("<---getFileLength  {} : " + "(File ID): " + id + "(File length): " + file.length());
+//        LOG.debug("<---getFileLength  {} : " + "(File ID): " + id + "(File length): " + file.length());
         return file.length();
 
     }
 
 
     public InputStreamResource getFileBody(Long id) throws IOException {
-        LOG.debug("<---getFileBody {}" + id);
+//        LOG.debug("<---getFileBody {}" + id);
         File file = new File(storageFolder + productService.findPictureByProductId(id));
         return new InputStreamResource( FileUtils.openInputStream(file));
     }
@@ -77,7 +77,7 @@ public class FileManager {
 
     public boolean deleteFile(Long id){
         File file = new File(storageFolder + productService.findPictureByProductId(id));
-        LOG.debug("<---Deleting file from HDD {}:" + file);
+//        LOG.debug("<---Deleting file from HDD {}:" + file);
         return file.delete();
     }
 
