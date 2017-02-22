@@ -22,13 +22,17 @@ public class OrderController {
     @RequestMapping(value = "/add/{productId}", method = RequestMethod.PUT)
     public void addProductToOrder(@PathVariable Long productId){
 
-        Long userId = userUtil.getUserId();
-        if (userId == null){
-            LOG.debug("<===REST---User is NOT LogIN");
-//            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-        }
-        LOG.debug("<<===REST---(Add product to Cart) where product ID: (" + productId + ") and UserID: (" + userId + ")");
-//        return new ResponseEntity<Void>(HttpStatus.OK);
+
+
+
+//        Long userId = userUtil.getUserId();
+//        if (userId == null){
+//            LOG.debug("<===REST---User is NOT LogIN");
+//        }
+//        LOG.debug("<<===REST---(Add product to Cart) where product ID: (" + productId + ") and UserID: (" + userId + ")");
+//
+
+
     }
 
 

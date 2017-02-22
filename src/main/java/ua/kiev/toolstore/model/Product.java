@@ -44,13 +44,6 @@ public class Product extends AbstractEntity {
     private String picture;
 
 
-
-//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JsonIgnore
-//    private List<CartItem> cartItemList;
-
-
-
     //-------------------- Constructors  ------------------------------------------
 
     public Product() {
