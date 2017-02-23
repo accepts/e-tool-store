@@ -20,15 +20,10 @@ public class OrderController {
 
 
 
-    @RequestMapping(value = "DELETEEEEEE/add/{productId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/add/{productId}", method = RequestMethod.PUT)
     public void addProductToOrder(@PathVariable Long productId){
-
-//        Order order = orderService.getActiveOrder();
-//        LOG.debug("<===REST---getActiveOrder|| userID: (" + order.getUser().getId()
-//                + ") and status (" + order.getOrderStatus() + ")");
-
         orderService.save(productId);
-
+        LOG.debug("<--- Order Saved to DB");
     }
 
 
