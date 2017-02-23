@@ -10,10 +10,6 @@ public class AbstractEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    @Column(nullable = true)
-
-
-
     public Long getId() {
         return id;
     }

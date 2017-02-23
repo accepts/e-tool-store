@@ -1,5 +1,6 @@
 package ua.kiev.toolstore.model.security;
 
+import ua.kiev.toolstore.model.AbstractEntity;
 import ua.kiev.toolstore.model.Address;
 import ua.kiev.toolstore.model.enums.Role;
 

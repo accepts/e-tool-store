@@ -55,6 +55,7 @@
                 <th style="background-color: blueviolet">View</th>
 
                 <th>ADD</th>
+                <th>ADD-dummy</th>
             </tr>
             </thead>
 
@@ -88,6 +89,9 @@
                            class="button-sign-in">SignIN!</a>
                     </td>
                 </div>
+
+                <td><a href="#" th:href="@{/order/add/dummy/{productId} (productId=${p.id}) }">ADD!</a></td>
+
 
             </tr>
             </tbody>

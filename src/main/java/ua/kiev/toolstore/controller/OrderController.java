@@ -20,7 +20,7 @@ public class OrderController {
 
 
 
-    @RequestMapping(value = "/add/{productId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "DELETEEEEEE/add/{productId}", method = RequestMethod.PUT)
     public void addProductToOrder(@PathVariable Long productId){
 
 //        Order order = orderService.getActiveOrder();
