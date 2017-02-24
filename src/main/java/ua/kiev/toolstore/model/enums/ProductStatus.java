@@ -2,6 +2,7 @@ package ua.kiev.toolstore.model.enums;
 
 public enum ProductStatus {
 
+    // TODO LOCK - ACTIVE
     IN_STOCK("IN_STOCK"),
     OUT_OF_STOCK("OUT_OF_STOCK"),
     SEVERAL_LEFT("SEVERAL_LEFT");

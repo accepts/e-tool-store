@@ -25,6 +25,7 @@
             <th>UserManager</th>
             <th>reserv</th>
             <th>PAGABLE</th>
+            <th>Order</th>
         </tr>
         <tr>
             <div sec:authorize="isAuthenticated()">
@@ -38,6 +39,7 @@
             <td><a href="#" th:href="@{/user/admin/manager}">UserManager</a></td>
             <td>reserv</td>
             <td><a href="#" th:href="@{/product/page/0}">PAGABLE</a></td>
+            <td><a href="#" th:href="@{/order/detail}">ORDER</a></td>
             <!--?page=0&size=3-->
         </tr>
         </tbody>

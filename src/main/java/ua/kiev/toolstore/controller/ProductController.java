@@ -167,7 +167,6 @@ public class ProductController {
 
 
     // -------------------- Find Product by Category ---------------------
-
     @RequestMapping(value = "/sort/{category}")
     public String selectByCategory(@PathVariable String category, ModelMap model){
         if ("all".equals(category)){
@@ -193,6 +192,9 @@ public class ProductController {
 
 
 
+
+
+    //TODO organize this PAGEBLE method
     @RequestMapping(value = "/page/{pageNumber}")
     public String pageView(@PathVariable Integer pageNumber,ModelMap model){
 
@@ -209,25 +211,6 @@ public class ProductController {
         model.addAttribute("productsPage", page);
         return "productListPegable";
     }
-
-
-
-
-
-
-//    @RequestMapping(value = "/gatall")
-//    public String pegableView(ModelMap model){
-//
-//        Page<Product> members = productService.findAll(new PageRequest(0, 3));
-//        List<Product> productsByCategory = members.getContent();
-//
-//        LOG.info("<---PEGABLE--- Elements: {}" + members.getTotalElements());
-//        LOG.info("<---PEGABLE--- Pages {}" + members.getTotalPages());
-//        LOG.info("<---PEGABLE--- Content: {}", productsByCategory);
-//        model.addAttribute("productsByCategory", productsByCategory);
-//
-//        return "productListPegable";
-//    }
 
 
 

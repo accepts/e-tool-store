@@ -17,6 +17,7 @@ public interface OrderService {
 
     void changeStatus(Long orderId, OrderStatus orderStatus);
 
+    Order getActiveOrder();
 
     // ==================== LineItem Repository =============================
 

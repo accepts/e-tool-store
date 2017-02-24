@@ -2,7 +2,6 @@ package ua.kiev.toolstore.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import ua.kiev.toolstore.model.LineItem;
 import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.model.enums.OrderStatus;
@@ -22,7 +21,7 @@ public class OrderServiceImpl implements OrderService {
     protected static final LoggerWrapper LOG = LoggerWrapper.get(OrderServiceImpl.class);
 
     @Autowired
-    private OrderRepository repository;
+    private OrderRepository orderRepository;
 
     @Autowired
     private UserUtil userUtil;
@@ -38,37 +37,60 @@ public class OrderServiceImpl implements OrderService {
 
 
     public void save(Long productId) {
-        Order order = repository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE);
+//        Order order = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE);
+//
+//        if (order == null){
+//            order = new Order(userRepository.findById(userUtil.getUserId()));
+//            LOG.debug("<--Order is NULL!!!, creating new order");
+//        }
 
-        if (order == null){
-            order = new Order(userRepository.findById(userUtil.getUserId()));
-            LOG.debug("<--Order is NULL!!!, creating new order");
-        }
-
+        Order order = getActiveOrder();
         order.addItem(new LineItem(productRepository.findById(productId)));
-        LOG.debug("<---REPO START SAVING TO REPO! ");
-        repository.save(order);
+        orderRepository.save(order);
         LOG.debug("<--REPO end saving to repo! ");
     }
 
 
     public Order findById(Long id) {
-        return repository.findById(id);
+        return orderRepository.findById(id);
     }
 
 
     public void delete(Long id) {
-        repository.delete(id);
+        orderRepository.delete(id);
     }
 
-
+    // Find ALL ORDERS of ALL USERS with required STATUS
     public List<Order> findByOrderStatus(OrderStatus orderStatus) {
-        return repository.findByOrderStatus(orderStatus);
+        return orderRepository.findByOrderStatus(orderStatus);
+    }
+
+    //Change ORDER status of particular USER
+    public void changeStatus(Long orderId, OrderStatus orderStatus) {
+        orderRepository.changeStatus(orderId, orderStatus.toString());
     }
 
 
-    public void changeStatus(Long orderId, OrderStatus orderStatus) {
-        repository.changeStatus(orderId, orderStatus.toString());
+    public Order getActiveOrder() {
+        Order order = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE);
+        if (order == null){
+            LOG.debug("<===ORDER=== is NULL!!!, creating new order");
+            order = new Order(userRepository.findById(userUtil.getUserId()));
+            orderRepository.save(order);
+            order = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE);
+        }
+        return order;
+    }
+
+
+    //TODO check
+    private Long getActiveOrderId(){
+        Long activeOrderID = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE).getId();
+//        Assert.notNull(activeOrderID, "ACTIVE orderId is NULL, ORDER does not exist");
+        if (activeOrderID == null){
+            activeOrderID = getActiveOrder().getId();
+        }
+        return activeOrderID;
     }
 
 
@@ -114,10 +136,6 @@ public class OrderServiceImpl implements OrderService {
 
     //----------------- Additional methods ------------------------------
 
-    private Long getActiveOrderId(){
-        Long activeOrderID = repository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE).getId();
-        Assert.notNull(activeOrderID, "ACTIVE orderId is NULL, ORDER does not exist");
-        return activeOrderID;
-    }
+
 
 }

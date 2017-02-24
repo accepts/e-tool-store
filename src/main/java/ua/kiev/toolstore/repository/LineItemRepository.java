@@ -5,10 +5,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.scheduling.annotation.Async;
 import ua.kiev.toolstore.model.LineItem;
 
+import java.util.List;
+
 public interface LineItemRepository extends CrudRepository<LineItem, Long> {
 
     LineItem findById(Long id);
 
+    //TODO find all items by orderId
+//    List<LineItem> findByOrderId(Long orderId);
 
     // Calculate sum all item's
     @Async
