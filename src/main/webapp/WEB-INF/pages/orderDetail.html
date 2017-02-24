@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+
+<div class="main-content">
+    <h2> CART detail items</h2>
+    <h2 th:text="#{testing.test.message}">_test_text_</h2>
+
+    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
+        <table border="2">
+            <tbody>
+            <tr style="background-color: cornflowerblue">
+                <th>Home</th>
+            </tr>
+            <tr>
+                <td><a href="#" >Home</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <br/>
+    </div>
+
+    <div th:replace="template/menu :: productmenu" class="product-menu" ></div>
+
+
+<h2>ORDER ITEMS</h2>
+
+<p>------------------------------------------------</p>
+    <p>
+        Active order status: <span th:text="${activeOrder.orderStatus}">_test_order_status_</span>
+    </p>
+    <p>
+        Shipping Address: <span th:text="${activeOrder.address.country}">_test_country_</span>
+    </p>
+    <p>
+        Total elements in List(lineItems): <span th:text="${#lists.size(activeOrder.lineItems)} ">_test_country_</span>
+    </p>
+    <br/>
+
+    <p>
+       <div th:if="${#lists.isEmpty(activeOrder.lineItems)} ">
+           <p>You order is EMPTY!</p>
+       </div>
+
+
+        <div th:if="${#lists.size(activeOrder.lineItems) > 0} ">
+            ---------------------- List of items ---------------------
+            <br/>
+            <table border="1">
+                <tr style="background-color: cornflowerblue">
+                    <th>photo</th>
+                    <th>name</th>
+                    <th>manufacturer</th>
+                    <th>category</th>
+                    <th>amount</th>
+                    <th>price</th>
+                    <th>Delete</th>
+                </tr>
+                <tr th:each="item : ${activeOrder.lineItems}">
+                    <td>
+                    <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}" style="width: 40px" />
+                    </td>
+                    <td th:text="${item.product.name}">Drill</td>
+                    <td th:text="${item.product.manufacturer}">DUSS</td>
+                    <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
+                    <td th:text="${item.amount}">amount</td>
+                    <td th:text="${item.product.price} + ' $' ">50</td>
+                    <td><a href="#" th:href="@{/order/item/delete/{itemId} (itemId=${item.id}) }" class="button-lock">Delete</a></td>
+
+                </tr>
+                <tr >
+                   <td colspan="4">Total amount and SUM of Order: </td>
+                    <td>
+                        <span th:text="${activeOrder.getItemsAmount()}" style="color: darkgreen; font-size: 14px" >4</span>
+                    </td>
+                    <td>
+                        <span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id}) }" class="button-delete">Clear Order</a>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </p>
+
+
+
+    <!--<table border="1">-->
+        <!--<thead>-->
+        <!--<tr style="background-color: dodgerblue">-->
+            <!--<th>Pic</th>-->
+            <!--<th>Name</th>-->
+            <!--<th>description</th>-->
+            <!--<th>manufact</th>-->
+            <!--<th>price</th>-->
+            <!--<th>unit</th>-->
+
+            <!--<th>condition</th>-->
+            <!--<th>category</th>-->
+            <!--<th>status</th>-->
+
+            <!--<th style="background-color: blueviolet">View</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+
+        <!--<tbody>-->
+        <!--<tr th:each="p : ${activeOrder.lineItems}">-->
+            <!--<td>-->
+                <!--<img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 80px" />-->
+            <!--</td>-->
+            <!--<td th:text="${{p.name}}">name_product</td>-->
+            <!--<td th:text="${{p.description}}">description_product</td>-->
+            <!--<td th:text="${{p.manufacturer}}">product_manufact</td>-->
+            <!--<td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>-->
+            <!--<td th:text="${{p.unitInStock}}">product_quantity</td>-->
+
+            <!--<td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>-->
+            <!--<td th:text="#{|product.category.${p.category}|}">prod_category</td>-->
+            <!--<td th:text="#{|product.status.${p.status}|}">prod_status</td>-->
+
+
+            <!--<td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>-->
+
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
+
+
+
+
+<p>------------------------------------------------</p>
+
+</div>
+<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+</body>
+</html>

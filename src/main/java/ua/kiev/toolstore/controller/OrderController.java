@@ -45,6 +45,24 @@ public class OrderController {
         return "orderDetail";
     }
 
+    //TODO Angular
+    //-----------Delete ITEM from ORDER
+    @RequestMapping(value = "/item/delete/{itemId}")
+    public String deleteItem(@PathVariable Long itemId){
+        orderService.deleteLineItem(itemId);
+        return "redirect:/order/detail";
+    }
+
+    //TODO Angular
+    //----------Clear all ITEM of active ORDER
+    @RequestMapping(value = "/clear/{orderId}")
+    public String clearOrder(@PathVariable Long orderId){
+        orderService.clearOrder(orderId);
+        return "redirect:/order/detail";
+    }
+
+
+
 
 
 }

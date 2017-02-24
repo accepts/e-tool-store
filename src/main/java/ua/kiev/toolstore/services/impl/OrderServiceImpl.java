@@ -134,8 +134,4 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    //----------------- Additional methods ------------------------------
-
-
-
 }

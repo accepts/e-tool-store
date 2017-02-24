@@ -1,8 +1,10 @@
 package ua.kiev.toolstore.repository;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.toolstore.model.LineItem;
 
 import java.util.List;
@@ -10,9 +12,6 @@ import java.util.List;
 public interface LineItemRepository extends CrudRepository<LineItem, Long> {
 
     LineItem findById(Long id);
-
-    //TODO find all items by orderId
-//    List<LineItem> findByOrderId(Long orderId);
 
     // Calculate sum all item's
     @Async
@@ -27,6 +26,8 @@ public interface LineItemRepository extends CrudRepository<LineItem, Long> {
 
 
     // Delete all LineItem of particular Order
+    @Transactional
+    @Modifying
     @Query(value = "DELETE FROM lineitem li WHERE li.order_id = ?1", nativeQuery = true)
     void clearOrder(Long orderId);
 

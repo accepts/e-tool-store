@@ -49,12 +49,22 @@ public class Order extends AbstractEntity {
     }
 
 
-    public BigDecimal getTotal() {
-
+    public BigDecimal getSumOfItems() {
         BigDecimal total = BigDecimal.ZERO;
 
         for (LineItem item : lineItems) {
             total = total.add(item.getTotal());
+        }
+
+        return total;
+    }
+
+
+    public int getItemsAmount(){
+        int total = 0;
+
+        for (LineItem item : lineItems) {
+            total = total + item.getAmount();
         }
 
         return total;
