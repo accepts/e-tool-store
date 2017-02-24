@@ -5,8 +5,8 @@ import ua.kiev.toolstore.model.security.User;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -17,7 +17,7 @@ public class Order extends AbstractEntity {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
-    private Set<LineItem> lineItems = new HashSet<LineItem>();
+    private List<LineItem> lineItems = new ArrayList<LineItem>();
 
 
     @ManyToOne
@@ -71,11 +71,11 @@ public class Order extends AbstractEntity {
         this.user = user;
     }
 
-    public Set<LineItem> getLineItems() {
+    public List<LineItem> getLineItems() {
         return lineItems;
     }
 
-    public void setLineItems(Set<LineItem> lineItems) {
+    public void setLineItems(List<LineItem> lineItems) {
         this.lineItems = lineItems;
     }
 
