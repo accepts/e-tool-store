@@ -29,12 +29,14 @@ public class ProductServiceImpl implements ProductService {
 
 
     public List<Product> findAll() {
-        return repository.findAll();
+        return repository.findAllByOrderByIdAsc();
     }
+
 
     public Product findById(Long id) {
         return repository.findById(id);
     }
+
 
     public void save(Product product) {
         repository.save(product);
@@ -56,9 +58,15 @@ public class ProductServiceImpl implements ProductService {
         return repository.findByCategory(category);
     }
 
+
     public Page<Product> findAll(Integer pageNumber) {
-//        PageRequest request = new PageRequest(pageNumber - 1, PAGE_SIZE);
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE);
-        return repository.findAll(request);
+        return repository.findAllByOrderByIdAsc(request);
     }
+
+
+    public void setUnitInStock(Long id, int unitInStock) {
+        repository.setUnitInStock(id, unitInStock);
+    }
+
 }

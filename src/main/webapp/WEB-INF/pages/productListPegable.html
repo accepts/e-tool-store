@@ -75,18 +75,28 @@
                 <td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>
 
                 <div sec:authorize="isAuthenticated()" >
-                    <td>
+                    <div th:if="${p.unitInStock} < 1">
+                        <td>
                         <a href="#"
-                           th:attr="ng-click='addToCart('+ ${p.id} +')'"
-                           class="button-buy">Buy!</a>
-                    </td>
+                           class="button-buy-locked">Out of stock</a>
+                        </td>
+                    </div>
+
+                    <div th:if="${p.unitInStock} > 0">
+                        <td>
+                            <a href="#"
+                               th:attr="ng-click='addToCart('+ ${p.id} +')'"
+                               class="button-buy-active">Buy!</a>
+                        </td>
+                    </div>
                 </div>
+
 
                 <div sec:authorize="isAnonymous()">
                     <td>
                         <a href="#"
                            th:href="@{/login}"
-                           class="button-sign-in">SignIN!</a>
+                           class="button-buy-locked">SignIN!</a>
                     </td>
                 </div>
 

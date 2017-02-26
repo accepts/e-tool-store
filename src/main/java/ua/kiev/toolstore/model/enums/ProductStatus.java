@@ -2,12 +2,13 @@ package ua.kiev.toolstore.model.enums;
 
 public enum ProductStatus {
 
-    // TODO LOCK - ACTIVE
-    IN_STOCK("IN_STOCK"),
-    OUT_OF_STOCK("OUT_OF_STOCK"),
-    SEVERAL_LEFT("SEVERAL_LEFT");
+    ACTIVE("ACTIVE"),
+    LOCKED("LOCKED"),
+    SPECIAL("SPECIAL"),
+    FRESH("FRESH"),
+    OBSOLETE("OBSOLETE");
 
-    public static final ProductStatus[] ALL = {IN_STOCK, OUT_OF_STOCK, SEVERAL_LEFT};
+    public static final ProductStatus[] ALL = {ACTIVE, LOCKED, SPECIAL, FRESH, OBSOLETE };
 
     private final String name;
 
@@ -15,12 +16,16 @@ public enum ProductStatus {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null for type");
         }
-        if (name.toUpperCase().equals("IN_STOCK")) {
-            return IN_STOCK;
-        } else if (name.toUpperCase().equals("OUT_OF_STOCK")) {
-            return OUT_OF_STOCK;
-        }else if (name.toUpperCase().equals("SEVERAL_LEFT")) {
-            return SEVERAL_LEFT;
+        if (name.toUpperCase().equals("ACTIVE")) {
+            return ACTIVE;
+        } else if (name.toUpperCase().equals("LOCKED")) {
+            return LOCKED;
+        }else if (name.toUpperCase().equals("SPECIAL")) {
+            return SPECIAL;
+        }else if (name.toUpperCase().equals("FRESH")) {
+            return FRESH;
+        }else if (name.toUpperCase().equals("OBSOLETE")) {
+            return OBSOLETE;
         }
         throw new IllegalArgumentException("Name \"" + name + "\" does not correspond to any ProductStatus");
     }

@@ -24,7 +24,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping(value = "/add/{productId}", method = RequestMethod.PUT)
     public void addProductToOrder(@PathVariable Long productId){
-        orderService.save(productId);
+        orderService.add(productId);
         LOG.debug("<--- Order Saved to DB");
     }
 
@@ -33,7 +33,7 @@ public class OrderController {
     @RequestMapping(value = "/add/dummy/{productId}")
     public String addProductToOrderDummy(@PathVariable Long productId){
         LOG.debug("<---ORDER-SERV-CONTROLLER ---- START...");
-        orderService.save(productId);
+        orderService.add(productId);
         LOG.debug("<---ORDER-SERV-CONTROLLER ---- END!");
         return "redirect:/home";
     }

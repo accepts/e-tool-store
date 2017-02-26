@@ -9,7 +9,7 @@ public interface OrderService {
 
     Order findById(Long id);
 
-    void save(Long productId);
+    void add(Long productId);
 
     void delete(Long id);
 

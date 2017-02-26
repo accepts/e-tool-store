@@ -22,5 +22,6 @@ public interface ProductService {
 
     Page<Product> findAll(Integer pageNumber);
 
+    void setUnitInStock(Long id, int unitInStock);
 
 }

@@ -70,7 +70,7 @@ ul.errorlist li, p.errorlist {
     border: 1px solid #333333;
 }
 
-.button-sign-in{
+.button-buy-locked{
     font: bold 12px Arial;
     text-decoration: none;
     background-color: #cccccc;
@@ -79,7 +79,7 @@ ul.errorlist li, p.errorlist {
     border: 1px solid #333333;
 }
 
-.button-buy{
+.button-buy-active{
     font: bold 12px Arial;
     text-decoration: none;
     background-color: #99cc33;
