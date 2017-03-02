@@ -3,12 +3,17 @@ package ua.kiev.toolstore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ua.kiev.toolstore.model.Address;
+import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.services.OrderService;
 import ua.kiev.toolstore.util.LoggerWrapper;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -63,15 +68,57 @@ public class OrderController {
 
 
 
-    //TODO DELETE dummy
-    @RequestMapping(value = "/confirm")
-    public String confirmOrder(){
-        long cartId = 55L;
-        return "redirect:/confirmOrder?cartId=" + cartId;
+
+    // ===================== Confirm ORDER ===========================
+
+    @RequestMapping(value = "/confirm/address")
+    public String confirmOrder(ModelMap model){
+        Address address = orderService.getActiveOrder().getAddress();
+        model.addAttribute("address", address);
+        return "orderConfirmAddress";
+    }
+
+    @RequestMapping(value = "/confirm/address", method = RequestMethod.POST, params = {"save"})
+    public String confirmOrdersAddress(Address address, BindingResult bindingResult,
+                                       ModelMap model){
+        LOG.debug("<===ORDER ADDRESS INFO!!!==== {}", address);
+        Order order = orderService.getActiveOrder();
+        order.setAddress(address);
+        //TODO save address to REPO or redirect Address to orderConfirmComment HOWTO do it ?
+        return "redirect:/order/confirm/address";
     }
 
 
+    @RequestMapping(value = "/confirm/comment")
+    public String confirmOrderComment(ModelMap model){
+        String commentToOrder = "<Enter your comment to order>";
+        model.addAttribute("commentToOrder", commentToOrder);
+        return "orderConfirmComment";
+    }
 
+
+    @RequestMapping(value = "/confirm/comment", method = RequestMethod.POST, params = {"saveComment"})
+    public String confirmOrderComment(ModelMap model, HttpServletRequest req){
+        String comment = String.valueOf(req.getParameter("commentToOrder"));
+        if (comment.trim().isEmpty()){
+            //DON'T SAVE comment
+            LOG.debug("<<===COMMENT is Empty! ");
+        } else{
+            //SAVE comment oto ORDER
+            LOG.debug("<===ORDER COMMENT INFO!!!==== ( "  + comment + " )");
+            //Order order = orderService.getActiveOrder();
+            //order.setComment(comment);
+        }
+        //TODO save comment to REPO or redirect Comment to orderConfirmed
+        return "redirect:/order/confirm/comment";
+    }
+
+
+    @RequestMapping(value = "/confirm/confirmed")
+    public String confirmedOrder(ModelMap model){
+//        String commentToOrder = "<Enter your comment to order>";
+        return "orderConfirmed";
+    }
 }
 
 

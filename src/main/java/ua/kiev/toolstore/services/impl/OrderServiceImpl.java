@@ -3,7 +3,6 @@ package ua.kiev.toolstore.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import ua.kiev.toolstore.model.LineItem;
 import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.model.Product;
@@ -45,11 +44,20 @@ public class OrderServiceImpl implements OrderService {
         Order order = getActiveOrder();
         Product product = productRepository.findById(productId);
         order.addItem(new LineItem(product));
-        orderRepository.save(order);
+        //orderRepository.save(order);
+        save(order);
         productRepository.setUnitInStock(product.getId(), product.getUnitInStock() -1);
         LOG.debug("<--REPO end saving to repo! ");
     }
 
+    //TODO
+    @Transactional
+    public void confirmOrder(Order order){
+        order.setOrderStatus(OrderStatus.CONFIRMED);
+        save(order);
+        LOG.debug("<===ORDER IS CONFIRMED into SERVICE! ");
+        //TODO send e-mail to Admin
+    }
 
     public Order findById(Long id) {
         return orderRepository.findById(id);
@@ -60,6 +68,10 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.delete(id);
     }
 
+
+    public void save(Order order){
+        orderRepository.save(order);
+    }
 
     // Find ALL ORDERS of ALL USERS with required STATUS
     public List<Order> findByOrderStatus(OrderStatus orderStatus) {
@@ -146,10 +158,7 @@ public class OrderServiceImpl implements OrderService {
         return lineItemRepository.countLineItemByOrderId(orderId);
     }
 
-    public void validateOrder(Long orderId) throws IllegalArgumentException{
-        Assert.notNull(orderId);
-        LOG.debug("<=======WEBFLOW-ServiceValidate============ ID (" + orderId + ")");
-    }
+
 
 
 

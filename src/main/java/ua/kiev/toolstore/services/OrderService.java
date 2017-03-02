@@ -11,6 +11,10 @@ public interface OrderService {
 
     void add(Long productId);
 
+    void save(Order order);
+
+    void confirmOrder(Order order);
+
     void delete(Long id);
 
     List<Order> findByOrderStatus(OrderStatus orderStatus);

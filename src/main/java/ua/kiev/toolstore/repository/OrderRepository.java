@@ -22,4 +22,8 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     @Query(value = "UPDATE orders o SET orderstatus = ?2 WHERE o.id = ?1", nativeQuery = true)
     void changeStatus(Long orderId, String status);
 
+
+    //TODO add comment to repo
+
+
 }
