@@ -3,6 +3,7 @@ package ua.kiev.toolstore.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import ua.kiev.toolstore.model.LineItem;
 import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.model.Product;
@@ -143,6 +144,11 @@ public class OrderServiceImpl implements OrderService {
             orderId = getActiveOrderId();
         }
         return lineItemRepository.countLineItemByOrderId(orderId);
+    }
+
+    public void validateOrder(Long orderId) throws IllegalArgumentException{
+        Assert.notNull(orderId);
+        LOG.debug("<=======WEBFLOW-ServiceValidate============ ID (" + orderId + ")");
     }
 
 

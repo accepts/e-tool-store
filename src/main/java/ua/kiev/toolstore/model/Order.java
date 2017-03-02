@@ -4,13 +4,16 @@ import ua.kiev.toolstore.model.enums.OrderStatus;
 import ua.kiev.toolstore.model.security.User;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
-public class Order extends AbstractEntity {
+public class Order extends AbstractEntity implements Serializable{
+
+    private static final long serialVersionUID = -2916282082864976438L;
 
     @ManyToOne(optional = false)
     private User user;

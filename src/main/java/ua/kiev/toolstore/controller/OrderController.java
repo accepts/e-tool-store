@@ -63,6 +63,13 @@ public class OrderController {
 
 
 
+    //TODO DELETE dummy
+    @RequestMapping(value = "/confirm")
+    public String confirmOrder(){
+        long cartId = 55L;
+        return "redirect:/confirmOrder?cartId=" + cartId;
+    }
+
 
 
 }
