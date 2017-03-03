@@ -20,7 +20,7 @@ public class Order extends AbstractEntity {
     private List<LineItem> lineItems = new ArrayList<LineItem>();
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 

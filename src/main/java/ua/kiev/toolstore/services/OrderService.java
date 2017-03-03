@@ -1,5 +1,6 @@
 package ua.kiev.toolstore.services;
 
+import ua.kiev.toolstore.model.Address;
 import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.model.enums.OrderStatus;
 
@@ -21,7 +22,10 @@ public interface OrderService {
 
     void changeStatus(Long orderId, OrderStatus orderStatus);
 
+    void changeOrderAddress(Address address, Long orderId);
+
     Order getActiveOrder();
+
 
     // ==================== LineItem Repository =============================
 

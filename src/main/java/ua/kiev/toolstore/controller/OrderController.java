@@ -3,13 +3,11 @@ package ua.kiev.toolstore.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ua.kiev.toolstore.model.Address;
-import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.services.OrderService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
@@ -78,15 +76,34 @@ public class OrderController {
         return "orderConfirmAddress";
     }
 
+
     @RequestMapping(value = "/confirm/address", method = RequestMethod.POST, params = {"save"})
-    public String confirmOrdersAddress(Address address, BindingResult bindingResult,
-                                       ModelMap model){
-        LOG.debug("<===ORDER ADDRESS INFO!!!==== {}", address);
-        Order order = orderService.getActiveOrder();
-        order.setAddress(address);
-        //TODO save address to REPO or redirect Address to orderConfirmComment HOWTO do it ?
+    public String confirmOrdersAddress(Address address){
+        LOG.debug("<---order change address info {}");
+        orderService.changeOrderAddress(address, null);
         return "redirect:/order/confirm/address";
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @RequestMapping(value = "/confirm/comment")

@@ -3,14 +3,13 @@ package ua.kiev.toolstore.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.kiev.toolstore.model.Address;
 import ua.kiev.toolstore.model.LineItem;
 import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.OrderStatus;
-import ua.kiev.toolstore.repository.LineItemRepository;
-import ua.kiev.toolstore.repository.OrderRepository;
-import ua.kiev.toolstore.repository.ProductRepository;
-import ua.kiev.toolstore.repository.UserRepository;
+import ua.kiev.toolstore.repository.*;
+import ua.kiev.toolstore.services.AddressService;
 import ua.kiev.toolstore.services.OrderService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 import ua.kiev.toolstore.util.validator.UserUtil;
@@ -36,6 +35,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private LineItemRepository lineItemRepository;
+
+    @Autowired
+    private AddressService addressService;
+
 
 
     // Add LineItem to Order
@@ -97,17 +100,34 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    private Long getActiveOrderId(){
-        Long activeOrderID = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE).getId();
-        if (activeOrderID == null){
-            activeOrderID = getActiveOrder().getId();
+    //===================== LineItem Repository ======================================
+
+/*    Get Address specific to Order
+*     (by default Address is the same that User entered on registration,
+*     after first modifying Address attain unique ID - different from User's address)
+*/
+    @Transactional
+    public void changeOrderAddress(Address address, Long orderId){
+        Order order = null;
+
+        if (orderId == null){
+            order = getActiveOrder();
+        } else {
+            order = orderRepository.findById(orderId);
         }
-        return activeOrderID;
+
+        if (address.getId().equals(order.getUser().getAddress().getId())){
+            address.setId(null);
+        }
+
+        address = addressService.saveAndFlush(address);
+        order.setAddress(address);
+        orderRepository.save(order);
     }
 
 
-    //===================== LineItem Repository ======================================
 
+    // Clear all items in particular Order
     @Transactional
     public void clearOrder(Long orderId) {
         if (orderId == null){
@@ -127,6 +147,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    // Sum of all items Price in Order
+    // TODO BIG_DECIMAL rebuild
     public Double sumAllItemsInOrder(Long orderId) {
         if (orderId == null){
             orderId = getActiveOrderId();
@@ -134,7 +156,7 @@ public class OrderServiceImpl implements OrderService {
         return lineItemRepository.sumAllItemsInOrder(orderId);
     }
 
-
+    // Count all item's in Order
     public Long countLineItemByOrderId(Long orderId) {
         if (orderId == null){
             orderId = getActiveOrderId();
@@ -151,15 +173,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    public Long countCartItems(Long orderId){
-        if (orderId == null){
-            orderId = getActiveOrderId();
+    // ================= Private methods =================================
+
+    private Long getActiveOrderId(){
+        Long activeOrderID = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE).getId();
+        if (activeOrderID == null){
+            activeOrderID = getActiveOrder().getId();
         }
-        return lineItemRepository.countLineItemByOrderId(orderId);
+        return activeOrderID;
     }
-
-
-
-
-
 }

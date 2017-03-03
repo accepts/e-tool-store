@@ -88,6 +88,17 @@ ul.errorlist li, p.errorlist {
     border: 1px solid #333333;
 }
 
+.btn-link{
+    border: 1px solid #333333;
+    outline:none;
+    background:#99cc33;
+    cursor:pointer;
+    color:aliceblue;
+    padding:0;
+    /*text-decoration:underline;*/
+    font-family:inherit;
+    font-size:inherit;
+}
 
 /*------------  Angular preValidation  ----------------  */
 

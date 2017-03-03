@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+
+<div class="main-content">
+    <h2> CONFIRM ORDER (ADDRESS CHECK) </h2>
+
+    <p>--------------Address for Delivery--------------</p>
+
+    <form action="#" th:action="@{/order/confirm/address}" th:object="${address}" method="post">
+        <fieldset>
+
+
+        <input type="hidden" th:field="*{id}" />
+
+
+        <div>
+            <label for="country">
+                <span th:text="#{user.country}">_test_Description_</span>
+            </label>
+            <input type="text" th:field="*{country}" id="country" th:value="*{country}"/>
+        </div>
+
+        <div>
+            <label for="state">
+                <span th:text="#{user.state}">_test_Description_</span>
+            </label>
+            <input type="text" th:field="*{state}" id="state" th:value="*{state}"/>
+        </div>
+
+        <div>
+            <label for="city">
+                <span th:text="#{user.city}">_test_Description_</span>
+            </label>
+            <input type="text" th:field="*{city}" id="city" th:value="*{city}"/>
+        </div>
+
+        <div>
+            <label for="street">
+                <span th:text="#{user.street}">_test_Description_</span>
+            </label>
+            <input type="text" th:field="*{street}" id="street" th:value="*{street}"/>
+        </div>
+
+        <div>
+            <label for="apartment">
+                <span th:text="#{user.apartment}">_test_Description_</span>
+            </label>
+            <input type="text" th:field="*{apartment}" id="apartment" th:value="*{apartment}"/>
+        </div>
+
+        <div>
+            <label for="zipCode">
+                <span th:text="#{user.zipCode}">_test_Description_</span>
+            </label>
+            <input type="text" th:field="*{zipCode}" id="zipCode" th:value="*{zipCode}"/>
+        </div>
+
+            <div class="submit">
+                <button type="submit" name="save" class="btn-link">Change Address!</button>
+            </div>
+
+
+        </fieldset>
+    </form>
+    <!--</div>-->
+<p>
+    <a href="#" th:href="@{/order/detail}" class="button-buy-active"> <--BACK (Order page) </a>  . 
+    <a href="#" th:href="@{/order/confirm/comment}" class="button-buy-active"> NEXT---> </a>
+</p>
+
+    <p>------------------------------------------------</p>
+
+</div>
+
+
+<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+</body>
+</html>

@@ -91,56 +91,13 @@
                 </tr>
             </table>
 
+            <br/>
+            <br/>
+            <a href="#" th:href="@{/order/confirm/address}" class="button-delete">CONFIRM !</a>
+
         </div>
 
-
     </p>
-    <a href="#" th:href="@{/order/confirm/address}" class="button-delete">CONFIRM !</a>
-
-
-
-    <!--<table border="1">-->
-        <!--<thead>-->
-        <!--<tr style="background-color: dodgerblue">-->
-            <!--<th>Pic</th>-->
-            <!--<th>Name</th>-->
-            <!--<th>description</th>-->
-            <!--<th>manufact</th>-->
-            <!--<th>price</th>-->
-            <!--<th>unit</th>-->
-
-            <!--<th>condition</th>-->
-            <!--<th>category</th>-->
-            <!--<th>status</th>-->
-
-            <!--<th style="background-color: blueviolet">View</th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-
-        <!--<tbody>-->
-        <!--<tr th:each="p : ${activeOrder.lineItems}">-->
-            <!--<td>-->
-                <!--<img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 80px" />-->
-            <!--</td>-->
-            <!--<td th:text="${{p.name}}">name_product</td>-->
-            <!--<td th:text="${{p.description}}">description_product</td>-->
-            <!--<td th:text="${{p.manufacturer}}">product_manufact</td>-->
-            <!--<td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>-->
-            <!--<td th:text="${{p.unitInStock}}">product_quantity</td>-->
-
-            <!--<td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>-->
-            <!--<td th:text="#{|product.category.${p.category}|}">prod_category</td>-->
-            <!--<td th:text="#{|product.status.${p.status}|}">prod_status</td>-->
-
-
-            <!--<td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>-->
-
-        <!--</tr>-->
-        <!--</tbody>-->
-    <!--</table>-->
-
-
-
 
 <p>------------------------------------------------</p>
 
