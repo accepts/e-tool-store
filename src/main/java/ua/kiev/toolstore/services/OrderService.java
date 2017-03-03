@@ -12,9 +12,9 @@ public interface OrderService {
 
     void add(Long productId);
 
-    void save(Order order);
+//    void save(Order order);
 
-    void confirmOrder(Order order);
+    void confirmOrder(Long orderId, String comment);
 
     void delete(Long id);
 

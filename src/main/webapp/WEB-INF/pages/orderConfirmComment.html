@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+
+<div class="main-content">
+    <h2> CONFIRM ORDER </h2>
+
+    <p>--------------Save to Admin--------------</p>
+
+
+    <!-- TODO 2 table: shipping Address + Price-->
+    <div id="order-info">
+        <div id="left">
+            ---------------------------<br/>
+            Personal info: <br/>
+            ---------------------------<br/>
+            <p>
+                <strong>Name:</strong>  <span th:text="${order.user.firstName}">_test_name</span><br/>
+                <strong>Last Name:</strong> <span th:text="${order.user.lastName}">_test_name</span><br/>
+                <strong>Phone:</strong> <span th:text="${order.user.phone}">_test_name</span><br/>
+                <br>
+            </p>
+
+            ---------------------------<br/>
+            Address Confirmed:<br/>
+            ---------------------------<br/>
+            <br/>
+            <span th:object="${order.address}" >
+            <strong>Country:</strong> <span th:text="*{country}"></span> <br/>
+            <strong>State:</strong> <span th:text="*{state}"></span> <br/>
+            <strong>City:</strong> <span th:text="*{city}"></span> <br/>
+            <strong>Street:</strong> <span th:text="*{street}"></span> <br/>
+            <strong>Apartment:</strong> <span th:text="*{apartment}"></span> <br/>
+            <strong>ZIP:</strong> <span th:text="*{zipCode}"></span> <br/>
+            </span>
+        </div>
+
+        <div id="right">
+            ---------------------------<br/>
+            Item List + Price:<br/>
+            ---------------------------<br/>
+            <table border="1">
+                <tr style="background-color: cornflowerblue">
+                    <th>name</th>
+                    <th>manufacturer</th>
+                    <th>category</th>
+                    <th>amount</th>
+                    <th>price</th>
+                </tr>
+                <tr th:each="item : ${order.lineItems}">
+                    <td th:text="${item.product.name}">Drill</td>
+                    <td th:text="${item.product.manufacturer}">DUSS</td>
+                    <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
+                    <td th:text="${item.amount}">amount</td>
+                    <td th:text="${item.product.price} + ' $' ">50</td>
+                </tr>
+                <tr >
+                    <td colspan="3">Total amount and SUM of Order: </td>
+                    <td>
+                        <span th:text="${order.getItemsAmount()}" style="color: darkgreen; font-size: 14px" >4</span>
+                    </td>
+                    <td>
+                        <span th:text="${order.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+
+    <p>
+        Comment to Order:
+    <form action="#" th:action="@{/order/confirm/comment}" method="post">
+        <fieldset>
+            <div>
+                 <input type="text" id="comment" name="commentToOrder" value="Enter your comment..." />
+            </div>
+
+            <p>
+                <a href="#" th:href="@{/order/confirm/address}" class="button-buy-active"> <-- Back to Address</a>
+                <button type="submit"  name="saveComment" class="btn-link">Confirm! </button>
+            </p>
+        </fieldset>
+    </form>
+
+    <br/>
+    <a href="#" th:href="@{/order/detail}" class="button-delete"> Back to Order page !</a>
+    </p>
+
+    <br>
+    <p>------------------------------------------------</p>
+
+</div>
+<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+</body>
+</html>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ua.kiev.toolstore.model.Address;
+import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.services.OrderService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
@@ -71,8 +72,13 @@ public class OrderController {
 
     @RequestMapping(value = "/confirm/address")
     public String confirmOrder(ModelMap model){
-        Address address = orderService.getActiveOrder().getAddress();
-        model.addAttribute("address", address);
+        Order order = orderService.getActiveOrder();
+
+        if (order.getLineItems().size() == 0){
+            return  "redirect:/order/detail";
+        }
+
+        model.addAttribute("address", order.getAddress());
         return "orderConfirmAddress";
     }
 
@@ -85,57 +91,27 @@ public class OrderController {
     }
 
 
+    @RequestMapping(value = "/confirm/comment", method = RequestMethod.GET)
+    public String confirmedOrder(ModelMap model){
+        Order order = orderService.getActiveOrder();
 
+        if (order.getLineItems().size() == 0){
+            return  "redirect:/order/detail";
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @RequestMapping(value = "/confirm/comment")
-    public String confirmOrderComment(ModelMap model){
-        String commentToOrder = "<Enter your comment to order>";
-        model.addAttribute("commentToOrder", commentToOrder);
+        model.addAttribute("order", order);
         return "orderConfirmComment";
     }
 
 
     @RequestMapping(value = "/confirm/comment", method = RequestMethod.POST, params = {"saveComment"})
-    public String confirmOrderComment(ModelMap model, HttpServletRequest req){
+    public String confirmOrderComment(HttpServletRequest req){
         String comment = String.valueOf(req.getParameter("commentToOrder"));
-        if (comment.trim().isEmpty()){
-            //DON'T SAVE comment
-            LOG.debug("<<===COMMENT is Empty! ");
-        } else{
-            //SAVE comment oto ORDER
-            LOG.debug("<===ORDER COMMENT INFO!!!==== ( "  + comment + " )");
-            //Order order = orderService.getActiveOrder();
-            //order.setComment(comment);
-        }
-        //TODO save comment to REPO or redirect Comment to orderConfirmed
-        return "redirect:/order/confirm/comment";
-    }
-
-
-    @RequestMapping(value = "/confirm/confirmed")
-    public String confirmedOrder(ModelMap model){
-//        String commentToOrder = "<Enter your comment to order>";
+        orderService.confirmOrder(null, comment);
         return "orderConfirmed";
     }
+
+
 }
 
 

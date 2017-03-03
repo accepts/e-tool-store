@@ -11,6 +11,8 @@ import ua.kiev.toolstore.model.enums.OrderStatus;
 import ua.kiev.toolstore.repository.*;
 import ua.kiev.toolstore.services.AddressService;
 import ua.kiev.toolstore.services.OrderService;
+import ua.kiev.toolstore.services.ProductService;
+import ua.kiev.toolstore.services.UserService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 import ua.kiev.toolstore.util.validator.UserUtil;
 
@@ -25,42 +27,54 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private UserUtil userUtil;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
     private LineItemRepository lineItemRepository;
 
     @Autowired
-    private AddressService addressService;
+    private UserUtil userUtil;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private AddressService addressService;
 
 
     // Add LineItem to Order
     @Transactional
     public void add(Long productId) {
         Order order = getActiveOrder();
-        Product product = productRepository.findById(productId);
+        Product product = productService.findById(productId);
         order.addItem(new LineItem(product));
-        //orderRepository.save(order);
-        save(order);
-        productRepository.setUnitInStock(product.getId(), product.getUnitInStock() -1);
+        orderRepository.save(order);
+        productService.setUnitInStock(product.getId(), product.getUnitInStock() -1);
         LOG.debug("<--REPO end saving to repo! ");
     }
 
-    //TODO
+
+    //TODO sand e-mail
     @Transactional
-    public void confirmOrder(Order order){
+    public void confirmOrder(Long orderId, String comment){
+        Order order = null;
+        if (orderId == null){
+            order = getActiveOrder();
+        } else {
+            order = orderRepository.findById(orderId);
+        }
+
+        if (!comment.trim().isEmpty()){
+            order.setComment(comment);
+            LOG.debug("<====REPO setComment: ( " + comment + " )");
+        }
+
         order.setOrderStatus(OrderStatus.CONFIRMED);
-        save(order);
-        LOG.debug("<===ORDER IS CONFIRMED into SERVICE! ");
+        orderRepository.save(order);
+        LOG.debug("<===ORDER IS CONFIRMED into SERVICE! ===== SAND e-mail to Administrator!");
         //TODO send e-mail to Admin
     }
+
 
     public Order findById(Long id) {
         return orderRepository.findById(id);
@@ -71,10 +85,6 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.delete(id);
     }
 
-
-    public void save(Order order){
-        orderRepository.save(order);
-    }
 
     // Find ALL ORDERS of ALL USERS with required STATUS
     public List<Order> findByOrderStatus(OrderStatus orderStatus) {
@@ -92,7 +102,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE);
         if (order == null){
             LOG.debug("<---Order does not exist, creating new order");
-            order = new Order(userRepository.findById(userUtil.getUserId()));
+            order = new Order(userService.findById(userUtil.getUserId()));
             orderRepository.save(order);
             order = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE);
         }
@@ -168,7 +178,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void deleteLineItem(Long itemId) {
         Product product = lineItemRepository.findById(itemId).getProduct();
-        productRepository.setUnitInStock(product.getId(), product.getUnitInStock() + 1);
+        productService.setUnitInStock(product.getId(), product.getUnitInStock() + 1);
         lineItemRepository.delete(itemId);
     }
 

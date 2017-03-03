@@ -47,6 +47,7 @@ public class UserUtil {
         return new UserWrapper(user.getId(), user.getName(), user.getEmail(), user.getPassword());
     }
 
+
     public Long getUserId() {
         Long id = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
