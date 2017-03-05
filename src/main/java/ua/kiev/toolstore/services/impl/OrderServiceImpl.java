@@ -14,6 +14,7 @@ import ua.kiev.toolstore.services.OrderService;
 import ua.kiev.toolstore.services.ProductService;
 import ua.kiev.toolstore.services.UserService;
 import ua.kiev.toolstore.util.LoggerWrapper;
+import ua.kiev.toolstore.util.MailUtil;
 import ua.kiev.toolstore.util.validator.UserUtil;
 
 import java.util.List;
@@ -29,8 +30,6 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private LineItemRepository lineItemRepository;
 
-    @Autowired
-    private UserUtil userUtil;
 
     @Autowired
     private UserService userService;
@@ -42,6 +41,13 @@ public class OrderServiceImpl implements OrderService {
     private AddressService addressService;
 
 
+    @Autowired
+    private MailUtil mailUtil;
+
+    @Autowired
+    private UserUtil userUtil;
+
+
     // Add LineItem to Order
     @Transactional
     public void add(Long productId) {
@@ -50,11 +56,10 @@ public class OrderServiceImpl implements OrderService {
         order.addItem(new LineItem(product));
         orderRepository.save(order);
         productService.setUnitInStock(product.getId(), product.getUnitInStock() -1);
-        LOG.debug("<--REPO end saving to repo! ");
+        LOG.debug("<---Add product to Order");
     }
 
-
-    //TODO sand e-mail
+    // Confirm Order
     @Transactional
     public void confirmOrder(Long orderId, String comment){
         Order order = null;
@@ -66,13 +71,13 @@ public class OrderServiceImpl implements OrderService {
 
         if (!comment.trim().isEmpty()){
             order.setComment(comment);
-            LOG.debug("<====REPO setComment: ( " + comment + " )");
+            LOG.debug("<---Confirm Order comment: ( " + comment + " )");
         }
 
         order.setOrderStatus(OrderStatus.CONFIRMED);
         orderRepository.save(order);
-        LOG.debug("<===ORDER IS CONFIRMED into SERVICE! ===== SAND e-mail to Administrator!");
-        //TODO send e-mail to Admin
+        LOG.debug("<-- Confirm Order. Send e-mail to Administrator.");
+        mailUtil.sendMailOrderConfirmed(order);
     }
 
 
@@ -166,6 +171,7 @@ public class OrderServiceImpl implements OrderService {
         return lineItemRepository.sumAllItemsInOrder(orderId);
     }
 
+
     // Count all item's in Order
     public Long countLineItemByOrderId(Long orderId) {
         if (orderId == null){
@@ -175,6 +181,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    // Delete item from Order
     @Transactional
     public void deleteLineItem(Long itemId) {
         Product product = lineItemRepository.findById(itemId).getProduct();

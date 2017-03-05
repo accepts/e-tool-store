@@ -12,6 +12,7 @@
 			classpath:spring/mvc-dispatcher-servlet.xml,
 			classpath:spring/view-thymeleaf-settings.xml,
 			classpath:spring/spring-data-db-settings.xml,
+			classpath:spring/spring-mail-config.xml,
 			classpath:spring/spring-security.xml
 		</param-value>
 	</context-param>
