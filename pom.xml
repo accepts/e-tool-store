@@ -45,8 +45,6 @@
         </dependency>
 
 
-
-
         <!-- Database: Spring DATA JPA, PostgreSQL-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -121,13 +119,12 @@
         </dependency>
 
 
-        <!-- All Mail related stuff + Much more-->
+        <!-- E-MAIL sending-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!-- JavaMail-->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>

@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
             order = orderRepository.findById(orderId);
         }
 
-        if (!comment.trim().isEmpty()){
+        if (!("Enter your comment...".equals(comment) | comment.trim().isEmpty())){
             order.setComment(comment);
             LOG.debug("<---Confirm Order comment: ( " + comment + " )");
         }
@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus(OrderStatus.CONFIRMED);
         orderRepository.save(order);
         LOG.debug("<-- Confirm Order. Send e-mail to Administrator.");
-        mailUtil.sendMailOrderConfirmed(order);
+        mailUtil.sendMailAboutConfirmedOrder(order);
     }
 
 
@@ -199,4 +199,5 @@ public class OrderServiceImpl implements OrderService {
         }
         return activeOrderID;
     }
+
 }

@@ -3,14 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
        <!-- Mail Sender-->
 
        <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-              <property name="host" value="smtp.gmail.com" />
-              <property name="port" value="587" />
-              <property name="username" value="obelec.sergey" />
-              <property name="password" value="apelsin66" />
+              <property name="host" value="${email.host}" />
+              <property name="port" value="${email.port}" />
+              <property name="username" value="${email.login}" />
+              <property name="password" value="${email.password}" />
 
               <property name="javaMailProperties">
                      <props>
@@ -20,49 +19,5 @@
               </property>
        </bean>
 
-       <!--<bean id="mailUtil" class="ua.kiev.toolstore.util.MailUtil">-->
-              <!--<property name="mailSender" ref="mailSender" />-->
-       <!--</bean>-->
-
 </beans>
 
-<!--
-
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="obelec.sergey" />
-		<property name="password" value="apelsin66" />
-
-		<property name="javaMailProperties">
-			<props>
-            	<prop key="mail.smtp.auth">true</prop>
-            	<prop key="mail.smtp.starttls.enable">true</prop>
-        	</props>
-		</property>
-
-	</bean>
-
-	<bean id="mailMail" class="com.mkyong.common.MailMail">
-		<property name="mailSender" ref="mailSender" />
-		<property name="simpleMailMessage" ref="customeMailMessage" />
-	</bean>
-
-	<bean id="customeMailMessage"
-		class="org.springframework.mail.SimpleMailMessage">
-
-		<property name="from" value="obelec.sergey@gmail.com" />
-		<property name="to" value="accepts@ya.ru" />
-		<property name="subject" value="Testing Subject" />
-		<property name="text">
-		<value>
-			<![CDATA[
-				Dear %s,
-				Mail Content : %s
-			]]>
-		</value>
-	</property>
-	</bean>
-
-
--->

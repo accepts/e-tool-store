@@ -45,7 +45,6 @@ public class FileManager {
     // ******************  Retrieve picture file from DB and HDD ******************************
 
     public String getContentType(Long id){
-
         File file = new File(storageFolder + productService.findPictureByProductId(id));
         String contentType = new MimetypesFileTypeMap().getContentType(file);
 
@@ -53,21 +52,18 @@ public class FileManager {
             contentType = "application/octet-stream";
         }
 
-//        LOG.debug("<---getContentType  {} : " + "(File ID): " + id + "(File contentType): " + contentType);
         return contentType;
     }
 
 
     public long getFileLength(Long id){
         File file = new File(storageFolder + productService.findPictureByProductId(id));
-//        LOG.debug("<---getFileLength  {} : " + "(File ID): " + id + "(File length): " + file.length());
         return file.length();
 
     }
 
 
     public InputStreamResource getFileBody(Long id) throws IOException {
-//        LOG.debug("<---getFileBody {}" + id);
         File file = new File(storageFolder + productService.findPictureByProductId(id));
         return new InputStreamResource( FileUtils.openInputStream(file));
     }
@@ -77,7 +73,6 @@ public class FileManager {
 
     public boolean deleteFile(Long id){
         File file = new File(storageFolder + productService.findPictureByProductId(id));
-//        LOG.debug("<---Deleting file from HDD {}:" + file);
         return file.delete();
     }
 

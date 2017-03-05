@@ -68,7 +68,7 @@ public class OrderController {
 
 
 
-    // ===================== Confirm ORDER ===========================
+    // ===================== Confirm ORDER methods ===========================
 
     @RequestMapping(value = "/confirm/address")
     public String confirmOrder(ModelMap model){
