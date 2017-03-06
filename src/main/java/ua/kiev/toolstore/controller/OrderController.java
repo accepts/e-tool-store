@@ -1,12 +1,10 @@
 package ua.kiev.toolstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ua.kiev.toolstore.model.Address;
 import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.services.OrderService;
@@ -111,6 +109,63 @@ public class OrderController {
         return "orderConfirmed";
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+//    @RequestMapping(value = "/admin/manage/page/{pageNumber}")
+//    public String adminOrderManagePage(@PathVariable Integer pageNumber, ModelMap model){
+//        model.addAttribute("ordersPage", orderService.findOrderByStatus(pageNumber));
+//        return "orderManager";
+//    }
+
+
+    //TODO page
+
+    @RequestMapping(value = "/admin/manage/page/{pageNumber}")
+    public String adminOrderManagePage(@PathVariable Integer pageNumber,
+                                       ModelMap model) throws IllegalArgumentException{
+        model.addAttribute("ordersPage", orderService.findOrderByStatus("all", pageNumber))
+                .addAttribute("orderStatus", "all");
+        return "orderManager";
+    }
+
+
+
+    @RequestMapping(value = "/admin/manage/{status}/page/{pageNumber}")
+    public String adminOrderManagePage(@PathVariable String status,
+                                       @PathVariable Integer pageNumber,
+                                       ModelMap model) throws IllegalArgumentException{
+        String orderStatus;
+        Page<Order> page = orderService.findOrderByStatus(status, pageNumber);
+
+        if (page.getContent().isEmpty()){
+            orderStatus = "empty";
+        } else {
+            orderStatus = page.getContent().get(0).getOrderStatus().toString().toLowerCase();
+        }
+
+        model.addAttribute("ordersPage", page)
+                .addAttribute("orderStatus", orderStatus);
+
+        return "orderManager";
+    }
+
+
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleClientErrors(Exception e) {
+        LOG.warn("<====E==== IllegalArgumentEXCEPTION occur {}" + e.getMessage());
+        return "redirect:/home";
+    }
 
 }
 

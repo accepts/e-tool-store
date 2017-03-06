@@ -2,15 +2,14 @@ package ua.kiev.toolstore.model.enums;
 
 public enum OrderStatus {
 
-    ACTIVE("ACTIVE"),       //Current Customer's Order in process
-
     CONFIRMED("CONFIRMED"), // Customer confirm his Order
-    CANCELED("CANCELED"),   // Customer canceled his Order
-
     PROCESSED("PROCESSED"), // Admin take Order in process
-    DECLINED("DECLINED"),   // Admin Decline Order
-    SHIPPED("SHIPPED"),     // Order is Shipping
 
+    SHIPPED("SHIPPED"),     // Order is Shipping
+    CANCELED("CANCELED"),   // Customer canceled his Order
+    DECLINED("DECLINED"),   // Admin Decline Order
+
+    ACTIVE("ACTIVE"),       //Current Customer's Order in process
     COMPLETED("COMPLETED"); // Completed
 
 

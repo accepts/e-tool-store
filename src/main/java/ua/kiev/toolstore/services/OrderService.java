@@ -1,5 +1,6 @@
 package ua.kiev.toolstore.services;
 
+import org.springframework.data.domain.Page;
 import ua.kiev.toolstore.model.Address;
 import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.model.enums.OrderStatus;
@@ -26,6 +27,10 @@ public interface OrderService {
 
     Order getActiveOrder();
 
+//    Page<Order> findAllOrder(Integer pageNumber);
+
+//    Page<Order> findByOrderStatus(String status, Integer pageNumber);
+    Page<Order> findOrderByStatus(String status, Integer pageNumber);
 
     // ==================== LineItem Repository =============================
 

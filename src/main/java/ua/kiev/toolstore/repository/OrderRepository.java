@@ -1,5 +1,7 @@
 package ua.kiev.toolstore.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,13 +19,18 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 
     List<Order> findByOrderStatus(OrderStatus orderStatus);
 
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE orders o SET orderstatus = ?2 WHERE o.id = ?1", nativeQuery = true)
     void changeStatus(Long orderId, String status);
 
 
-    //TODO add comment to repo
+    Page<Order> findAllByOrderByOrderStatusAsc(Pageable pageable);
 
+    Page<Order> findByOrderStatus(OrderStatus orderStatus, Pageable pageable);
+
+
+//    Page<Order> findAllByOrderByOrderStatusAsc(Pageable pageable);
 
 }

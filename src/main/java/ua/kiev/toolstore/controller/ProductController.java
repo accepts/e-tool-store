@@ -196,7 +196,7 @@ public class ProductController {
 
     //TODO organize this PAGEBLE method
     @RequestMapping(value = "/page/{pageNumber}")
-    public String pageView(@PathVariable Integer pageNumber,ModelMap model){
+    public String pageView(@PathVariable Integer pageNumber, ModelMap model){
 
         Page<Product> page = productService.findAll(pageNumber);
 
@@ -222,8 +222,8 @@ Arrays.asList(a).contains("any");
 */
 
 
-
-    // TODO ************************** Exception handler *************************************
+    // TODO EXCEPTION HANDLER
+    //  ************************** Exception handler *************************************
 
     @ExceptionHandler(IllegalArgumentException.class)
     public String handleClientErrors(Exception e) {

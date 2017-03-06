@@ -1,6 +1,8 @@
 package ua.kiev.toolstore.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.toolstore.model.Address;
@@ -8,7 +10,8 @@ import ua.kiev.toolstore.model.LineItem;
 import ua.kiev.toolstore.model.Order;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.OrderStatus;
-import ua.kiev.toolstore.repository.*;
+import ua.kiev.toolstore.repository.LineItemRepository;
+import ua.kiev.toolstore.repository.OrderRepository;
 import ua.kiev.toolstore.services.AddressService;
 import ua.kiev.toolstore.services.OrderService;
 import ua.kiev.toolstore.services.ProductService;
@@ -97,6 +100,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+
+
     //Change ORDER status of particular USER
     public void changeStatus(Long orderId, OrderStatus orderStatus) {
         orderRepository.changeStatus(orderId, orderStatus.toString());
@@ -113,6 +118,62 @@ public class OrderServiceImpl implements OrderService {
         }
         return order;
     }
+
+
+
+
+
+
+
+
+
+
+
+    public Page<Order> findOrderByStatus(String status, Integer pageNumber) throws IllegalArgumentException{
+
+        PageRequest request = new PageRequest(pageNumber, 30);
+
+        if (status.equalsIgnoreCase("all")){
+            return orderRepository.findAllByOrderByOrderStatusAsc(request);
+        }
+
+        return orderRepository.findByOrderStatus(OrderStatus.valueOf(status.toUpperCase()), request);
+    }
+
+
+//    public Page<Order> findAllOrder(Integer pageNumber) {
+//        PageRequest request = new PageRequest(pageNumber, 30);
+//        return orderRepository.findAllByOrderByOrderStatusAsc(request);
+//    }
+
+
+//    public Page<Order> findByOrderStatus(OrderStatus orderStatus, Integer pageNumber) {
+//        PageRequest request = new PageRequest(pageNumber, 30);
+//
+//        return orderRepository.findByOrderStatus(OrderStatus.CONFIRMED, request);
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //===================== LineItem Repository ======================================
