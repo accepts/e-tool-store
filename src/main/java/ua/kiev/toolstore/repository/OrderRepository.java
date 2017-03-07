@@ -28,6 +28,8 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 
     Page<Order> findAllByOrderByOrderStatusAsc(Pageable pageable);
 
+    Page<Order> findAllByOrderByIdDesc(Pageable pageable);
+
     Page<Order> findByOrderStatus(OrderStatus orderStatus, Pageable pageable);
 
 

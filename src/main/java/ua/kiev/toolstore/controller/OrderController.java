@@ -1,7 +1,6 @@
 package ua.kiev.toolstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -110,57 +109,32 @@ public class OrderController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-//    @RequestMapping(value = "/admin/manage/page/{pageNumber}")
-//    public String adminOrderManagePage(@PathVariable Integer pageNumber, ModelMap model){
-//        model.addAttribute("ordersPage", orderService.findOrderByStatus(pageNumber));
-//        return "orderManager";
-//    }
-
-
-    //TODO page
-
-    @RequestMapping(value = "/admin/manage/page/{pageNumber}")
-    public String adminOrderManagePage(@PathVariable Integer pageNumber,
-                                       ModelMap model) throws IllegalArgumentException{
-        model.addAttribute("ordersPage", orderService.findOrderByStatus("all", pageNumber))
-                .addAttribute("orderStatus", "all");
-        return "orderManager";
-    }
-
-
-
     @RequestMapping(value = "/admin/manage/{status}/page/{pageNumber}")
     public String adminOrderManagePage(@PathVariable String status,
                                        @PathVariable Integer pageNumber,
                                        ModelMap model) throws IllegalArgumentException{
-        String orderStatus;
-        Page<Order> page = orderService.findOrderByStatus(status, pageNumber);
+        model.addAttribute("ordersPage", orderService.findOrderByStatus(status, pageNumber))
+                .addAttribute("orderStatus", status);
+        return "orderManager";
+    }
 
-        if (page.getContent().isEmpty()){
-            orderStatus = "empty";
-        } else {
-            orderStatus = page.getContent().get(0).getOrderStatus().toString().toLowerCase();
-        }
 
-        model.addAttribute("ordersPage", page)
-                .addAttribute("orderStatus", orderStatus);
+    @RequestMapping(value = "/order/admin/manage/{status}/page/{pageNumber}/{action}/{id}")
+    public String adminOrderOperate(@PathVariable String status,
+                                    @PathVariable Integer pageNumber,
+                                    @PathVariable String action,
+                                    @PathVariable Long id){
+
+
 
         return "orderManager";
     }
 
 
 
+
+
+    //============================ EXCEPTION handler ===========================================
     @ExceptionHandler(IllegalArgumentException.class)
     public String handleClientErrors(Exception e) {
         LOG.warn("<====E==== IllegalArgumentEXCEPTION occur {}" + e.getMessage());

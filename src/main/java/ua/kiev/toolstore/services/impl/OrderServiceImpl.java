@@ -131,10 +131,11 @@ public class OrderServiceImpl implements OrderService {
 
     public Page<Order> findOrderByStatus(String status, Integer pageNumber) throws IllegalArgumentException{
 
-        PageRequest request = new PageRequest(pageNumber, 30);
+        PageRequest request = new PageRequest(pageNumber, 15);
 
         if (status.equalsIgnoreCase("all")){
-            return orderRepository.findAllByOrderByOrderStatusAsc(request);
+//            return orderRepository.findAllByOrderByOrderStatusAsc(request);
+            return orderRepository.findAllByOrderByIdDesc(request);
         }
 
         return orderRepository.findByOrderStatus(OrderStatus.valueOf(status.toUpperCase()), request);
