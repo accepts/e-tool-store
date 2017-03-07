@@ -10,6 +10,7 @@ import ua.kiev.toolstore.services.OrderService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 
 @Controller
@@ -40,11 +41,17 @@ public class OrderController {
     }
 
 
-    @RequestMapping(value = "/detail")
-    public String showOrder(ModelMap model){
-        model.addAttribute("activeOrder", orderService.getActiveOrder());
+    @RequestMapping(value = {"/detail", "/detail/{id}"})
+    public String showOrder(@PathVariable(value = "id") Optional<Long> id,
+                            ModelMap model){
+        if (id.isPresent()){
+            model.addAttribute("activeOrder", orderService.findById(id.get()));
+        } else {
+            model.addAttribute("activeOrder", orderService.getActiveOrder());
+        }
         return "orderDetail";
     }
+
 
     //TODO Angular
     //-----------Delete ITEM from ORDER
@@ -109,26 +116,24 @@ public class OrderController {
     }
 
 
-    @RequestMapping(value = "/admin/manage/{status}/page/{pageNumber}")
-    public String adminOrderManagePage(@PathVariable String status,
-                                       @PathVariable Integer pageNumber,
-                                       ModelMap model) throws IllegalArgumentException{
-        model.addAttribute("ordersPage", orderService.findOrderByStatus(status, pageNumber))
-                .addAttribute("orderStatus", status);
+
+    @RequestMapping(value = {"/admin/manage/{status}/page/{pageNumber}",
+                            "/admin/manage/{status}/page/{pageNumber}/{action}/{id}"})
+    public String adminOrderOperate(@PathVariable(value = "status") String status,
+                                    @PathVariable(value = "pageNumber") Integer pageNumber,
+                                    @PathVariable(value = "action") Optional<String> action,
+                                    @PathVariable(value = "id") Optional<Long> id,
+                                    ModelMap model) throws IllegalArgumentException {
+        if (action.isPresent() && id.isPresent()){
+            model.addAttribute("ordersPage", orderService.switchOrderStatus(status, id.get(), action.get(), pageNumber));
+        } else {
+            model.addAttribute("ordersPage", orderService.findOrderByStatus(status, pageNumber));
+        }
+        model.addAttribute("orderStatus", status);
         return "orderManager";
     }
 
 
-    @RequestMapping(value = "/order/admin/manage/{status}/page/{pageNumber}/{action}/{id}")
-    public String adminOrderOperate(@PathVariable String status,
-                                    @PathVariable Integer pageNumber,
-                                    @PathVariable String action,
-                                    @PathVariable Long id){
-
-
-
-        return "orderManager";
-    }
 
 
 

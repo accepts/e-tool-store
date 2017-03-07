@@ -30,7 +30,10 @@ public interface OrderService {
 //    Page<Order> findAllOrder(Integer pageNumber);
 
 //    Page<Order> findByOrderStatus(String status, Integer pageNumber);
+
     Page<Order> findOrderByStatus(String status, Integer pageNumber);
+
+    Page<Order> switchOrderStatus(String status, Long orderId, String action, Integer pageNumber);
 
     // ==================== LineItem Repository =============================
 

@@ -102,11 +102,6 @@ public class OrderServiceImpl implements OrderService {
 
 
 
-    //Change ORDER status of particular USER
-    public void changeStatus(Long orderId, OrderStatus orderStatus) {
-        orderRepository.changeStatus(orderId, orderStatus.toString());
-    }
-
 
     public Order getActiveOrder() {
         Order order = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE);
@@ -120,21 +115,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
-
-
-
-
-
-
-
-
     public Page<Order> findOrderByStatus(String status, Integer pageNumber) throws IllegalArgumentException{
-
         PageRequest request = new PageRequest(pageNumber, 15);
 
         if (status.equalsIgnoreCase("all")){
-//            return orderRepository.findAllByOrderByOrderStatusAsc(request);
+            //return orderRepository.findAllByOrderByOrderStatusAsc(request);
             return orderRepository.findAllByOrderByIdDesc(request);
         }
 
@@ -142,38 +127,40 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-//    public Page<Order> findAllOrder(Integer pageNumber) {
-//        PageRequest request = new PageRequest(pageNumber, 30);
-//        return orderRepository.findAllByOrderByOrderStatusAsc(request);
-//    }
-
-
-//    public Page<Order> findByOrderStatus(OrderStatus orderStatus, Integer pageNumber) {
-//        PageRequest request = new PageRequest(pageNumber, 30);
-//
-//        return orderRepository.findByOrderStatus(OrderStatus.CONFIRMED, request);
-//    }
 
 
 
+    //Change ORDER status of particular USER
+    public void changeStatus(Long orderId, OrderStatus orderStatus) {
+        orderRepository.changeStatus(orderId, orderStatus.toString());
+    }
 
 
+    // Administrator's Order manager switcher
+    @Transactional
+    public Page<Order> switchOrderStatus(String status, Long orderId,
+                                         String action, Integer pageNumber) throws IllegalArgumentException{
 
+        if (action.equalsIgnoreCase("DECLINED") || action.equalsIgnoreCase("CANCELED")){
+            Order order = orderRepository.findById(orderId);
+            List<LineItem> lineItems = order.getLineItems();
+            for (LineItem item : lineItems) {
+                item.getProduct().setUnitInStock(item.getProduct().getUnitInStock()+1);
+                item.setAmount(item.getAmount() - 1);
+            }
+            order.setLineItems(lineItems);
+            orderRepository.save(order);
+        }
 
+        changeStatus(orderId, OrderStatus.valueOf(action.toUpperCase()));
+        PageRequest request = new PageRequest(pageNumber, 15);
 
+        if (status.equalsIgnoreCase("all")){
+            return orderRepository.findAllByOrderByIdDesc(request);
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        return orderRepository.findByOrderStatus(OrderStatus.valueOf(status.toUpperCase()), request);
+    }
 
 
 
