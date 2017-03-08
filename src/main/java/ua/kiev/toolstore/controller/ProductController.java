@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/product")
@@ -55,7 +56,7 @@ public class ProductController {
 
     @ModelAttribute("allProducts")
     public List<Product> populateProduct() {
-        return this.productService.findAll();
+        return productService.findAll();
     }
     //  ---------------------------------------------------------------------------------------
 
@@ -137,7 +138,6 @@ public class ProductController {
     }
 
 
-
     //  **************************** DELETE Product ****************************
     @RequestMapping(value = "/manage/delete/{id}")
     public String deleteProduct(@PathVariable Long id, Product product, ModelMap model) {
@@ -159,11 +159,59 @@ public class ProductController {
 
 
     //  **************************** VIEW Product ****************************
-    @RequestMapping(value = "/view/{id}")
+    @RequestMapping(value = "/detail/{id}")
     public String getProductById(@PathVariable Long id, ModelMap model) {
         model.addAttribute("productDetailed", productService.findById(id));
         return "productDetail";
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @RequestMapping(value = {"/admin/manage/{status}/page/{pageNumber}",
+            "/admin/manage/{status}/page/{pageNumber}/{action}/{id}"})
+    public String getProductsForManage(@PathVariable(value = "status") String status,
+                                       @PathVariable(value = "pageNumber") Integer pageNumber,
+                                       @PathVariable(value = "action") Optional<String> action,
+                                       @PathVariable(value = "id") Optional<Long> id,
+                                       ModelMap model) throws IllegalArgumentException{
+        //TODO getProducts
+        if (action.isPresent() && id.isPresent()){
+            model.addAttribute("productsPage", productService.switchProductStatus(status, id.get(), action.get(), pageNumber));
+        } else {
+            model.addAttribute("productsPage", productService.findProductByStatus(status, pageNumber));
+        }
+        model.addAttribute("productStatus", status);
+        return "productManager";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // -------------------- Find Product by Category ---------------------
@@ -183,15 +231,6 @@ public class ProductController {
         model.addAttribute("productsByCategory", productService.findByCategory(ProductCategory.forName(category.toUpperCase())));
         return "productList";
     }
-
-
-
-
-
-
-
-
-
 
 
     //TODO organize this PAGEBLE method

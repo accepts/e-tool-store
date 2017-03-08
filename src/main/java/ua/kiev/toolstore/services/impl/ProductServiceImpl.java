@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.ProductCategory;
+import ua.kiev.toolstore.model.enums.ProductStatus;
 import ua.kiev.toolstore.repository.ProductRepository;
 import ua.kiev.toolstore.services.ProductService;
 import ua.kiev.toolstore.util.FileManager;
@@ -29,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     public List<Product> findAll() {
-        return repository.findAllByOrderByIdAsc();
+        return repository.findTop3AllByOrderByIdDesc();
     }
 
 
@@ -67,6 +68,42 @@ public class ProductServiceImpl implements ProductService {
 
     public void setUnitInStock(Long id, int unitInStock) {
         repository.setUnitInStock(id, unitInStock);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public Page<Product> findProductByStatus(String status, Integer pageNumber) throws IllegalArgumentException{
+        PageRequest request = new PageRequest(pageNumber, 15);
+
+        if (status.equalsIgnoreCase("all")){
+//            return repository.findByStatusNotIn(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
+            return repository.findAllByOrderByIdDesc(request);
+        }
+        return repository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
+    }
+
+
+
+    @Transactional
+    public Page<Product> switchProductStatus(String status, Long orderId,
+                                         String action, Integer pageNumber) throws IllegalArgumentException{
+        ProductStatus newStatus = ProductStatus.valueOf(action.toUpperCase());
+        repository.changeStatus(orderId, newStatus.toString());
+        PageRequest request = new PageRequest(pageNumber, 15);
+
+        if (status.equalsIgnoreCase("all")){
+            return repository.findAllByOrderByIdDesc(request);
+        }
+        return repository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
     }
 
 }

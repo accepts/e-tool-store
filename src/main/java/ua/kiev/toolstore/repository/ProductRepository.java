@@ -9,12 +9,14 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.ProductCategory;
+import ua.kiev.toolstore.model.enums.ProductStatus;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-    List<Product> findAllByOrderByIdAsc();
+    List<Product> findTop3AllByOrderByIdDesc();
 
     Page<Product> findAllByOrderByIdAsc(Pageable pageable);
 
@@ -33,7 +35,26 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     void setUnitInStock(Long id, int unitInStock);
 
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE products p SET status = ?2 WHERE p.id = ?1", nativeQuery = true)
+    void changeStatus(Long productId, String status);
 
+
+    Page<Product> findAllByOrderByIdDesc(Pageable pageable);
+
+
+    Page<Product> findByStatus(ProductStatus status, Pageable pageable);
+
+    Page<Product> findByStatusNotIn(Collection<ProductStatus> status, Pageable pageable);
+
+
+
+    /*
+
+    findByAgeNotIn(Collection<Age> age)
+
+   */
     //long count();
     //long countByLastName(String lastName);
 

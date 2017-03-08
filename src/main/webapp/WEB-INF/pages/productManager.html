@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+<div class="main-content"  >
+
+    <!-- ************************************** Site menu  ****************************************** -->
+
+    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
+    </div>
+
+
+    <h1>Product manager:</h1>
+    <br/>
+    <strong>Total elements: </strong>    <span th:text="${productsPage.totalElements}">_test_</span><br/>
+
+    <strong>Product Status: </strong>    <span th:text="${productStatus}">_test_</span><br/>
+
+    <p>-----------------------------------------</p>
+
+    <a href="#" th:href="@{/product/admin/manage/all/page/0}" class="button-blue"> ALL</a>
+    <a href="#" th:href="@{/product/admin/manage/locked/page/0}" class="button-delete"> LOCKED</a>
+    <a href="#" th:href="@{/product/admin/manage/obsolete/page/0}" class="button-lock"> OBSOLETE</a>
+    <a href="#" th:href="@{/product/admin/manage/active/page/0}" class="button-buy-active"> ACTIVE</a>
+    <br/>
+    <br/>
+
+    <table border="1">
+        <thead>
+        <tr style="background-color: #99cc33">
+            <th>ID</th>
+            <th>Edit</th>
+            <th>name</th>
+            <th>manufacturer</th>
+            <th>category</th>
+            <th>condition</th>
+            <th>status</th>
+            <th>price</th>
+            <th>unitInStock</th>
+
+            <th style="background-color: brown">LOCKED</th>
+            <th style="background-color: crimson">OBSOLETE</th>
+            <th style="background-color: mediumseagreen">SPECIAL</th>
+            <th style="background-color: green">ACTIVE</th>
+            <th style="background-color: cornflowerblue">FRESH</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="p : ${productsPage.content}">
+
+            <td >
+                <a href="#"
+                   th:href="@{/product/detail/{id} (id=${p.id})}"
+                   class="button-blue"> <span th:text="${{p.id}}">_id_link_</span></a>
+            </td>
+
+            <td>
+                <a href="#"
+                   th:href="@{/product/manage/edit/{productId} (productId=${p.id})}"
+                   class="button-buy-active">Edit!</a>
+            </td>
+
+
+            <td th:text="${{p.name}}">name</td>
+            <td th:text="${{p.manufacturer}}">manufacturer</td>
+
+            <td th:text="${{p.category}}">category</td>
+            <td th:text="${{p.condition}}">condition</td>
+            <td th:text="${{p.status}}">status</td>
+
+            <td th:text="${{p.price}} + '$'">price</td>
+            <td th:text="${{p.unitInStock}}">unitInStock</td>
+
+
+            <td>
+                <a href="#"
+                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber}/locked/{id}
+                   (id=${p.id}, productStatus=${productStatus}, pageNumber=${productsPage.number})}"
+                   class="button-delete">Lock!</a>
+            </td>
+
+            <td>
+                <a href="#"
+                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber}/obsolete/{id}
+                   (id=${p.id}, productStatus=${productStatus}, pageNumber=${productsPage.number})}"
+                   class="button-lock">Obsolete</a>
+            </td>
+
+            <td>
+                <a href="#"
+                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber}/special/{id}
+                   (id=${p.id}, productStatus=${productStatus}, pageNumber=${productsPage.number})}"
+                   class="button-buy-active">Special</a>
+            </td>
+            <td>
+                <a href="#"
+                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber}/active/{id}
+                   (id=${p.id}, productStatus=${productStatus}, pageNumber=${productsPage.number})}"
+                   class="button-buy-active">Active</a>
+            </td>
+            <td>
+                <a href="#"
+                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber}/fresh/{id}
+                   (id=${p.id}, productStatus=${productStatus}, pageNumber=${productsPage.number})}"
+                   class="button-blue">FRESH!</a>
+            </td>
+
+
+
+        </tr>
+        </tbody>
+    </table>
+
+
+    <br/>
+    <br/>
+
+
+    <div class="page-list-container">
+        <!-- Previous + First arrows -->
+    <span>
+        <span th:if="${productsPage.isFirst() == false}">
+            <a href="#" th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber} (pageNumber=0, productStatus=${productStatus})}"> <--First</a>
+        </span>
+          <span th:if="${productsPage.isFirst()} ">
+            <span class="button-disabled"> <--First</span>
+        </span>
+    </span>
+
+    <span>
+        <span th:if="${productsPage.hasPrevious()}">
+            <a href="#" th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber} (pageNumber=${productsPage.number} - 1, productStatus=${productStatus})}"> <-Prev</a>
+        </span>
+         <span th:if="${productsPage.hasPrevious() == false} ">
+            <span class="button-disabled"> <-Prev</span>
+         </span>
+    </span>
+
+        <!-- Numerated List of all pages-->
+    <span th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
+        <span th:each="ap : ${arrayOfPages}">
+            <span th:class="${ap eq productsPage.number} ? 'button-active' : ''">
+                <a href="#" th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber} (pageNumber=${ap}, productStatus=${productStatus})}">
+                    <span th:text="${ap}+1 + ', '"></span>
+                </a>
+            </span>
+        </span>
+    </span>
+
+        <!-- Next + Last arrows -->
+    <span >
+        <span th:if="${productsPage.hasNext()}">
+            <a href="#" th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber} (pageNumber=${productsPage.number} + 1, productStatus=${productStatus})}"> Next-></a>
+        </span>
+        <span th:if="${productsPage.hasNext() == false} ">
+            <span class="button-disabled"> Next-></span>
+        </span>
+    </span>
+
+    <span >
+        <span th:if="${productsPage.isLast() == false}">
+            <a href="#" th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber} (pageNumber=${productsPage.totalPages} -1, productStatus=${productStatus}) }">  Last-->>  </a>
+        </span>
+         <span th:if="${productsPage.isLast()} ">
+            <span class="button-disabled"> Last-->></span>
+        </span>
+    </span>
+    </div>
+
+</div>
+</body>
+</html>

@@ -28,6 +28,7 @@
             <th>PAGABLE</th>
             <th>Order</th>
             <th>Order-Manager</th>
+            <th>Product-Manager</th>
         </tr>
         <tr>
             <div sec:authorize="isAuthenticated()">
@@ -43,7 +44,9 @@
             <td><a href="#" th:href="@{/product/page/0}">PAGABLE</a></td>
             <td><a href="#" th:href="@{/order/detail}">ORDER</a></td>
             <td><a href="#" th:href="@{/order/admin/manage/all/page/0}">Manage-Order</a></td>
-            <!--?page=0&size=3-->
+            <td><a href="#" th:href="@{/product/admin/manage/all/page/0}">Manage-Product</a></td>
+
+
         </tr>
         </tbody>
     </table>

@@ -26,7 +26,7 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     void changeStatus(Long orderId, String status);
 
 
-    Page<Order> findAllByOrderByOrderStatusAsc(Pageable pageable);
+//    Page<Order> findAllByOrderByOrderStatusAsc(Pageable pageable);
 
     Page<Order> findAllByOrderByIdDesc(Pageable pageable);
 
@@ -34,5 +34,7 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 
 
 //    Page<Order> findAllByOrderByOrderStatusAsc(Pageable pageable);
+
+
 
 }

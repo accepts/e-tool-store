@@ -34,7 +34,8 @@
 </div>
     <!-- ***************************************** Table with all products  ************************************** -->
 
-    <div th:unless="${#lists.isEmpty(allProducts)}">
+    <div >
+    <!--<div th:unless="${#lists.isEmpty(allProducts)}">-->
 
         <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
@@ -88,7 +89,7 @@
 
                 <td><a href="#" th:href="@{/product/manage/delete/{productId} (productId=${p.id}) }">Delete</a></td>
                 <td><a href="#" th:href="@{/product/manage/edit/{productId} (productId=${p.id}) }">Edit</a></td>
-                <td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>
+                <td><a href="#" th:href="@{/product/detail/{productId} (productId=${p.id}) }">View</a></td>
 
             </tr>
             </tbody>
