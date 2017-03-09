@@ -36,8 +36,7 @@
 
 
 
-
-    <div th:unless="${#lists.isEmpty(productsByCategory)}">
+    <div th:unless="${#lists.isEmpty(productsPage)}" ng-app="orderApp">
 
         <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
@@ -50,17 +49,18 @@
                 <th>manufact</th>
                 <th>price</th>
                 <th>unit</th>
-
                 <th>condition</th>
                 <th>category</th>
                 <th>status</th>
-
                 <th style="background-color: blueviolet">View</th>
+
+                <th>ADD</th>
+                <th>View</th>
             </tr>
             </thead>
 
-            <tbody>
-            <tr th:each="p : ${productsByCategory}">
+            <tbody ng-controller="orderCtrl">
+            <tr th:each="p : ${productsPage.content}">
                 <td>
                     <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 80px" />
                 </td>
@@ -69,13 +69,39 @@
                 <td th:text="${{p.manufacturer}}">product_manufact</td>
                 <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>
                 <td th:text="${{p.unitInStock}}">product_quantity</td>
-
                 <td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>
                 <td th:text="#{|product.category.${p.category}|}">prod_category</td>
                 <td th:text="#{|product.status.${p.status}|}">prod_status</td>
+                <td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>
 
+                <div sec:authorize="isAuthenticated()" >
+                    <div th:if="${p.unitInStock} < 1">
+                        <td>
+                            <a href="#"
+                               class="button-buy-locked">Out of stock</a>
+                        </td>
+                    </div>
+
+                    <div th:if="${p.unitInStock} > 0">
+                        <td>
+                            <a href="#"
+                               th:attr="ng-click='addToCart('+ ${p.id} +')'"
+                               class="button-buy-active">Buy!</a>
+                        </td>
+                    </div>
+                </div>
+
+
+                <div sec:authorize="isAnonymous()">
+                    <td>
+                        <a href="#"
+                           th:href="@{/login}"
+                           class="button-buy-locked">SignIN!</a>
+                    </td>
+                </div>
 
                 <td><a href="#" th:href="@{/product/view/{productId} (productId=${p.id}) }">View</a></td>
+
 
             </tr>
             </tbody>
@@ -85,6 +111,103 @@
 
 
 
+
+    <!--<div th:unless="${#lists.isEmpty(productsByCategory)}">-->
+
+        <!--<h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>-->
+
+        <!--<table border="1">-->
+            <!--<thead>-->
+            <!--<tr style="background-color: dodgerblue">-->
+                <!--<th>Pic</th>-->
+                <!--<th>Name</th>-->
+                <!--<th>description</th>-->
+                <!--<th>manufact</th>-->
+                <!--<th>price</th>-->
+                <!--<th>unit</th>-->
+
+                <!--<th>condition</th>-->
+                <!--<th>category</th>-->
+                <!--<th>status</th>-->
+
+                <!--<th style="background-color: blueviolet">View</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+
+            <!--<tbody>-->
+            <!--<tr th:each="p : ${productsByCategory}">-->
+                <!--<td>-->
+                    <!--<img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 80px" />-->
+                <!--</td>-->
+                <!--<td th:text="${{p.name}}">name_product</td>-->
+                <!--<td th:text="${{p.description}}">description_product</td>-->
+                <!--<td th:text="${{p.manufacturer}}">product_manufact</td>-->
+                <!--<td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>-->
+                <!--<td th:text="${{p.unitInStock}}">product_quantity</td>-->
+
+                <!--<td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>-->
+                <!--<td th:text="#{|product.category.${p.category}|}">prod_category</td>-->
+                <!--<td th:text="#{|product.status.${p.status}|}">prod_status</td>-->
+
+
+
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+    <!--<br/><br/>-->
+
+
+    <div class="page-list-container">
+        <!-- Previous + First arrows -->
+    <span>
+        <span th:if="${productsPage.isFirst() == false}">
+            <a href="#" th:href="@{/product/sort/{productCategory}/page/{pageNumber} (pageNumber=0, productCategory=${productCategory})}"> <--First</a>
+        </span>
+          <span th:if="${productsPage.isFirst()} ">
+            <span class="button-disabled"> <--First</span>
+        </span>
+    </span>
+
+    <span>
+        <span th:if="${productsPage.hasPrevious()}">
+            <a href="#" th:href="@{/product/sort/{productCategory}/page/{pageNumber} (pageNumber=${productsPage.number} - 1, productCategory=${productCategory})}"> <-Prev</a>
+        </span>
+         <span th:if="${productsPage.hasPrevious() == false} ">
+            <span class="button-disabled"> <-Prev</span>
+         </span>
+    </span>
+
+        <!-- Numerated List of all pages-->
+    <span th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
+        <span th:each="ap : ${arrayOfPages}">
+            <span th:class="${ap eq productsPage.number} ? 'button-active' : ''">
+                <a href="#" th:href="@{/product/sort/{productCategory}/page/{pageNumber} (pageNumber=${ap}, productCategory=${productCategory})}">
+                    <span th:text="${ap}+1 + ', '"></span>
+                </a>
+            </span>
+        </span>
+    </span>
+
+        <!-- Next + Last arrows -->
+    <span >
+        <span th:if="${productsPage.hasNext()}">
+            <a href="#" th:href="@{/product/sort/{productCategory}/page/{pageNumber} (pageNumber=${productsPage.number} + 1, productCategory=${productCategory})}"> Next-></a>
+        </span>
+        <span th:if="${productsPage.hasNext() == false} ">
+            <span class="button-disabled"> Next-></span>
+        </span>
+    </span>
+
+    <span >
+        <span th:if="${productsPage.isLast() == false}">
+            <a href="#" th:href="@{/product/sort/{productCategory}/page/{pageNumber}(pageNumber=${productsPage.totalPages} -1, productCategory=${productCategory}) }">  Last-->>  </a>
+        </span>
+         <span th:if="${productsPage.isLast()} ">
+            <span class="button-disabled"> Last-->></span>
+        </span>
+    </span>
+    </div>
 
 
 

@@ -2,6 +2,7 @@ package ua.kiev.toolstore.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -18,11 +19,9 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     List<Product> findTop3AllByOrderByIdDesc();
 
-    Page<Product> findAllByOrderByIdAsc(Pageable pageable);
-
     Product findById(Long id);
 
-    List<Product> findByCategory(ProductCategory category);
+    //List<Product> findByCategory(ProductCategory category);
 
     @Async
     @Query(value = "SELECT p.picture FROM products p WHERE p.id = ?1", nativeQuery = true)
@@ -43,19 +42,31 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     Page<Product> findAllByOrderByIdDesc(Pageable pageable);
 
-
     Page<Product> findByStatus(ProductStatus status, Pageable pageable);
 
-    Page<Product> findByStatusNotIn(Collection<ProductStatus> status, Pageable pageable);
+//    Page<Product> findByStatusNotInOrderByManufacturerAsc(Collection<ProductStatus> status, Pageable pageable);
+    Page<Product> findByStatusNotIn(Collection<ProductStatus> status, Pageable pageable, Sort sort);
+
+//    Page<Product> findByCategoryAndStatusNotInOrderByManufacturer(ProductCategory category, Collection<ProductStatus> status, Pageable pageable);
+    Page<Product> findByCategoryAndStatusNotIn(ProductCategory category, Collection<ProductStatus> status, Pageable pageable, Sort sort);
 
 
-
-    /*
-
-    findByAgeNotIn(Collection<Age> age)
-
-   */
-    //long count();
-    //long countByLastName(String lastName);
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

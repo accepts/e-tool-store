@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -14,7 +15,9 @@ import ua.kiev.toolstore.repository.ProductRepository;
 import ua.kiev.toolstore.services.ProductService;
 import ua.kiev.toolstore.util.FileManager;
 
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -27,6 +30,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Value("${product.item.per.page}")
     private int PAGE_SIZE;
+
+    @Value("${product.item.per.page.admin}")
+    private int PAGE_SIZE_ADMIN;
+
+
+
 
 
     public List<Product> findAll() {
@@ -55,42 +64,49 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public List<Product> findByCategory(ProductCategory category) {
-        return repository.findByCategory(category);
-    }
-
-
-    public Page<Product> findAll(Integer pageNumber) {
-        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE);
-        return repository.findAllByOrderByIdAsc(request);
-    }
-
-
     public void setUnitInStock(Long id, int unitInStock) {
         repository.setUnitInStock(id, unitInStock);
     }
 
 
+    public Page<Product> findProductByCategory(String category, Integer pageNumber, Optional<String> orderBy, Optional<String> sortBy){
+
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE);
+
+//        if (orderBy.isPresent() && sortBy.isPresent()){
+//            //TODO get Sort
+//            Sort sort = getSort(orderBy.get(), sortBy.get());
+//
+//        }
+
+        if (category.equalsIgnoreCase("all")){
+//            return repository.findByStatusNotInOrderByManufacturerAsc(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
+            return repository.findByStatusNotIn(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request,
+                    new Sort(Sort.Direction.valueOf(sortBy.get()), orderBy.get()));
+        }
+
+//        return repository.findByCategoryAndStatusNotInOrderByManufacturer(ProductCategory.valueOf(category.toUpperCase()),
+//                EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
+
+        return repository.findByCategoryAndStatusNotIn(ProductCategory.valueOf(category.toUpperCase()),
+                EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request,
+                new Sort(Sort.Direction.valueOf(sortBy.get()), orderBy.get()));
+    }
 
 
 
 
 
 
-
-
-
+    // *****************************  For ADMIN purposes ********************************************
 
     public Page<Product> findProductByStatus(String status, Integer pageNumber) throws IllegalArgumentException{
-        PageRequest request = new PageRequest(pageNumber, 15);
-
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
         if (status.equalsIgnoreCase("all")){
-//            return repository.findByStatusNotIn(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
             return repository.findAllByOrderByIdDesc(request);
         }
         return repository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
     }
-
 
 
     @Transactional
@@ -98,12 +114,19 @@ public class ProductServiceImpl implements ProductService {
                                          String action, Integer pageNumber) throws IllegalArgumentException{
         ProductStatus newStatus = ProductStatus.valueOf(action.toUpperCase());
         repository.changeStatus(orderId, newStatus.toString());
-        PageRequest request = new PageRequest(pageNumber, 15);
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
 
         if (status.equalsIgnoreCase("all")){
             return repository.findAllByOrderByIdDesc(request);
         }
         return repository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
+    }
+
+
+
+
+    private Sort getSort(String orderBy, String sortBy){
+        return new Sort(Sort.Direction.valueOf(sortBy), orderBy);
     }
 
 }

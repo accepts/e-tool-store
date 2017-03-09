@@ -31,15 +31,6 @@ public class OrderController {
     }
 
 
-//    //TODO DELETE this DUMMY method
-//    @RequestMapping(value = "/add/dummy/{productId}")
-//    public String addProductToOrderDummy(@PathVariable Long productId){
-//        LOG.debug("<---ORDER-SERV-CONTROLLER ---- START...");
-//        orderService.add(productId);
-//        LOG.debug("<---ORDER-SERV-CONTROLLER ---- END!");
-//        return "redirect:/home";
-//    }
-
 
     @RequestMapping(value = {"/detail", "/detail/{id}"})
     public String showOrder(@PathVariable(value = "id") Optional<Long> id,

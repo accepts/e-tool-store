@@ -24,11 +24,18 @@ public class HomeController {
 	}
 
 
+
 	@RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
+		//TODO get user name and greeting him on home page
 		model.addAttribute("message", "Hello from Controller!");
 		LOG.info("<------ Home page is Loaded " + (new Date().toString()));
+
 		return "home";
 	}
+
+
+
+
 
 }

@@ -1,7 +1,6 @@
 package ua.kiev.toolstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -70,7 +69,6 @@ public class ProductController {
 
     //  **************************** CREATE (+ Edit) Product ****************************
 
-//    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/manage/create", params = {"save"})
     public String saveProduct(Product product, BindingResult bindingResult,
                               ModelMap model) throws IOException, IllegalArgumentException {
@@ -169,6 +167,35 @@ public class ProductController {
 
 
 
+    // -------------------- Find Product by Category ---------------------
+    @RequestMapping(value = "/sort/{category}/page/{pageNumber}")
+    public String getProductList(@PathVariable String category,
+                                 @PathVariable Integer pageNumber,
+                                 @RequestParam("orderBy") Optional<String> orderBy,
+                                 @RequestParam("sortBy") Optional<String> sortBy,
+                                 ModelMap model){
+        if (category == null || category.trim().isEmpty()){
+            category = "all";
+        }
+        if (pageNumber == null){
+            pageNumber = 0;
+        }
+
+        if (sortBy.isPresent() && orderBy.isPresent()){
+            LOG.debug("<===REQUEST_PARAM is Present, sortBy=( " + sortBy + " ), orderBy=( " + orderBy + " )"  );
+        }else{
+            LOG.debug("<===REQUEST_PARAM is NOT");
+        }
+
+
+        model.addAttribute("productsPage", productService.findProductByCategory(category, pageNumber,  orderBy, sortBy))
+                .addAttribute("productCategory", category );
+
+        return "productList";
+    }
+
+
+
 
 
 
@@ -188,7 +215,6 @@ public class ProductController {
                                        @PathVariable(value = "action") Optional<String> action,
                                        @PathVariable(value = "id") Optional<Long> id,
                                        ModelMap model) throws IllegalArgumentException{
-        //TODO getProducts
         if (action.isPresent() && id.isPresent()){
             model.addAttribute("productsPage", productService.switchProductStatus(status, id.get(), action.get(), pageNumber));
         } else {
@@ -214,51 +240,16 @@ public class ProductController {
 
 
 
-    // -------------------- Find Product by Category ---------------------
-    @RequestMapping(value = "/sort/{category}")
-    public String selectByCategory(@PathVariable String category, ModelMap model){
-        if ("all".equals(category)){
-            model.addAttribute("productsByCategory", productService.findAll());
-            return "productList";
-        }
-        if (category.trim().isEmpty()
-                || !Arrays.asList(ProductCategory.ALL).contains(ProductCategory.valueOf(category.toUpperCase()))){
-            LOG.info("<---PRODUCT (SELECT CATEGORY) ERORR! {} ", category);
-            return "home";
-        }
-
-        LOG.info("<---PRODUCT (SELECT CATEGORY) OK! {} ", category);
-        model.addAttribute("productsByCategory", productService.findByCategory(ProductCategory.forName(category.toUpperCase())));
-        return "productList";
-    }
-
-
-    //TODO organize this PAGEBLE method
-    @RequestMapping(value = "/page/{pageNumber}")
-    public String pageView(@PathVariable Integer pageNumber, ModelMap model){
-
-        Page<Product> page = productService.findAll(pageNumber);
-
-//        int current = page.getNumber() + 1;
-//        int begin = Math.max(1, current - 2);
-//        int end = Math.min(begin + 4, page.getTotalPages());
-
-//        int current = page.getNumber() + 1;
-//        int begin = Math.max(1, current - 5);
-//        int end = Math.min(begin + 10, page.getTotalPages());
-
-        model.addAttribute("productsPage", page);
-        return "productListPegable";
-    }
 
 
 
-/*
-ProductCategory.valueOf(category).
-+++
-String[] a= {"tube", "are", "fun"};
-Arrays.asList(a).contains("any");
-*/
+
+
+
+
+
+
+
 
 
     // TODO EXCEPTION HANDLER

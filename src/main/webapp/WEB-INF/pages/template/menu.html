@@ -20,15 +20,14 @@
             </div>
 
             <th>Home</th>
-            <th>Product</th>
+            <th>Product-DAO</th>
             <th>Register</th>
             <th>Login</th>
-            <th>UserManager</th>
-            <th>reserv</th>
-            <th>PAGABLE</th>
+            <th>UserMgr(Admin)</th>
+            <th>ALL-Products</th>
             <th>Order</th>
-            <th>Order-Manager</th>
-            <th>Product-Manager</th>
+            <th>OrderMgr(Admin)</th>
+            <th>ProductMgr(Admin)</th>
         </tr>
         <tr>
             <div sec:authorize="isAuthenticated()">
@@ -40,8 +39,7 @@
             <td><a href="#" th:href="@{/user/register}">Register</a></td>
             <td><a href="#" th:href="@{/login}">Login</a></td>
             <td><a href="#" th:href="@{/user/admin/manager}">UserManager</a></td>
-            <td>reserv</td>
-            <td><a href="#" th:href="@{/product/page/0}">PAGABLE</a></td>
+            <td><a href="#" th:href="@{/product/sort/all/page/0}">AllProducts</a></td>
             <td><a href="#" th:href="@{/order/detail}">ORDER</a></td>
             <td><a href="#" th:href="@{/order/admin/manage/all/page/0}">Manage-Order</a></td>
             <td><a href="#" th:href="@{/product/admin/manage/all/page/0}">Manage-Product</a></td>
@@ -61,19 +59,31 @@
     <tbody>
     <tr th:each="category : ${allProductCategory}" style="background-color: greenyellow">
         <td>
-            <a href="#" th:href="@{/product/sort/{category} (category=${category})}"
+            <a href="#" th:href="@{/product/sort/{category}/page/0 (category=${category})}"
                th:text="#{${'product.category.' + category}}">_test_Show!</a>
         </td>
     </tr>
     <tr style="background-color: lime">
         <td>
-            <a href="#" th:href="@{/product/sort/all}">Show All!</a>
+            <a href="#" th:href="@{/product/sort/all/page/0}">Show All!</a>
         </td>
     </tr>
     </tbody>
 </table>
 <br/>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- ========Table example==========  -->

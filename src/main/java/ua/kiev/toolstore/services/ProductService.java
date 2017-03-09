@@ -2,9 +2,9 @@ package ua.kiev.toolstore.services;
 
 import org.springframework.data.domain.Page;
 import ua.kiev.toolstore.model.Product;
-import ua.kiev.toolstore.model.enums.ProductCategory;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
@@ -18,9 +18,9 @@ public interface ProductService {
 
     String findPictureByProductId(Long id);
 
-    List<Product> findByCategory(ProductCategory category);
+//    List<Product> findByCategory(ProductCategory category);
 
-    Page<Product> findAll(Integer pageNumber);
+//    Page<Product> findAll(Integer pageNumber);
 
     Page<Product> findProductByStatus(String status, Integer pageNumber);
 
@@ -28,7 +28,8 @@ public interface ProductService {
 
     void setUnitInStock(Long id, int unitInStock);
 
-
+//    Page<Product> findProductByCategory(String category, Integer pageNumber);
+    Page<Product> findProductByCategory(String category, Integer pageNumber, Optional<String> orderBy, Optional<String> sortBy);
 
 }
 
