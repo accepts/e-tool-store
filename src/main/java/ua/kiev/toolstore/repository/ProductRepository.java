@@ -45,28 +45,10 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     Page<Product> findByStatus(ProductStatus status, Pageable pageable);
 
 //    Page<Product> findByStatusNotInOrderByManufacturerAsc(Collection<ProductStatus> status, Pageable pageable);
-    Page<Product> findByStatusNotIn(Collection<ProductStatus> status, Pageable pageable, Sort sort);
+    Page<Product> findByStatusNotIn(Collection<ProductStatus> status, Pageable pageable);
 
 //    Page<Product> findByCategoryAndStatusNotInOrderByManufacturer(ProductCategory category, Collection<ProductStatus> status, Pageable pageable);
-    Page<Product> findByCategoryAndStatusNotIn(ProductCategory category, Collection<ProductStatus> status, Pageable pageable, Sort sort);
-
+    Page<Product> findByCategoryAndStatusNotIn(ProductCategory category, Collection<ProductStatus> status, Pageable pageable);
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

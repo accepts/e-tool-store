@@ -165,14 +165,12 @@ public class ProductController {
 
 
 
-
-
-    // -------------------- Find Product by Category ---------------------
-    @RequestMapping(value = "/sort/{category}/page/{pageNumber}")
+    // -------------------- Browse Product All and by Category ---------------------
+    @RequestMapping(value = "/{category}/page/{pageNumber}")
     public String getProductList(@PathVariable String category,
                                  @PathVariable Integer pageNumber,
-                                 @RequestParam("orderBy") Optional<String> orderBy,
-                                 @RequestParam("sortBy") Optional<String> sortBy,
+                                 @RequestParam(value = "orderBy", required = false, defaultValue = "price") Optional<String> orderBy,
+                                 @RequestParam(value = "sortBy", required = false, defaultValue = "asc") Optional<String> sortBy,
                                  ModelMap model){
         if (category == null || category.trim().isEmpty()){
             category = "all";
@@ -181,33 +179,17 @@ public class ProductController {
             pageNumber = 0;
         }
 
-        if (sortBy.isPresent() && orderBy.isPresent()){
-            LOG.debug("<===REQUEST_PARAM is Present, sortBy=( " + sortBy + " ), orderBy=( " + orderBy + " )"  );
-        }else{
-            LOG.debug("<===REQUEST_PARAM is NOT");
-        }
-
-
         model.addAttribute("productsPage", productService.findProductByCategory(category, pageNumber,  orderBy, sortBy))
-                .addAttribute("productCategory", category );
+                .addAttribute("productCategory", category)
+                .addAttribute("orderBy", orderBy.get())
+                .addAttribute("sortBy", sortBy.get());
 
         return "productList";
     }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    // ---------------- Admin Product  manager page --------------------------
     @RequestMapping(value = {"/admin/manage/{status}/page/{pageNumber}",
             "/admin/manage/{status}/page/{pageNumber}/{action}/{id}"})
     public String getProductsForManage(@PathVariable(value = "status") String status,
@@ -223,33 +205,6 @@ public class ProductController {
         model.addAttribute("productStatus", status);
         return "productManager";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // TODO EXCEPTION HANDLER

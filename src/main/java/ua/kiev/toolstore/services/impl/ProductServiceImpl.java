@@ -14,6 +14,7 @@ import ua.kiev.toolstore.model.enums.ProductStatus;
 import ua.kiev.toolstore.repository.ProductRepository;
 import ua.kiev.toolstore.services.ProductService;
 import ua.kiev.toolstore.util.FileManager;
+import ua.kiev.toolstore.util.LoggerWrapper;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -21,6 +22,9 @@ import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+
+    protected static final LoggerWrapper LOG = LoggerWrapper.get(ProductServiceImpl.class);
 
     @Autowired
     private ProductRepository repository;
@@ -33,8 +37,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Value("${product.item.per.page.admin}")
     private int PAGE_SIZE_ADMIN;
-
-
 
 
 
@@ -69,32 +71,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+
     public Page<Product> findProductByCategory(String category, Integer pageNumber, Optional<String> orderBy, Optional<String> sortBy){
 
-        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE);
-
-//        if (orderBy.isPresent() && sortBy.isPresent()){
-//            //TODO get Sort
-//            Sort sort = getSort(orderBy.get(), sortBy.get());
-//
-//        }
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.valueOf(sortBy.get().toUpperCase()), orderBy.get()));;
 
         if (category.equalsIgnoreCase("all")){
-//            return repository.findByStatusNotInOrderByManufacturerAsc(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
-            return repository.findByStatusNotIn(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request,
-                    new Sort(Sort.Direction.valueOf(sortBy.get()), orderBy.get()));
+
+            return repository.findByStatusNotIn(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
         }
 
-//        return repository.findByCategoryAndStatusNotInOrderByManufacturer(ProductCategory.valueOf(category.toUpperCase()),
-//                EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
-
         return repository.findByCategoryAndStatusNotIn(ProductCategory.valueOf(category.toUpperCase()),
-                EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request,
-                new Sort(Sort.Direction.valueOf(sortBy.get()), orderBy.get()));
+                EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
     }
-
-
-
 
 
 
@@ -125,8 +114,8 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    private Sort getSort(String orderBy, String sortBy){
-        return new Sort(Sort.Direction.valueOf(sortBy), orderBy);
-    }
+
+
+
 
 }

@@ -109,6 +109,16 @@ ul.errorlist li, p.errorlist {
     border: 1px solid #333333;
 }
 
+.button-blue-active{
+    font: bold 12px Arial;
+    text-decoration: none;
+    background-color: darkslateblue;
+    color: aliceblue;
+    padding: 2px 6px 2px 6px;
+    border: 1px solid #333333;
+}
+
+
 .btn-link{
     border: 1px solid #333333;
     outline:none;
