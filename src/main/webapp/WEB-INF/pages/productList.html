@@ -55,6 +55,7 @@
 
         <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
+        <div th:if="${productsPage.numberOfElements} > 0" >
         <table border="1">
             <thead>
             <tr style="background-color: dodgerblue">
@@ -117,8 +118,15 @@
             </tbody>
         </table>
     </div>
+
+    </div>
     <br/><br/>
 
+
+
+    <div th:if="${productsPage.hasContent()} eq false" >
+        <h1>There is no Product! </h1>
+    </div>
 
 
 

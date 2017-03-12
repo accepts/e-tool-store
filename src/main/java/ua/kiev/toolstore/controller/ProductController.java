@@ -27,7 +27,6 @@ public class ProductController {
 
     protected static final LoggerWrapper LOG = LoggerWrapper.get(ProductController.class);
 
-
     @Autowired
     private ProductService productService;
 
@@ -188,7 +187,6 @@ public class ProductController {
     }
 
 
-
     // ---------------- Admin Product  manager page --------------------------
     @RequestMapping(value = {"/admin/manage/{status}/page/{pageNumber}",
             "/admin/manage/{status}/page/{pageNumber}/{action}/{id}"})
@@ -197,6 +195,7 @@ public class ProductController {
                                        @PathVariable(value = "action") Optional<String> action,
                                        @PathVariable(value = "id") Optional<Long> id,
                                        ModelMap model) throws IllegalArgumentException{
+
         if (action.isPresent() && id.isPresent()){
             model.addAttribute("productsPage", productService.switchProductStatus(status, id.get(), action.get(), pageNumber));
         } else {
@@ -205,6 +204,40 @@ public class ProductController {
         model.addAttribute("productStatus", status);
         return "productManager";
     }
+
+
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST, params = {"startSearch"})
+    public String  searchProduct(ModelMap model, HttpServletRequest req) {
+        String searchTerm = String.valueOf(req.getParameter("searchTerm"));
+        model.addAttribute("productsPage", productService.findProduct(searchTerm, 0))
+                .addAttribute("searchTerm", searchTerm);
+        return "searchResult";
+    }
+
+
+    @RequestMapping(value = "/search/{pageNumber}", method = RequestMethod.GET)
+    public String  searchProductBrowse(ModelMap model,
+                                       @PathVariable(value = "pageNumber") Integer pageNumber,
+                                       @RequestParam(value = "searchTerm", required = false) Optional<String> searchTerm) {
+        if (!searchTerm.isPresent()){
+            return "redirect:/home";
+        }
+
+        model.addAttribute("productsPage", productService.findProduct(searchTerm.get(), pageNumber))
+                .addAttribute("searchTerm", searchTerm);
+        return "searchResult";
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     // TODO EXCEPTION HANDLER

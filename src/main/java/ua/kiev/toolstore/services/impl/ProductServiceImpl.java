@@ -38,6 +38,8 @@ public class ProductServiceImpl implements ProductService {
     @Value("${product.item.per.page.admin}")
     private int PAGE_SIZE_ADMIN;
 
+    @Value("${product.search.sort.by}")
+    private String SEARCH_SORT;
 
 
     public List<Product> findAll() {
@@ -71,16 +73,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
     public Page<Product> findProductByCategory(String category, Integer pageNumber, Optional<String> orderBy, Optional<String> sortBy){
-
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.valueOf(sortBy.get().toUpperCase()), orderBy.get()));;
 
         if (category.equalsIgnoreCase("all")){
-
             return repository.findByStatusNotIn(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
         }
-
         return repository.findByCategoryAndStatusNotIn(ProductCategory.valueOf(category.toUpperCase()),
                 EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
     }
@@ -113,6 +111,37 @@ public class ProductServiceImpl implements ProductService {
 
 
 
+
+
+
+
+
+
+
+
+    public Page<Product> findProduct(String searchTerm, Integer pageNumber){
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.ASC, SEARCH_SORT));
+
+
+//        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.);
+//        LOG.debug("<=== Before gating PAGE");
+//        Page<Product> products = repository.findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(
+//                searchTerm, searchTerm, searchTerm, EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
+//        LOG.debug("<=== After gating PAGE");
+//        if (products == null){
+//            LOG.debug("<=== Products is NULL!");
+//        } else {
+//            LOG.debug("<===!!!===SEARCH!: hasContent: ( " + products.hasContent() + " ), ");
+//
+//            if (products.hasContent()){
+//                LOG.debug("<===!!!===SEARCH!: hasContent: ( "  + "size of List: (" + products.getContent().size()
+//                        + " ). Manufacturer: " + products.getContent().get(0).getManufacturer());
+//            }
+//        }
+
+        return repository.findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(
+                searchTerm, searchTerm, searchTerm, EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
+    }
 
 
 

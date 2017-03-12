@@ -2,10 +2,11 @@ package ua.kiev.toolstore.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.toolstore.model.Product;
@@ -51,4 +52,28 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     Page<Product> findByCategoryAndStatusNotIn(ProductCategory category, Collection<ProductStatus> status, Pageable pageable);
 
 
+
+    @Query(value = "SELECT * FROM products p WHERE " +
+            "LOWER(p.name) LIKE LOWER(CONCAT('%',:searchTerm, '%')) OR " +
+            "LOWER(p.description) LIKE LOWER(CONCAT('%',:searchTerm, '%')) OR " +
+            "LOWER(p.manufacturer) LIKE LOWER(CONCAT('%',:searchTerm, '%'))",
+            nativeQuery = true
+    )
+    List<Product> findBySearchTermNative(@Param("searchTerm") String searchTerm);
+
+
+
+//    List<Product> findByNameOrStatus(String name, String status);
+//    Page<Product> findByNameContaining(@Param("searchTerm") String searchTerm, Pageable pageable);
+//    Page<Product> findAllByNameOrStatusContaining(@Param("searchTerm") String searchTerm, Pageable pageable);
+//    Page<Product> findAllByNameContainingOrDescriptionContainingOrManufacturerContaining(String searchTerm, String searchTerm2, String searchTerm3, Pageable pageable);
+//    Page<Product> findAllByNameContainingOrDescriptionContainingOrManufacturerContainingAndStatusNotIn(String searchTerm, String searchTerm2, String searchTerm3, Collection<ProductStatus> status, Pageable pageable);
+//    Page<Product> findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(String searchTerm, String searchTerm2, String searchTerm3, Collection<ProductStatus> status, Pageable pageable);
+
+
+
+    Page<Product> findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(String searchTerm, String searchTerm2, String searchTerm3, Collection<ProductStatus> status, Pageable pageable);
+
+
 }
+

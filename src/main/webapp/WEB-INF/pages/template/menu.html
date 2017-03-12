@@ -28,7 +28,9 @@
             <th>Order</th>
             <th>OrderMgr(Admin)</th>
             <th>ProductMgr(Admin)</th>
+            <th>Search</th>
         </tr>
+
         <tr>
             <div sec:authorize="isAuthenticated()">
                 <td><a href="#" th:href="@{/logout}">Logout</a></td>
@@ -44,12 +46,24 @@
             <td><a href="#" th:href="@{/order/admin/manage/all/page/0}">Manage-Order</a></td>
             <td><a href="#" th:href="@{/product/admin/manage/all/page/0}">Manage-Product</a></td>
 
-
+            <td><a href="#" th:href="@{/product/search}">SEARCH!!!</a></td>
         </tr>
         </tbody>
     </table>
     <br/>
 </div>
+
+
+<div th:fragment="searchform" class="search-form">
+    <form action="#" th:action="@{/product/search}" method="post">
+        <input type="text" id="comment" name="searchTerm" value="Search product..." />
+        <button type="submit"  name="startSearch" class="btn-link">Search! </button>
+    </form>
+    <br/>
+</div>
+
+
+
 
 
 
