@@ -58,8 +58,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     public void delete(Long id) {
-//        TODO this method can be used for Exception handler testing
-        Assert.isTrue(fileManager.deleteFile(id), "<---E--- Can't delete file from LOCAL storage!");
+        Assert.isTrue(fileManager.deleteFile(id), "Can't delete file from LOCAL storage!");
         repository.delete(id);
     }
 
@@ -81,6 +80,16 @@ public class ProductServiceImpl implements ProductService {
         }
         return repository.findByCategoryAndStatusNotIn(ProductCategory.valueOf(category.toUpperCase()),
                 EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
+    }
+
+
+
+    // ----- Search user "Therm" method -----------
+    public Page<Product> findProduct(String searchTerm, Integer pageNumber){
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.ASC, SEARCH_SORT));
+
+        return repository.findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(
+                searchTerm, searchTerm, searchTerm, EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
     }
 
 
@@ -108,43 +117,5 @@ public class ProductServiceImpl implements ProductService {
         }
         return repository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
     }
-
-
-
-
-
-
-
-
-
-
-
-    public Page<Product> findProduct(String searchTerm, Integer pageNumber){
-        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.ASC, SEARCH_SORT));
-
-
-//        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.);
-//        LOG.debug("<=== Before gating PAGE");
-//        Page<Product> products = repository.findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(
-//                searchTerm, searchTerm, searchTerm, EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
-//        LOG.debug("<=== After gating PAGE");
-//        if (products == null){
-//            LOG.debug("<=== Products is NULL!");
-//        } else {
-//            LOG.debug("<===!!!===SEARCH!: hasContent: ( " + products.hasContent() + " ), ");
-//
-//            if (products.hasContent()){
-//                LOG.debug("<===!!!===SEARCH!: hasContent: ( "  + "size of List: (" + products.getContent().size()
-//                        + " ). Manufacturer: " + products.getContent().get(0).getManufacturer());
-//            }
-//        }
-
-        return repository.findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(
-                searchTerm, searchTerm, searchTerm, EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
-    }
-
-
-
-
 
 }

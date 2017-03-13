@@ -127,6 +127,7 @@ public class ProductController {
         return "productCreate";
     }
 
+
     @RequestMapping(value = "/manage/create", params = {"removeRow"}, method = {RequestMethod.POST})
     public String removeRow(Product product, BindingResult bindingResult, HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
@@ -137,11 +138,11 @@ public class ProductController {
 
     //  **************************** DELETE Product ****************************
     @RequestMapping(value = "/manage/delete/{id}")
-    public String deleteProduct(@PathVariable Long id, Product product, ModelMap model) {
+    public String deleteProduct(@PathVariable Long id, ModelMap model) {
         productService.delete(id);
         LOG.debug("<------Delete product with ID: || " + id);
         model.clear();
-        return "redirect:/product/create";
+        return "redirect:/product/manage/create";
     }
 
 
@@ -206,19 +207,6 @@ public class ProductController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     @RequestMapping(value = "/search", method = RequestMethod.POST, params = {"startSearch"})
     public String  searchProduct(ModelMap model, HttpServletRequest req) {
         String searchTerm = String.valueOf(req.getParameter("searchTerm"));
@@ -239,33 +227,6 @@ public class ProductController {
         model.addAttribute("productsPage", productService.findProduct(searchTerm.get(), pageNumber))
                 .addAttribute("searchTerm", searchTerm);
         return "searchResult";
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    // TODO EXCEPTION HANDLER
-    //  ************************** Exception handler *************************************
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public String handleClientErrors(Exception e) {
-        LOG.warn("<====E==== IllegalArgumentEXCEPTION occur {}" + e.getMessage());
-//        return "redirect:/product/create";
-        return "redirect:/home";
-    }
-
-    @ExceptionHandler(Exception.class)
-    public String handleServerErrors(Exception e) {
-        LOG.warn("<====E==== Exception occur {}" + e.getMessage());
-        return "redirect:/product/create";
     }
 
 

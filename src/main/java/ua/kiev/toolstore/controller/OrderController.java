@@ -131,11 +131,11 @@ public class OrderController {
 
 
     //============================ EXCEPTION handler ===========================================
-    @ExceptionHandler(IllegalArgumentException.class)
-    public String handleClientErrors(Exception e) {
-        LOG.warn("<====E==== IllegalArgumentEXCEPTION occur {}" + e.getMessage());
-        return "redirect:/home";
-    }
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    public String handleClientErrors(Exception e) {
+//        LOG.warn("<====E==== IllegalArgumentEXCEPTION occur {}" + e.getMessage());
+//        return "redirect:/home";
+//    }
 
 }
 

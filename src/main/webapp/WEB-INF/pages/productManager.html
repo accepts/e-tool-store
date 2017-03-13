@@ -45,6 +45,7 @@
             <th>price</th>
             <th>unitInStock</th>
 
+            <th style="background-color: deeppink">delete</th>
             <th style="background-color: brown">LOCKED</th>
             <th style="background-color: crimson">OBSOLETE</th>
             <th style="background-color: mediumseagreen">SPECIAL</th>
@@ -79,6 +80,11 @@
             <td th:text="${{p.price}} + '$'">price</td>
             <td th:text="${{p.unitInStock}}">unitInStock</td>
 
+            <td>
+                <a href="#"
+                   th:href="@{/product/manage/delete/{id} (id=${p.id})}"
+                   class="button-delete">delete</a>
+            </td>
 
             <td>
                 <a href="#"

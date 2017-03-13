@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.kiev.toolstore.model.enums.ProductCategory;
 import ua.kiev.toolstore.util.LoggerWrapper;
+import ua.kiev.toolstore.util.exceptions.CustomGenericException;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -27,7 +28,6 @@ public class HomeController {
 
 	@RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
-		//TODO get user name and greeting him on home page
 		model.addAttribute("message", "Hello from Controller!");
 		LOG.info("<------ Home page is Loaded " + (new Date().toString()));
 
@@ -35,6 +35,10 @@ public class HomeController {
 	}
 
 
+	@RequestMapping(value="/error")
+	public String errorHandle(){
+		throw new CustomGenericException("E888", "Current address does not Exist!");
+	}
 
 
 

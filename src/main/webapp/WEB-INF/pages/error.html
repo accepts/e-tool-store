@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+<div class="main-content">
+
+
+
+    <h3 th:if="${errorMsg} ne null" >
+       Message:  <span th:text="${errorMsg}" style="color: crimson"></span>
+    </h3>
+
+    <h3 th:if="${errorMsg} eq null" >
+        Something is going wrong...
+    </h3>
+
+</div>
+
+
+<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+</body>
+</html>
