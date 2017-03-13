@@ -13,7 +13,7 @@
 
     <!-- ************************************** Site menu  ****************************************** -->
 
-    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
+    <div th:replace="template/menu :: tablecontroller" class="table-controller">
         <table border="2">
             <tbody>
             <tr style="background-color: darkturquoise">
@@ -32,113 +32,110 @@
         <br/> <br/>
     </div>
 
-    <div th:replace="template/menu :: productmenu" class="product-menu" ></div>
+    <div th:replace="template/menu :: productmenu" class="product-menu"></div>
 
-<!-- product/all/page -->
-    <a href="#" th:href="@{?}" class="button-blue"  > ALL-TEST!!!!</a>
+    <!-- product/all/page -->
+    <a href="#" th:href="@{?}" class="button-blue"> ALL-TEST!!!!</a>
 
     <!--${#strings.equals-->
-                                                                        <!--th:class="${isAdmin}? adminclass : userclass"-->
+    <!--th:class="${isAdmin}? adminclass : userclass"-->
 
     <a href="#" th:href="@{?orderBy=price&sortBy=asc}" th:class="${sortBy} eq 'asc' and ${orderBy} eq 'price' ?
-                                                                    'button-blue-active' : 'button-blue' " > PRICE-ASC(V)</a>
+                                                                    'button-blue-active' : 'button-blue' ">
+        PRICE-ASC(V)</a>
     <a href="#" th:href="@{?orderBy=price&sortBy=desc}" th:class="${sortBy} eq 'desc' and ${orderBy} eq 'price' ?
-                                                                    'button-blue-active' : 'button-blue'" > PRICE-DESC(^)</a>
+                                                                    'button-blue-active' : 'button-blue'">
+        PRICE-DESC(^)</a>
 
     <a href="#" th:href="@{?orderBy=manufacturer&sortBy=asc}" th:class="${sortBy} eq 'asc' and ${orderBy} eq 'manufacturer' ?
-                                                                    'button-blue-active' : 'button-blue'" > Brand-Asc(V)</a>
+                                                                    'button-blue-active' : 'button-blue'">
+        Brand-Asc(V)</a>
     <a href="#" th:href="@{?orderBy=manufacturer&sortBy=desc}" th:class="${sortBy} eq 'desc' and ${orderBy} eq 'manufacturer' ?
-                                                                    'button-blue-active' : 'button-blue'" > Brand-DESC(^)</a>
+                                                                    'button-blue-active' : 'button-blue'">
+        Brand-DESC(^)</a>
 
 
-    <div th:unless="${#lists.isEmpty(productsPage)}" ng-app="orderApp">
+    <div class="product-content">
 
-        <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
+        <div th:unless="${#lists.isEmpty(productsPage)}" ng-app="orderApp" id="product-view">
 
-        <div th:if="${productsPage.numberOfElements} > 0" >
-        <table border="1">
-            <thead>
-            <tr style="background-color: dodgerblue">
-                <th>Pic</th>
-                <th>Name</th>
-                <th>description</th>
-                <th>manufact</th>
-                <th>price</th>
-                <th>unit</th>
-                <th>condition</th>
-                <th>category</th>
-                <th>status</th>
-                <th style="background-color: blueviolet">View</th>
-                <th>ADD</th>
-            </tr>
-            </thead>
+            <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
-            <tbody ng-controller="orderCtrl">
-            <tr th:each="p : ${productsPage.content}">
-                <td>
-                    <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 80px" />
-                </td>
-                <td th:text="${{p.name}}">name_product</td>
-                <td th:text="${{p.description}}">description_product</td>
-                <td th:text="${{p.manufacturer}}">product_manufact</td>
-                <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>
-                <td th:text="${{p.unitInStock}}">product_quantity</td>
-                <td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>
-                <td th:text="#{|product.category.${p.category}|}">prod_category</td>
-                <td th:text="#{|product.status.${p.status}|}">prod_status</td>
-                <td><a href="#" th:href="@{/product/detail/{productId} (productId=${p.id}) }">View</a></td>
+            <div th:if="${productsPage.numberOfElements} > 0">
+                <table border="1">
+                    <thead>
+                    <tr style="background-color: dodgerblue">
+                        <th>Pic</th>
+                        <th>Name</th>
+                        <th>description</th>
+                        <th>manufact</th>
+                        <th>price</th>
+                        <th>unit</th>
+                        <th>condition</th>
+                        <th>category</th>
+                        <th>status</th>
+                        <th style="background-color: blueviolet">View</th>
+                        <th>ADD</th>
+                    </tr>
+                    </thead>
 
-                <div sec:authorize="isAuthenticated()" >
-                    <div th:if="${p.unitInStock} < 1">
+                    <tbody ng-controller="orderCtrl">
+                    <tr th:each="p : ${productsPage.content}">
                         <td>
-                            <a href="#"
-                               class="button-buy-locked">Out of stock</a>
+                            <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}"
+                                 style="width: 80px"/>
                         </td>
-                    </div>
+                        <td th:text="${{p.name}}">name_product</td>
+                        <td th:text="${{p.description}}">description_product</td>
+                        <td th:text="${{p.manufacturer}}">product_manufact</td>
+                        <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>
+                        <td th:text="${{p.unitInStock}}">product_quantity</td>
+                        <td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>
+                        <td th:text="#{|product.category.${p.category}|}">prod_category</td>
+                        <td th:text="#{|product.status.${p.status}|}">prod_status</td>
+                        <td><a href="#" th:href="@{/product/detail/{productId} (productId=${p.id}) }">View</a></td>
 
-                    <div th:if="${p.unitInStock} > 0">
-                        <td>
-                            <a href="#"
-                               th:attr="ng-click='addToCart('+ ${p.id} +')'"
-                               class="button-buy-active">Buy!</a>
-                        </td>
-                    </div>
-                </div>
+                        <div sec:authorize="isAuthenticated()">
+                            <div th:if="${p.unitInStock} < 1">
+                                <td>
+                                    <a href="#"
+                                       class="button-buy-locked">Out of stock</a>
+                                </td>
+                            </div>
 
-
-                <div sec:authorize="isAnonymous()">
-                    <td>
-                        <a href="#"
-                           th:href="@{/login}"
-                           class="button-buy-locked">SignIN!</a>
-                    </td>
-                </div>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    </div>
-    <br/><br/>
-
+                            <div th:if="${p.unitInStock} > 0">
+                                <td>
+                                    <a href="#"
+                                       th:attr="ng-click='addToCart('+ ${p.id} +')'"
+                                       class="button-buy-active">Buy!</a>
+                                </td>
+                            </div>
+                        </div>
 
 
-    <div th:if="${productsPage.hasContent()} eq false" >
-        <h1>There is no Product! </h1>
-    </div>
+                        <div sec:authorize="isAnonymous()">
+                            <td>
+                                <a href="#"
+                                   th:href="@{/login}"
+                                   class="button-buy-locked">SignIN!</a>
+                            </td>
+                        </div>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
 
 
-
-
-
-
-    <div class="page-list-container">
-        <!-- Previous + First arrows -->
+        <div class="page-list-container">
+            <!-- Previous + First arrows -->
     <span>
         <span th:if="${productsPage.isFirst() == false}">
             <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
-                                (pageNumber=0, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}"> <--First</a>
+                                (pageNumber=0, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">
+                <--First</a>
         </span>
 
         <span th:if="${productsPage.isFirst()} ">
@@ -149,14 +146,15 @@
     <span>
         <span th:if="${productsPage.hasPrevious()}">
             <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
-                                    (pageNumber=${productsPage.number} - 1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}"> <-Prev</a>
+                                    (pageNumber=${productsPage.number} - 1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">
+                <-Prev</a>
         </span>
          <span th:if="${productsPage.hasPrevious() == false} ">
             <span class="button-disabled"> <-Prev</span>
          </span>
     </span>
 
-        <!-- Numerated List of all pages-->
+            <!-- Numerated List of all pages-->
     <span th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
         <span th:each="ap : ${arrayOfPages}">
             <span th:class="${ap eq productsPage.number} ? 'button-active' : ''">
@@ -168,28 +166,41 @@
         </span>
     </span>
 
-        <!-- Next + Last arrows -->
-    <span >
+            <!-- Next + Last arrows -->
+    <span>
         <span th:if="${productsPage.hasNext()}">
             <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
-                                (pageNumber=${productsPage.number} + 1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}"> Next-></a>
+                                (pageNumber=${productsPage.number} + 1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">
+                Next-></a>
         </span>
         <span th:if="${productsPage.hasNext() == false} ">
             <span class="button-disabled"> Next-></span>
         </span>
     </span>
 
-    <span >
+    <span>
         <span th:if="${productsPage.isLast() == false}">
             <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
-                                (pageNumber=${productsPage.totalPages} -1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy}) }">  Last-->>  </a>
+                                (pageNumber=${productsPage.totalPages} -1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy}) }">
+                Last-->> </a>
         </span>
          <span th:if="${productsPage.isLast()} ">
             <span class="button-disabled"> Last-->></span>
         </span>
     </span>
+        </div>
+
+
     </div>
 
+    <br/><br/>
+
+
+    <!-- If content is absent-->
+
+    <div th:if="${productsPage.hasContent()} eq false" id="product-content-absent">
+        <h1>There is no Product! </h1>
+    </div>
 
 
 </div>

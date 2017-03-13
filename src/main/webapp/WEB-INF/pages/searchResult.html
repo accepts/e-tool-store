@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="template/header :: head">
+    <meta charset="UTF-8">
+    <title th:text="#{title.application}">_test_title_</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+<div th:replace="template/menu :: searchform" class="search-form"><p>_test_search form_</p></div>
+
+
+<div class="main-content">
+
+    <!-- ************************************** Site menu  ****************************************** -->
+
+    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
+        <table border="2">
+            <tbody>
+            <tr style="background-color: darkturquoise">
+                <th>Test_title_1</th>
+                <th>TestTitle_2</th>
+                <th>reserv</th>
+            </tr>
+            <tr>
+                <td><a href="#">_test_Link1</a></td>
+                <td><a href="#">_test_Link2</a></td>
+                <td>reserv</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br/> <br/>
+    </div>
+
+    <div th:replace="template/menu :: productmenu" class="product-menu" ></div>
+
+    <div th:replace="productList :: #product-view"></div>
+
+    <div th:replace="productList :: #product-content-absent"></div>
+
+    <br/><br/>
+
+    <div th:if="${productsPage.hasContent()} eq true" >
+
+    <div class="page-list-container">
+        <!-- Previous + First arrows -->
+    <span>
+        <span th:if="${productsPage.isFirst() == false}">
+            <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=0)}"> <--First</a>
+        </span>
+
+        <span th:if="${productsPage.isFirst()} ">
+            <span class="button-disabled"> <--First</span>
+        </span>
+    </span>
+
+    <span>
+        <span th:if="${productsPage.hasPrevious()}">
+            <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} - 1)}"> <-Prev</a>
+        </span>
+         <span th:if="${productsPage.hasPrevious() == false} ">
+            <span class="button-disabled"> <-Prev</span>
+         </span>
+    </span>
+
+        <!-- Numerated List of all pages-->
+    <span th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
+        <span th:each="ap : ${arrayOfPages}">
+            <span th:class="${ap eq productsPage.number} ? 'button-active' : ''">
+                <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${ap})}">
+                    <span th:text="${ap}+1 + ', '"></span>
+                </a>
+            </span>
+        </span>
+    </span>
+
+        <!-- Next + Last arrows -->
+    <span >
+        <span th:if="${productsPage.hasNext()}">
+            <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} + 1)}"> Next-></a>
+        </span>
+        <span th:if="${productsPage.hasNext() == false} ">
+            <span class="button-disabled"> Next-></span>
+        </span>
+    </span>
+
+    <span >
+        <span th:if="${productsPage.isLast() == false}">
+            <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.totalPages} -1) }">  Last-->>  </a>
+        </span>
+         <span th:if="${productsPage.isLast()} ">
+            <span class="button-disabled"> Last-->></span>
+        </span>
+    </span>
+    </div>
+    </div>
+
+
+</div>
+</body>
+</html>

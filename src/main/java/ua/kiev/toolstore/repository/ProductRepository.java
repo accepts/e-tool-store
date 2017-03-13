@@ -22,7 +22,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     Product findById(Long id);
 
-    //List<Product> findByCategory(ProductCategory category);
 
     @Async
     @Query(value = "SELECT p.picture FROM products p WHERE p.id = ?1", nativeQuery = true)
@@ -45,14 +44,11 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     Page<Product> findByStatus(ProductStatus status, Pageable pageable);
 
-//    Page<Product> findByStatusNotInOrderByManufacturerAsc(Collection<ProductStatus> status, Pageable pageable);
     Page<Product> findByStatusNotIn(Collection<ProductStatus> status, Pageable pageable);
 
-//    Page<Product> findByCategoryAndStatusNotInOrderByManufacturer(ProductCategory category, Collection<ProductStatus> status, Pageable pageable);
     Page<Product> findByCategoryAndStatusNotIn(ProductCategory category, Collection<ProductStatus> status, Pageable pageable);
 
-
-
+/*
     @Query(value = "SELECT * FROM products p WHERE " +
             "LOWER(p.name) LIKE LOWER(CONCAT('%',:searchTerm, '%')) OR " +
             "LOWER(p.description) LIKE LOWER(CONCAT('%',:searchTerm, '%')) OR " +
@@ -60,8 +56,24 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
             nativeQuery = true
     )
     List<Product> findBySearchTermNative(@Param("searchTerm") String searchTerm);
+*/
+
+    Page<Product> findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(String searchTerm, String searchTerm2, String searchTerm3, Collection<ProductStatus> status, Pageable pageable);
+
+}
 
 
+
+
+
+
+
+
+//  List<Product> findByCategory(ProductCategory category);
+
+//    Page<Product> findByStatusNotInOrderByManufacturerAsc(Collection<ProductStatus> status, Pageable pageable);
+
+//    Page<Product> findByCategoryAndStatusNotInOrderByManufacturer(ProductCategory category, Collection<ProductStatus> status, Pageable pageable);
 
 //    List<Product> findByNameOrStatus(String name, String status);
 //    Page<Product> findByNameContaining(@Param("searchTerm") String searchTerm, Pageable pageable);
@@ -72,8 +84,4 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
 
 
-    Page<Product> findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(String searchTerm, String searchTerm2, String searchTerm3, Collection<ProductStatus> status, Pageable pageable);
-
-
-}
 

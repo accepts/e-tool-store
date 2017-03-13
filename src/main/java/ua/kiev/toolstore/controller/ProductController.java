@@ -207,6 +207,18 @@ public class ProductController {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     @RequestMapping(value = "/search", method = RequestMethod.POST, params = {"startSearch"})
     public String  searchProduct(ModelMap model, HttpServletRequest req) {
         String searchTerm = String.valueOf(req.getParameter("searchTerm"));
@@ -216,7 +228,7 @@ public class ProductController {
     }
 
 
-    @RequestMapping(value = "/search/{pageNumber}", method = RequestMethod.GET)
+    @RequestMapping(value = "/search/page/{pageNumber}", method = RequestMethod.GET)
     public String  searchProductBrowse(ModelMap model,
                                        @PathVariable(value = "pageNumber") Integer pageNumber,
                                        @RequestParam(value = "searchTerm", required = false) Optional<String> searchTerm) {
