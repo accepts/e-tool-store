@@ -82,8 +82,9 @@
 
             <td>
                 <a href="#"
-                   th:href="@{/product/manage/delete/{id} (id=${p.id})}"
-                   class="button-delete">delete</a>
+                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber}/delete/{id}
+                   (id=${p.id}, productStatus=${productStatus}, pageNumber=${productsPage.number})}"
+                   class="button-delete">Lock!</a>
             </td>
 
             <td>

@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import ua.kiev.toolstore.model.enums.Role;
 import ua.kiev.toolstore.model.security.AuthorizedUser;
 import ua.kiev.toolstore.model.security.User;
 import ua.kiev.toolstore.model.security.UserWrapper;
 import ua.kiev.toolstore.services.UserService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 @Component
@@ -58,4 +60,43 @@ public class UserUtil {
             return null;
         }
     }
+
+
+    //*********************************************************************************************
+    //******************************* Addition Methods ********************************************
+    //*********************************************************************************************
+
+    public Collection<Role> getRoles(){
+        Collection<Role> roles = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            roles = (Collection<Role>) ((UserDetails)principal).getAuthorities();
+            return roles;
+        } else {
+            return null;
+        }
+    }
+
+    public String getUserName(){
+        String name = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            name = ((UserDetails)principal).getUsername();
+            return name;
+        } else {
+            return null;
+        }
+    }
+
+    public String getEmail(){
+        String email = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            email = ((AuthorizedUser)principal).getUserWrapper().getEmail();
+            return email;
+        } else {
+            return null;
+        }
+    }
+
 }

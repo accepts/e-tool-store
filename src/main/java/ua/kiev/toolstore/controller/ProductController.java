@@ -136,15 +136,6 @@ public class ProductController {
     }
 
 
-    //  **************************** DELETE Product ****************************
-    @RequestMapping(value = "/manage/delete/{id}")
-    public String deleteProduct(@PathVariable Long id, ModelMap model) {
-        productService.delete(id);
-        LOG.debug("<------Delete product with ID: || " + id);
-        model.clear();
-        return "redirect:/product/manage/create";
-    }
-
 
     //  **************************** EDIT Product ****************************
     @RequestMapping(value = "/manage/edit/{id}")
@@ -188,7 +179,8 @@ public class ProductController {
     }
 
 
-    // ---------------- Admin Product  manager page --------------------------
+
+    // ---------------- Admin Product  manager page (Change ProductStatus, DELETE) --------------------------
     @RequestMapping(value = {"/admin/manage/{status}/page/{pageNumber}",
             "/admin/manage/{status}/page/{pageNumber}/{action}/{id}"})
     public String getProductsForManage(@PathVariable(value = "status") String status,
@@ -207,6 +199,7 @@ public class ProductController {
     }
 
 
+
     @RequestMapping(value = "/search", method = RequestMethod.POST, params = {"startSearch"})
     public String  searchProduct(ModelMap model, HttpServletRequest req) {
         String searchTerm = String.valueOf(req.getParameter("searchTerm"));
@@ -214,6 +207,7 @@ public class ProductController {
                 .addAttribute("searchTerm", searchTerm);
         return "searchResult";
     }
+
 
 
     @RequestMapping(value = "/search/page/{pageNumber}", method = RequestMethod.GET)

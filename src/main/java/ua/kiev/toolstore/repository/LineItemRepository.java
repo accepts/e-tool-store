@@ -31,4 +31,12 @@ public interface LineItemRepository extends CrudRepository<LineItem, Long> {
     @Query(value = "DELETE FROM lineitem li WHERE li.order_id = ?1", nativeQuery = true)
     void clearOrder(Long orderId);
 
+
+    // Delete LineItem When some product deleting from DB
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM lineitem li WHERE li.product_id = ?1", nativeQuery = true)
+    void deleteItemWithProductId(Long productId);
+
+
 }

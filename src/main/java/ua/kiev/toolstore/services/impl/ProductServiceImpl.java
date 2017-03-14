@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 import ua.kiev.toolstore.model.Product;
 import ua.kiev.toolstore.model.enums.ProductCategory;
 import ua.kiev.toolstore.model.enums.ProductStatus;
+import ua.kiev.toolstore.repository.LineItemRepository;
 import ua.kiev.toolstore.repository.ProductRepository;
 import ua.kiev.toolstore.services.ProductService;
 import ua.kiev.toolstore.util.FileManager;
@@ -23,11 +24,13 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-
     protected static final LoggerWrapper LOG = LoggerWrapper.get(ProductServiceImpl.class);
 
     @Autowired
-    private ProductRepository repository;
+    private ProductRepository productRepository;
+
+    @Autowired
+    private LineItemRepository lineItemRepository;
 
     @Autowired
     private FileManager fileManager;
@@ -43,32 +46,34 @@ public class ProductServiceImpl implements ProductService {
 
 
     public List<Product> findAll() {
-        return repository.findTop3AllByOrderByIdDesc();
+        return productRepository.findTop3AllByOrderByIdDesc();
     }
 
 
     public Product findById(Long id) {
-        return repository.findById(id);
+        return productRepository.findById(id);
     }
 
 
     public void save(Product product) {
-        repository.save(product);
+        productRepository.save(product);
     }
 
     @Transactional
     public void delete(Long id) {
         Assert.isTrue(fileManager.deleteFile(id), "Can't delete file from LOCAL storage!");
-        repository.delete(id);
+        lineItemRepository.deleteItemWithProductId(id);
+        productRepository.delete(id);
+        LOG.info("<---DELETE Product from repository productId: " + id);
     }
 
     public String findPictureByProductId(Long id) {
-        return repository.findPictureByProductId(id);
+        return productRepository.findPictureByProductId(id);
     }
 
 
     public void setUnitInStock(Long id, int unitInStock) {
-        repository.setUnitInStock(id, unitInStock);
+        productRepository.setUnitInStock(id, unitInStock);
     }
 
 
@@ -76,19 +81,19 @@ public class ProductServiceImpl implements ProductService {
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.valueOf(sortBy.get().toUpperCase()), orderBy.get()));;
 
         if (category.equalsIgnoreCase("all")){
-            return repository.findByStatusNotIn(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
+            return productRepository.findByStatusNotIn(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
         }
-        return repository.findByCategoryAndStatusNotIn(ProductCategory.valueOf(category.toUpperCase()),
+
+        return productRepository.findByCategoryAndStatusNotIn(ProductCategory.valueOf(category.toUpperCase()),
                 EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
     }
-
 
 
     // ----- Search user "Therm" method -----------
     public Page<Product> findProduct(String searchTerm, Integer pageNumber){
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.ASC, SEARCH_SORT));
 
-        return repository.findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(
+        return productRepository.findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(
                 searchTerm, searchTerm, searchTerm, EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
     }
 
@@ -99,23 +104,30 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> findProductByStatus(String status, Integer pageNumber) throws IllegalArgumentException{
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
         if (status.equalsIgnoreCase("all")){
-            return repository.findAllByOrderByIdDesc(request);
+            return productRepository.findAllByOrderByIdDesc(request);
         }
-        return repository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
+        return productRepository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
     }
 
 
     @Transactional
-    public Page<Product> switchProductStatus(String status, Long orderId,
+    public Page<Product> switchProductStatus(String status, Long productId,
                                          String action, Integer pageNumber) throws IllegalArgumentException{
-        ProductStatus newStatus = ProductStatus.valueOf(action.toUpperCase());
-        repository.changeStatus(orderId, newStatus.toString());
-        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
+        PageRequest request = null;
+
+        if (action.equalsIgnoreCase("delete")){
+            delete(productId);
+        } else{
+            ProductStatus newStatus = ProductStatus.valueOf(action.toUpperCase());
+            productRepository.changeStatus(productId, newStatus.toString());
+            request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
+        }
 
         if (status.equalsIgnoreCase("all")){
-            return repository.findAllByOrderByIdDesc(request);
+            return productRepository.findAllByOrderByIdDesc(request);
         }
-        return repository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
+
+        return productRepository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
     }
 
 }

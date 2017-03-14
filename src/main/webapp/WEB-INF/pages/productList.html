@@ -199,7 +199,7 @@
     <!-- If content is absent-->
 
     <div th:if="${productsPage.hasContent()} eq false" id="product-content-absent">
-        <h1>There is no Product! </h1>
+        <h1 th:text="#{searching.get.no.result}">test_There is no Product! </h1>
     </div>
 
 
