@@ -17,7 +17,11 @@ public class AuthenticationSuccessHandlerImpl implements ApplicationListener<Aut
 
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent authenticationSuccessEvent) {
-        LOG.debug("<----LOGIN Success for userID: ( " + userUtil.getUserId() + " ), userEmail: (" + userUtil.getEmail());
+        LOG.debug("<---login success-");
+//        userUtil.setItemsInOrder(6);
+//        LOG.debug("<----LOGIN Success for userID: ( " + userUtil.getUserId()
+//                + " ), userEmail: (" + userUtil.getEmail() + " ) \n items in Order: ( " + userUtil.getItemsInOrder()
+//                + " )"  );
     }
 
 

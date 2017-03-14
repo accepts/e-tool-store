@@ -27,10 +27,6 @@ public interface OrderService {
 
     Order getActiveOrder();
 
-//    Page<Order> findAllOrder(Integer pageNumber);
-
-//    Page<Order> findByOrderStatus(String status, Integer pageNumber);
-
     Page<Order> findOrderByStatus(String status, Integer pageNumber);
 
     Page<Order> switchOrderStatus(String status, Long orderId, String action, Integer pageNumber);
@@ -42,6 +38,8 @@ public interface OrderService {
     Double sumAllItemsInOrder(Long orderId);
 
     Long countLineItemByOrderId(Long orderId);
+
+    Integer countItemsInActiveOrderOfUser(Long userId);
 
     void deleteLineItem(Long itemId);
 }

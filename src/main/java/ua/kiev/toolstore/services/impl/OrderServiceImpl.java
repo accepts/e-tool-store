@@ -229,6 +229,11 @@ public class OrderServiceImpl implements OrderService {
         return lineItemRepository.countLineItemByOrderId(orderId);
     }
 
+    @Override
+    public Integer countItemsInActiveOrderOfUser(Long userId) {
+        return lineItemRepository.countItemsInActiveOrderOfUser(userId);
+    }
+
 
     // Delete item from Order
     @Transactional

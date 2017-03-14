@@ -23,4 +23,8 @@
 
     <context:property-placeholder location="classpath*:messages.properties"/>
 
+    <mvc:interceptors>
+        <bean class="ua.kiev.toolstore.util.ModelInterceptor"/>
+    </mvc:interceptors>
+
 </beans>

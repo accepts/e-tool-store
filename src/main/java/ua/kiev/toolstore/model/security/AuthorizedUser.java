@@ -40,7 +40,6 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
       return userWrapper;
     }
 
-
     @Override
     public String toString() {
         return userWrapper.toString();

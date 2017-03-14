@@ -8,6 +8,7 @@ import ua.kiev.toolstore.model.enums.Role;
 import ua.kiev.toolstore.model.security.AuthorizedUser;
 import ua.kiev.toolstore.model.security.User;
 import ua.kiev.toolstore.model.security.UserWrapper;
+import ua.kiev.toolstore.services.OrderService;
 import ua.kiev.toolstore.services.UserService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 
@@ -23,6 +24,9 @@ public class UserUtil {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     // Validate USER fields (name + email)
     public boolean userFieldsValidator(User user){

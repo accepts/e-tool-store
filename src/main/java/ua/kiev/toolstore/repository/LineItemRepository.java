@@ -38,5 +38,11 @@ public interface LineItemRepository extends CrudRepository<LineItem, Long> {
     @Query(value = "DELETE FROM lineitem li WHERE li.product_id = ?1", nativeQuery = true)
     void deleteItemWithProductId(Long productId);
 
+    @Async
+    @Query(value = "SELECT COUNT(li.amount) FROM lineitem li, orders o WHERE o.orderstatus = 'ACTIVE' AND o.user_id = ?1 AND o.id = li.order_id", nativeQuery = true)
+    Integer countItemsInActiveOrderOfUser(Long userId);
 
 }
+
+
+
