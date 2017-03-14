@@ -59,6 +59,8 @@
 
         <div th:unless="${#lists.isEmpty(productsPage)}" ng-app="orderApp" id="product-view">
 
+            Items in order: <span>{{itemsInOrder}}</span>
+
             <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
             <div th:if="${productsPage.numberOfElements} > 0">
