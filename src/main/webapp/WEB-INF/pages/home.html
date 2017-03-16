@@ -6,13 +6,13 @@
     <title th:text="#{title.application}">_test_title_</title>
     <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
 </head>
-<body>
+<body ng-app="orderApp">
 <div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
 <div th:replace="template/menu :: searchform" class="search-form"><p>_test_search form_</p></div>
 
 
-<div class="main-content">
+<div class="main-content" ng-controller="orderCtrl">
 
 <div th:replace="template/menu :: tablecontroller" class="table-controller" >
     <table border="2">
@@ -32,6 +32,7 @@
 
     Items: <span th:text="${itemsInOrder} eq null ? '0' : ${itemsInOrder}"> _test_items </span>
 
+    Items in Angular: <span>{{itemsInOrder}}</span>
 
     <div sec:authorize="isAuthenticated()">
         <p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>

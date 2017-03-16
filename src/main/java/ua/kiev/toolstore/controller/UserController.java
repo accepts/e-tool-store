@@ -1,22 +1,16 @@
 package ua.kiev.toolstore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.kiev.toolstore.model.Address;
-import ua.kiev.toolstore.model.enums.Role;
-import ua.kiev.toolstore.model.security.AuthorizedUser;
 import ua.kiev.toolstore.model.security.User;
 import ua.kiev.toolstore.services.UserService;
 import ua.kiev.toolstore.util.LoggerWrapper;
 import ua.kiev.toolstore.util.validator.UserUtil;
-
-import java.util.Collection;
 
 @Controller
 @RequestMapping(value = "/user")

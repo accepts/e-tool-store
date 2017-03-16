@@ -27,7 +27,7 @@ public class OrderController {
     @RequestMapping(value = "/add/{productId}", method = RequestMethod.PUT)
     public void addProductToOrder(@PathVariable Long productId){
         orderService.add(productId);
-        LOG.debug("<--- Order Saved to DB");
+        LOG.debug("<===REST+Angular=== Order Saved to DB");
     }
 
 
@@ -44,23 +44,18 @@ public class OrderController {
     }
 
 
-    //TODO Angular
-    //-----------Delete ITEM from ORDER
     @RequestMapping(value = "/item/delete/{itemId}")
     public String deleteItem(@PathVariable Long itemId){
         orderService.deleteLineItem(itemId);
         return "redirect:/order/detail";
     }
 
-    //TODO Angular
-    //----------Clear all ITEM of active ORDER
+
     @RequestMapping(value = "/clear/{orderId}")
     public String clearOrder(@PathVariable Long orderId){
         orderService.clearOrder(orderId);
         return "redirect:/order/detail";
     }
-
-
 
 
     // ===================== Confirm ORDER methods ===========================
@@ -107,6 +102,7 @@ public class OrderController {
     }
 
 
+    // ================== Admin methods: order manager =============================================
 
     @RequestMapping(value = {"/admin/manage/{status}/page/{pageNumber}",
                             "/admin/manage/{status}/page/{pageNumber}/{action}/{id}"})
@@ -123,19 +119,6 @@ public class OrderController {
         model.addAttribute("orderStatus", status);
         return "orderManager";
     }
-
-
-
-
-
-
-
-    //============================ EXCEPTION handler ===========================================
-//    @ExceptionHandler(IllegalArgumentException.class)
-//    public String handleClientErrors(Exception e) {
-//        LOG.warn("<====E==== IllegalArgumentEXCEPTION occur {}" + e.getMessage());
-//        return "redirect:/home";
-//    }
 
 }
 

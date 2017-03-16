@@ -34,13 +34,10 @@
 
     <div th:replace="template/menu :: productmenu" class="product-menu"></div>
 
-    <!-- product/all/page -->
+
     <a href="#" th:href="@{?}" class="button-blue"> ALL-TEST!!!!</a>
 
-    <!--${#strings.equals-->
-    <!--th:class="${isAdmin}? adminclass : userclass"-->
-
-    <a href="#" th:href="@{?orderBy=price&sortBy=asc}" th:class="${sortBy} eq 'asc' and ${orderBy} eq 'price' ?
+     <a href="#" th:href="@{?orderBy=price&sortBy=asc}" th:class="${sortBy} eq 'asc' and ${orderBy} eq 'price' ?
                                                                     'button-blue-active' : 'button-blue' ">
         PRICE-ASC(V)</a>
     <a href="#" th:href="@{?orderBy=price&sortBy=desc}" th:class="${sortBy} eq 'desc' and ${orderBy} eq 'price' ?
@@ -59,7 +56,7 @@
 
         <div th:unless="${#lists.isEmpty(productsPage)}" ng-app="orderApp" id="product-view">
 
-            Items in order: <span>{{itemsInOrder}}</span>
+
 
             <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
@@ -122,7 +119,6 @@
                                    class="button-buy-locked">SignIN!</a>
                             </td>
                         </div>
-
                     </tr>
                     </tbody>
                 </table>

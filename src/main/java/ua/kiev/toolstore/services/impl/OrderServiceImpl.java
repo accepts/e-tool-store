@@ -99,10 +99,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByOrderStatus(orderStatus);
     }
 
-
-
-
-
+    // Get active order
     public Order getActiveOrder() {
         Order order = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE);
         if (order == null){
@@ -122,12 +119,8 @@ public class OrderServiceImpl implements OrderService {
             //return orderRepository.findAllByOrderByOrderStatusAsc(request);
             return orderRepository.findAllByOrderByIdDesc(request);
         }
-
         return orderRepository.findByOrderStatus(OrderStatus.valueOf(status.toUpperCase()), request);
     }
-
-
-
 
 
     //Change ORDER status of particular USER
@@ -163,9 +156,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
-    //===================== LineItem Repository ======================================
-
 /*    Get Address specific to Order
 *     (by default Address is the same that User entered on registration,
 *     after first modifying Address attain unique ID - different from User's address)
@@ -190,6 +180,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    //===================== LineItem Repository ======================================
 
     // Clear all items in particular Order
     @Transactional
@@ -211,8 +202,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    // Sum of all items Price in Order
-    // TODO BIG_DECIMAL rebuild
+    // Sum all items in order
     public Double sumAllItemsInOrder(Long orderId) {
         if (orderId == null){
             orderId = getActiveOrderId();
@@ -229,7 +219,8 @@ public class OrderServiceImpl implements OrderService {
         return lineItemRepository.countLineItemByOrderId(orderId);
     }
 
-    @Override
+
+    // Count quantity of Products in Order
     public Integer countItemsInActiveOrderOfUser(Long userId) {
         return lineItemRepository.countItemsInActiveOrderOfUser(userId);
     }

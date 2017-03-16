@@ -19,11 +19,9 @@ public class Order extends AbstractEntity {
     @JoinColumn(name = "order_id")
     private List<LineItem> lineItems = new ArrayList<LineItem>();
 
-
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
-
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
@@ -88,14 +86,6 @@ public class Order extends AbstractEntity {
     public void setLineItems(List<LineItem> lineItems) {
         this.lineItems = lineItems;
     }
-
-//    public Address getAddress() {
-//        if(address == null){
-//            return user.getAddress();
-//        }
-//        return this.address;
-//    }
-
 
     public Address getAddress() {
         return address;

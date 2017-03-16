@@ -86,7 +86,8 @@
                         <span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
                     </td>
                     <td>
-                        <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id}) }" class="button-delete">Clear Order</a>
+                        <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id}) }"
+                           class="button-delete">Clear Order</a>
                     </td>
                 </tr>
             </table>

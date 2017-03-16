@@ -1,13 +1,14 @@
 package ua.kiev.toolstore.model;
 
-import ua.kiev.toolstore.model.AbstractEntity;
-
 import javax.persistence.Entity;
 
 @Entity
 public class Feature extends AbstractEntity {
 
+
     private String title, body, attribute;
+
+
 
     public Feature() {
     }
