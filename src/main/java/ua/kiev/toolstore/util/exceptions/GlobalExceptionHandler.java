@@ -38,7 +38,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CustomGenericException.class)
     @Order(Ordered.LOWEST_PRECEDENCE)
     ModelAndView handleCustomException(CustomGenericException e){
-        LOG.error("<<-CustomGenericException occur" + " \n " + e.getErrorMsg());
+        LOG.error("<<-CustomGenericException occur" + " \n " + e.getErrorMsg() + "\n" +
+        e.getMessage() + " | Cause: " +e.getCause() );
         ModelAndView model = new ModelAndView("error");
         model.addObject("errorMsg", e.getErrorMsg());
 

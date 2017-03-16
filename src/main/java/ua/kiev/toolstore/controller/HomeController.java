@@ -34,6 +34,11 @@ public class HomeController {
 		return "home";
 	}
 
+	//TODO DELETE this method
+	@RequestMapping(value = {"/index"}, method = RequestMethod.GET)
+	public String indexPage() {
+		return "index";
+	}
 
 	@RequestMapping(value="/error")
 	public String errorHandle(){
