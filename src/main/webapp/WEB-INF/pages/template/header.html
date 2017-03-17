@@ -1,38 +1,99 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head th:fragment="head">
     <meta charset="UTF-8">
 
     <title th:text="#{title.application}">_test_title_</title>
 
-    <!-- CSS styles-->
+    <!-- Custom CSS styles-->
     <link rel="stylesheet" type="text/css" media="all" href="../../resources/css/main.css" th:href="@{/css/main.css}" />
+    <!--<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/style.css" th:href="@{/css/style.css}" />-->
 
+    <!-- Included Bootstrap CSS Files -->
+    <link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bootstrap.css" th:href="@{/css/bootstrap.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bootstrap-responsive.css" th:href="@{/css/bootstrap-responsive.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../resources/css/font-awesome/css/font-awesome.min.css" th:href="@{/css/font-awesome/css/font-awesome.min.css}" />
+
+    <!-- Java script-->
+    <script src="../../resources/js/jquery-1.10.0.min.js" th:src="@{/js/jquery-1.10.0.min.js}"></script>
+    <script src="../../resources/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="../../resources/js/holder.js" th:src="@{/js/holder.js}"></script>
+    <script src="../../resources/js/orderApp.js" th:src="@{/js/orderApp.js}"></script>
     <!-- AngularJS -->
-    <script src="../../resources/js/angular.js" th:src="@{/js/angular.js}">
-    </script>
+    <script src="../../resources/js/angular.js" th:src="@{/js/angular.js}"></script>
+    <script src="../../resources/js/formApp.js" th:src="@{/js/formApp.js}"></script>
+    <script src="../../resources/js/orderApp.js" th:src="@{/js/orderApp.js}"></script>
 
-    <script src="../../resources/js/formApp.js" th:src="@{/js/formApp.js}">
-    </script>
-
-    <script src="../../resources/js/orderApp.js" th:src="@{/js/orderApp.js}">
-    </script>
 </head>
 
 <body>
 
 
 <div th:fragment="header" class="header">
-    <!--<div>-->
-        <!--<img src="../../resources/images/logo.png" alt="STSM logo" title="STSM logo"-->
-             <!--th:src="@{/pic/logo.png}" th:alt-title="#{title.application}"/>-->
-    <!--</div>-->
-    <p>
-        =====================================<br/>
-        ===== Some HEADer from Thymeleaf ====<br/>
-        =====================================<br/>
-    </p>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+
+                <!-- Shop Logo -->
+                <a class="brand" href="/"  th:href="@{/home}">e-ToolStore</a>
+
+                <!-- Search block-->
+                <form action="#" th:action="@{/product/search}" method="post" class="navbar-form form-search pull-left">
+                    <input type="text" id="comment" name="searchTerm" value="Search product..." class="input-medium" />
+                    <button type="submit"  name="startSearch" class="btn">Search! </button>
+                </form>
+
+                <!--Admin manage-->
+                <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                <div class="nav-collapse collapse pull-right">
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin-manage <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" th:href="@{/product/admin/manage/all/page/0}">Product manage</a></li>
+                                <li><a href="#" th:href="@{/order/admin/manage/all/page/0}">Order manage</a></li>
+
+                                <span sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-menu-admin">
+                                    <li><a href="#" th:href="@{/user/admin/manager}">User manage</a></li>
+                                </span>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+
+                <!-- Sign Out-->
+                <div sec:authorize="isAuthenticated()">
+                    <ul class="nav pull-right">
+                        <li><a href="#" th:href="@{/logout}">SignOut</a></li>
+                    </ul>
+                </div>
+
+                <!-- Login - Register -->
+                <div sec:authorize="isAnonymous()">
+                    <div class="nav-collapse collapse pull-right">
+                        <ul class="nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">SignIn<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" th:href="@{/login}">Login</a></li>
+                                    <li><a href="#" th:href="@{/user/register}">Register</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Order -->
+                <ul class="nav pull-right">
+                    <li><a href="#" th:href="@{/order/detail}">Order</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
