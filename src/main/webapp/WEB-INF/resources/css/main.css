@@ -28,32 +28,35 @@
     font-size:inherit;
 }
 
-html {
-    background-color: #f0f0f0;
+.main-content {
+padding: 60px 20px 40px 20px;
+/*display:block;*/
+/*overflow:auto;*/
 }
 
-body {
-    font-family: 'DejaVu Sans', Arial, Helvetica;
-    font-size: 12px;
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAIAAABvrngfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBMTkzRTQwMEEyRDYxMUUzOEY5OEZFRTVDM0IwNzgzNiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBMTkzRTQwMUEyRDYxMUUzOEY5OEZFRTVDM0IwNzgzNiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBCMUVCM0VCQTJDNzExRTM4Rjk4RkVFNUMzQjA3ODM2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjBCMUVCM0VDQTJDNzExRTM4Rjk4RkVFNUMzQjA3ODM2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+4yJi6QAAAEdJREFUeNo8jEEKwEAIA6v0KOL/v+cLBM/adAPrYTAx8c1Md68qsLvNTCCeMyIyM6Bei3p3NSJuivxTFLhzUXxlhS1YnwADAONXI7F5UyFVAAAAAElFTkSuQmCC');
-    border: 2px solid #cccccc;
-    margin: 20px auto;
-    padding: 60px 20px 40px 20px;
-    width: 1050px;
-}
+/*html {*/
+    /*background-color: #eeeeee;*/
+/*}*/
+
+/*.main-content {*/
+    /*font-family: 'DejaVu Sans', Arial, Helvetica;*/
+    /*font-size: 12px;*/
+    /*background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAIAAABvrngfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBMTkzRTQwMEEyRDYxMUUzOEY5OEZFRTVDM0IwNzgzNiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBMTkzRTQwMUEyRDYxMUUzOEY5OEZFRTVDM0IwNzgzNiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBCMUVCM0VCQTJDNzExRTM4Rjk4RkVFNUMzQjA3ODM2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjBCMUVCM0VDQTJDNzExRTM4Rjk4RkVFNUMzQjA3ODM2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+4yJi6QAAAEdJREFUeNo8jEEKwEAIA6v0KOL/v+cLBM/adAPrYTAx8c1Md68qsLvNTCCeMyIyM6Bei3p3NSJuivxTFLhzUXxlhS1YnwADAONXI7F5UyFVAAAAAElFTkSuQmCC');*/
+    /*border: 2px solid #cccccc;*/
+    /*margin: 20px auto;*/
+    /*padding: 60px 20px 40px 20px;*/
+    /*width: 80%;*/
+    /*height: 100%;*/
+    /*/!*height: auto;*!/*/
+    /*display:block;*/
+    /*overflow:auto;*/
+/*}*/
+
+
+
+
 
 /* ====================  DELETE  =====================*/
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -212,43 +215,43 @@ ul.errorlist li, p.errorlist {
 
 /* ======================= Some trash del for Clear work ===========================  */
 
-h1{
-    color: darkred;
-}
+/*h1{*/
+    /*color: darkred;*/
+/*}*/
 
-h2{
-    color: darkslategrey;
-    font-style: italic;
-    text-align: center;
-}
+/*h2{*/
+    /*color: darkslategrey;*/
+    /*font-style: italic;*/
+    /*text-align: center;*/
+/*}*/
 
-.msg-for-customer{
-    font-size: 16px;
-    color: maroon;
-}
+/*.msg-for-customer{*/
+    /*font-size: 16px;*/
+    /*color: maroon;*/
+/*}*/
 
-.page-list-container {
-    width:100%;
-    height:100%;
-    text-align:center;
-    font-size:12px;
-    white-space:nowrap;
-    font-style: normal;
-    border: double;
-}
+/*.page-list-container {*/
+    /*width:100%;*/
+    /*height:100%;*/
+    /*text-align:center;*/
+    /*font-size:12px;*/
+    /*white-space:nowrap;*/
+    /*font-style: normal;*/
+    /*border: double;*/
+/*}*/
 
-.page-list-container a, u{
-    text-decoration: none;
-}
+/*.page-list-container a, u{*/
+    /*text-decoration: none;*/
+/*}*/
 
-.button-disabled{
-    color: #cccccc;
-}
+/*.button-disabled{*/
+    /*color: #cccccc;*/
+/*}*/
 
-.button-active{
-    color: #f0f0f0;
-    background-color: royalblue;
-}
+/*.button-active{*/
+    /*color: #f0f0f0;*/
+    /*background-color: royalblue;*/
+/*}*/
 
 /*.button-active  {*/
     /**/

@@ -7,9 +7,10 @@
     <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
 </head>
 <body>
-<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
 <div class="main-content"  >
+
+    <div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
     <!-- ************************************** Site menu  ****************************************** -->
 
@@ -182,5 +183,8 @@
     </div>
 
 </div>
+
+<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+
 </body>
 </html>
