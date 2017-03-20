@@ -1,38 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="template/header :: head">
+<head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
     <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
 </head>
 <body>
-<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
-<div class="main-content">
+<div th:replace="template/fragments :: header" class="header"><p>_test_header_</p></div>
 
-    <!-- ************************************** Site menu  ****************************************** -->
-
-    <div th:replace="template/menu :: tablecontroller" class="table-controller">
-        <table border="2">
-            <tbody>
-            <tr style="background-color: darkturquoise">
-                <th>Test_title_1</th>
-                <th>TestTitle_2</th>
-                <th>reserv</th>
-            </tr>
-            <tr>
-                <td><a href="#">_test_Link1</a></td>
-                <td><a href="#">_test_Link2</a></td>
-                <td>reserv</td>
-            </tr>
-            </tbody>
-        </table>
-
-        <br/> <br/>
+<div th:replace="template/fragments :: sidebar" class="col-sm-1" >
+    <div id="sidebar-wrapper">
+        <nav id="spy">
+            <ul class="sidebar-nav nav">
+                <li class="sidebar-brand">
+                    <a href="#home"><span class="fa fa-home solo">All</span></a>
+                </li>
+                <li>
+                    <a href="#anch1" data-scroll>
+                        <span class="fa fa-anchor solo">Hand Tool</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch2" data-scroll>
+                        <span class="fa fa-anchor solo">Electric </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch3" data-scroll>
+                        <span class="fa fa-anchor solo">Hydraulic </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch4" data-scroll>
+                        <span class="fa fa-anchor solo">Pneumatic </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
+</div>
 
-    <div th:replace="template/menu :: productmenu" class="product-menu"></div>
+
+<div id="main-content" class="row col-sm-10">
+
+
+    <!--<div th:replace="template/menu :: tablecontroller" class="table-controller">-->
+        <!--<table border="2">-->
+            <!--<tbody>-->
+            <!--<tr style="background-color: darkturquoise">-->
+                <!--<th>Test_title_1</th>-->
+                <!--<th>TestTitle_2</th>-->
+                <!--<th>reserv</th>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td><a href="#">_test_Link1</a></td>-->
+                <!--<td><a href="#">_test_Link2</a></td>-->
+                <!--<td>reserv</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+
+        <!--<br/> <br/>-->
+    <!--</div>-->
+
+    <!--<div th:replace="template/menu :: productmenu" class="product-menu"></div>-->
 
 
     <a href="#" th:href="@{?}" class="button-blue"> ALL-TEST!!!!</a>
@@ -52,11 +85,9 @@
         Brand-DESC(^)</a>
 
 
-    <div class="product-content">
+    <div >
 
         <div th:unless="${#lists.isEmpty(productsPage)}" ng-app="orderApp" id="product-view">
-
-
 
             <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
@@ -127,7 +158,8 @@
         </div>
 
 
-        <div class="page-list-container">
+
+    <div class="page-list-container">
             <!-- Previous + First arrows -->
     <span>
         <span th:if="${productsPage.isFirst() == false}">
@@ -188,8 +220,9 @@
     </span>
         </div>
 
+    </div> <!--product-content-->
 
-    </div>
+
 
     <br/><br/>
 
@@ -203,7 +236,7 @@
 
 </div>
 
-<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+<div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
 
 </body>
 </html>
