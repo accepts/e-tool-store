@@ -45,119 +45,83 @@
 
 <div id="main-content" class="row col-sm-10">
 
-
-    <!--<div th:replace="template/menu :: tablecontroller" class="table-controller">-->
-        <!--<table border="2">-->
-            <!--<tbody>-->
-            <!--<tr style="background-color: darkturquoise">-->
-                <!--<th>Test_title_1</th>-->
-                <!--<th>TestTitle_2</th>-->
-                <!--<th>reserv</th>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td><a href="#">_test_Link1</a></td>-->
-                <!--<td><a href="#">_test_Link2</a></td>-->
-                <!--<td>reserv</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-        <!--</table>-->
-
-        <!--<br/> <br/>-->
-    <!--</div>-->
-
-    <!--<div th:replace="template/menu :: productmenu" class="product-menu"></div>-->
+    <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
 
-    <a href="#" th:href="@{?}" class="button-blue"> ALL-TEST!!!!</a>
+    <!-- Sort button -->
+    <div id="sort-button-block" class="row col-sm-10" >
 
-     <a href="#" th:href="@{?orderBy=price&sortBy=asc}" th:class="${sortBy} eq 'asc' and ${orderBy} eq 'price' ?
-                                                                    'button-blue-active' : 'button-blue' ">
-        PRICE-ASC(V)</a>
-    <a href="#" th:href="@{?orderBy=price&sortBy=desc}" th:class="${sortBy} eq 'desc' and ${orderBy} eq 'price' ?
-                                                                    'button-blue-active' : 'button-blue'">
-        PRICE-DESC(^)</a>
+        <a href="#" th:href="@{?}" class="btn btn-success btn-sm" id="button-blue"> All Products</a>
 
-    <a href="#" th:href="@{?orderBy=manufacturer&sortBy=asc}" th:class="${sortBy} eq 'asc' and ${orderBy} eq 'manufacturer' ?
-                                                                    'button-blue-active' : 'button-blue'">
-        Brand-Asc(V)</a>
-    <a href="#" th:href="@{?orderBy=manufacturer&sortBy=desc}" th:class="${sortBy} eq 'desc' and ${orderBy} eq 'manufacturer' ?
-                                                                    'button-blue-active' : 'button-blue'">
-        Brand-DESC(^)</a>
+        <a href="#" th:href="@{?orderBy=price&sortBy=asc}" class="btn btn-default btn-sm"
+           th:id="${sortBy} eq 'asc' and ${orderBy} eq 'price' ? 'button-blue-active' : 'button-blue' ">
+            PRICE-ASC(V)</a>
+
+        <a href="#" th:href="@{?orderBy=price&sortBy=desc}" class="btn btn-default btn-sm"
+           th:id="${sortBy} eq 'desc' and ${orderBy} eq 'price' ? 'button-blue-active' : 'button-blue'">
+            PRICE-DESC(^)</a>
+
+        <a href="#" th:href="@{?orderBy=manufacturer&sortBy=asc}" class="btn btn-default btn-sm"
+           th:id="${sortBy} eq 'asc' and ${orderBy} eq 'manufacturer' ? 'button-blue-active' : 'button-blue'">
+            Brand-Asc(V)</a>
+
+        <a href="#" th:href="@{?orderBy=manufacturer&sortBy=desc}" class="btn btn-default btn-sm"
+           th:id="${sortBy} eq 'desc' and ${orderBy} eq 'manufacturer' ? 'button-blue-active' : 'button-blue'">
+            Brand-DESC(^)</a>
+    </div>
 
 
-    <div >
 
-        <div th:unless="${#lists.isEmpty(productsPage)}" ng-app="orderApp" id="product-view">
+    <!-- Products list-->
 
-            <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
+        <div ng-app="orderApp" id="product-view">
 
             <div th:if="${productsPage.numberOfElements} > 0">
-                <table border="1">
-                    <thead>
-                    <tr style="background-color: dodgerblue">
-                        <th>Pic</th>
-                        <th>Name</th>
-                        <th>description</th>
-                        <th>manufact</th>
-                        <th>price</th>
-                        <th>unit</th>
-                        <th>condition</th>
-                        <th>category</th>
-                        <th>status</th>
-                        <th style="background-color: blueviolet">View</th>
-                        <th>ADD</th>
-                    </tr>
-                    </thead>
 
-                    <tbody ng-controller="orderCtrl">
-                    <tr th:each="p : ${productsPage.content}">
-                        <td>
-                            <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}"
-                                 style="width: 80px"/>
-                        </td>
-                        <td th:text="${{p.name}}">name_product</td>
-                        <td th:text="${{p.description}}">description_product</td>
-                        <td th:text="${{p.manufacturer}}">product_manufact</td>
-                        <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>
-                        <td th:text="${{p.unitInStock}}">product_quantity</td>
-                        <td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>
-                        <td th:text="#{|product.category.${p.category}|}">prod_category</td>
-                        <td th:text="#{|product.status.${p.status}|}">prod_status</td>
-                        <td><a href="#" th:href="@{/product/detail/{productId} (productId=${p.id}) }">View</a></td>
+                <div class="col-xs-18 col-sm-6 col-md-3" th:each="p : ${productsPage.content}" ng-controller="orderCtrl">
+                    <div class="thumbnail">
+                        <img src="../resources/images/fein_kbh.jpg" th:src="@{/photo/} + ${p.id}" alt="">
+                        <div class="caption">
+                            <h3 th:text="${{p.manufacturer}}">Fein</h3>
+                            <h4 th:text="${{p.name}}">Name</h4>
+                            <p th:text="${#numbers.formatDecimal(p.price, 0, 2)} + ' $'" class="thumbnail-price" >90.99 $</p>
+                            <p th:text="${{p.description}}" class="thumbnail-description">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat.
+                                Consectetur, culpa itaque odio similique suscipit
+                            </p>
 
-                        <div sec:authorize="isAuthenticated()">
-                            <div th:if="${p.unitInStock} < 1">
-                                <td>
-                                    <a href="#"
-                                       class="button-buy-locked">Out of stock</a>
-                                </td>
-                            </div>
 
-                            <div th:if="${p.unitInStock} > 0">
-                                <td>
-                                    <a href="#"
-                                       th:attr="ng-click='addToCart('+ ${p.id} +')'"
-                                       class="button-buy-active">Buy!</a>
-                                </td>
-                            </div>
+                         <p class="thumbnail-buttons">
+
+                            <a href="#" sec:authorize="isAuthenticated()" th:if="${p.unitInStock} < 1"
+                               id="btn-add-to-basket-lock" class="btn btn-info btn-sm" role="button">Out of stock</a>
+
+                            <a href="#" sec:authorize="isAuthenticated()" th:if="${p.unitInStock} > 0"
+                               th:attr="ng-click='addToCart('+ ${p.id} +')'" id="btn-add-to-basket"
+                               class="btn btn-info btn-sm" role="button" >Add to basket!</a>
+
+                            <a href="#" sec:authorize="isAnonymous()" th:href="@{/login}" id="btn-add-to-basket-lock"
+                               class="btn btn-info btn-sm" role="button">SignIN!</a>
+
+                            <a href="#" th:href="@{/product/detail/{productId} (productId=${p.id}) }"
+                               id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>
+
+                         </p>
+
                         </div>
+                    </div>
+                </div>
 
 
-                        <div sec:authorize="isAnonymous()">
-                            <td>
-                                <a href="#"
-                                   th:href="@{/login}"
-                                   class="button-buy-locked">SignIN!</a>
-                            </td>
-                        </div>
-                    </tr>
-                    </tbody>
-                </table>
+
+
             </div>
 
         </div>
 
 
+    <br/><br/>
 
     <div class="page-list-container">
             <!-- Previous + First arrows -->
@@ -220,11 +184,6 @@
     </span>
         </div>
 
-    </div> <!--product-content-->
-
-
-
-    <br/><br/>
 
 
     <!-- If content is absent-->
@@ -240,3 +199,83 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div th:replace="template/menu :: tablecontroller" class="table-controller">-->
+<!--<table border="2">-->
+<!--<tbody>-->
+<!--<tr style="background-color: darkturquoise">-->
+<!--<th>Test_title_1</th>-->
+<!--<th>TestTitle_2</th>-->
+<!--<th>reserv</th>-->
+<!--</tr>-->
+<!--<tr>-->
+<!--<td><a href="#">_test_Link1</a></td>-->
+<!--<td><a href="#">_test_Link2</a></td>-->
+<!--<td>reserv</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+
+<!--<br/> <br/>-->
+<!--</div>-->
+
+<!--<div th:replace="template/menu :: productmenu" class="product-menu"></div>-->
+
+
+
+<!--<tbody ng-controller="orderCtrl">-->
+<!--<tr th:each="p : ${productsPage.content}">-->
+<!--<td>-->
+<!--<img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}"-->
+<!--style="width: 80px"/>-->
+<!--</td>-->
+<!--<td th:text="${{p.name}}">name_product</td>-->
+<!--<td th:text="${{p.description}}">description_product</td>-->
+<!--<td th:text="${{p.manufacturer}}">product_manufact</td>-->
+<!--<td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>-->
+<!--<td th:text="${{p.unitInStock}}">product_quantity</td>-->
+<!--<td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>-->
+<!--<td th:text="#{|product.category.${p.category}|}">prod_category</td>-->
+<!--<td th:text="#{|product.status.${p.status}|}">prod_status</td>-->
+<!--<td><a href="#" th:href="@{/product/detail/{productId} (productId=${p.id}) }">View</a></td>-->
+
+<!--<div sec:authorize="isAuthenticated()">-->
+<!--<div th:if="${p.unitInStock} < 1">-->
+<!--<td>-->
+<!--<a href="#"-->
+<!--class="button-buy-locked">Out of stock</a>-->
+<!--</td>-->
+<!--</div>-->
+
+<!--<div th:if="${p.unitInStock} > 0">-->
+<!--<td>-->
+<!--<a href="#"-->
+<!--th:attr="ng-click='addToCart('+ ${p.id} +')'"-->
+<!--class="button-buy-active">Buy!</a>-->
+<!--</td>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--<div sec:authorize="isAnonymous()">-->
+<!--<td>-->
+<!--<a href="#"-->
+<!--th:href="@{/login}"-->
+<!--class="button-buy-locked">SignIN!</a>-->
+<!--</td>-->
+<!--</div>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="template/header :: head">
+<head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
     <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
 </head>
 
 <body>
+
+<div th:replace="template/fragments :: header" class="header"><p>_test_header_</p></div>
+
 
 <div class="content">
 
@@ -33,5 +36,9 @@
 <p><a href="#" th:href="@{/user/register}">Register</a></p>
 
     </div>
+
+
+<div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
+
 </body>
 </html>

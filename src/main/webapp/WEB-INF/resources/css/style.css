@@ -90,12 +90,36 @@ html {
     border-color: #080808;
 }
 
+#btn-add-to-basket-lock{
+    background-color: #999999;
+    border-color: #080808;
+}
+
 #btn-detail{
     background-color: #eeeceb;
     border-color: #999999;
 }
 
+#button-blue-active{
+    background-color: #56128e;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
+}
 
+#button-blue{
+    background-color: #269abc;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
+}
+
+
+#sort-button-block{
+    text-align: right;
+    margin-bottom: 50px;
+    /*align-content: flex-end;*/
+}
 
 
 /* ====================== Sidebar ===================== */
@@ -169,7 +193,7 @@ html {
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-    font-size: 28px;
+    font-size: 20px;
     color: #ac2925;
     background: none;
 }
