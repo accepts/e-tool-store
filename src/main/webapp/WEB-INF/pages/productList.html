@@ -42,14 +42,19 @@
     </div>
 </div>
 
+<!--TODO title of product depends of category displayed-->
+<!--<h4 th:text="#{product.table.title.list}">_test_List of Products_</h4>-->
 
 <div id="main-content" class="row col-sm-10">
 
-    <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
+    <!-- TODO  If content is absent-->
+    <div th:if="${productsPage.hasContent()} eq false">
+        <h1 th:text="#{searching.get.no.result}">test_There is no Product! </h1>
+    </div>
 
 
     <!-- Sort button -->
-    <div id="sort-button-block" class="row col-sm-10" >
+    <div id="sort-button-block"  >
 
         <a href="#" th:href="@{?}" class="btn btn-success btn-sm" id="button-blue"> All Products</a>
 
@@ -71,9 +76,7 @@
     </div>
 
 
-
     <!-- Products list-->
-
         <div ng-app="orderApp" id="product-view">
 
             <div th:if="${productsPage.numberOfElements} > 0">
@@ -90,6 +93,25 @@
                                 Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat.
                                 Consectetur, culpa itaque odio similique suscipit
                             </p>
+
+<!--FRESH + SPECIAL-->
+
+                            <!--<div class="label-image">-->
+                                <!--<span class="fa-stack fa-lg" id="action">-->
+                                    <!--<i class="fa fa-bookmark  fa-stack-2x" ></i>-->
+                                    <!--<i class="fa fa-stack-1x fa-inverse" id="label-image-text">New!</i>-->
+                                <!--</span>-->
+                            <!--</div>-->
+
+                            <div class="label-image">
+                                <span class="fa-stack fa-lg" id="action">
+                                    <i class="fa fa-tag  fa-stack-2x flash" ></i>
+                                    <i class="fa fa-stack-1x fa-inverse" id="label-image-text"> -5% </i>
+                                </span>
+                            </div>
+
+
+
 
 
                          <p class="thumbnail-buttons">
@@ -112,95 +134,55 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
             </div>
-
         </div>
-
-
-    <br/><br/>
-
-
-
-
-
-    <!-- Pagination -->
-    <div class="page-list-container" th:if="${productsPage.totalPages} > 1">
-            <!-- Previous + First arrows -->
-    <span>
-        <span th:if="${productsPage.isFirst() == false}">
-            <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
-                                (pageNumber=0, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">
-                <--First</a>
-        </span>
-
-        <span th:if="${productsPage.isFirst()} ">
-            <span class="button-disabled"> <--First</span>
-        </span>
-    </span>
-
-    <span>
-        <span th:if="${productsPage.hasPrevious()}">
-            <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
-                                    (pageNumber=${productsPage.number} - 1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">
-                <-Prev</a>
-        </span>
-         <span th:if="${productsPage.hasPrevious() == false} ">
-            <span class="button-disabled"> <-Prev</span>
-         </span>
-    </span>
-
-            <!-- Numerated List of all pages-->
-    <span th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
-        <span th:each="ap : ${arrayOfPages}">
-            <span th:class="${ap eq productsPage.number} ? 'button-active' : ''">
-                <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
-                 (pageNumber=${ap}, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">
-                    <span th:text="${ap}+1 + ', '"></span>
-                </a>
-            </span>
-        </span>
-    </span>
-
-            <!-- Next + Last arrows -->
-    <span>
-        <span th:if="${productsPage.hasNext()}">
-            <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
-                                (pageNumber=${productsPage.number} + 1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">
-                Next-></a>
-        </span>
-        <span th:if="${productsPage.hasNext() == false} ">
-            <span class="button-disabled"> Next-></span>
-        </span>
-    </span>
-
-    <span>
-        <span th:if="${productsPage.isLast() == false}">
-            <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
-                                (pageNumber=${productsPage.totalPages} -1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy}) }">
-                Last-->> </a>
-        </span>
-         <span th:if="${productsPage.isLast()} ">
-            <span class="button-disabled"> Last-->></span>
-        </span>
-    </span>
-
-        </div>
-            <!-- END pagination-->
-
-
-
-    <!-- If content is absent-->
-
-    <div th:if="${productsPage.hasContent()} eq false" id="product-content-absent">
-        <h1 th:text="#{searching.get.no.result}">test_There is no Product! </h1>
-    </div>
-
 
 </div>
+
+
+<!-- Pagination -->
+<div class="container col-sm-10" id="pagination-products">
+    <ul class="pagination" th:if="${productsPage.totalPages} > 1"
+        th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
+
+        <!-- First arrow -->
+        <li th:class ="${productsPage.isFirst()} eq true ? 'disabled' : '' ">
+            <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
+                                (pageNumber=0, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">&laquo; First</a>
+        </li>
+
+        <!--Previous arrow -->
+        <li th:class ="${productsPage.hasPrevious()} eq false ? 'disabled' : '' ">
+            <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
+                                    (pageNumber=${productsPage.number} - 1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">
+                &lsaquo; Prev</a>
+        </li>
+
+        <!-- Numerated List of all pages-->
+        <li th:each="ap : ${arrayOfPages}" th:class="${ap eq productsPage.number} ? 'active' : ''">
+            <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
+                 (pageNumber=${ap}, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}" th:text="${ap}+1">
+                _test_page_number_
+            </a>
+        </li>
+
+        <!-- Next  arrow -->
+        <li th:class ="${productsPage.hasNext()} eq false ? 'disabled' : '' ">
+            <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
+                                (pageNumber=${productsPage.number} + 1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy})}">
+                Next &rsaquo;</a>
+        </li>
+
+        <!--Last arrow-->
+        <li th:class ="${productsPage.isLast()} eq true ? 'disabled' : '' ">
+            <a href="#" th:href="@{/product/{productCategory}/page/{pageNumber}?orderBy={orderBy}&sortBy={sortBy}
+                                (pageNumber=${productsPage.totalPages} -1, productCategory=${productCategory}, orderBy=${orderBy}, sortBy=${sortBy}) }">
+                Last &raquo; </a>
+        </li>
+
+    </ul>
+</div>
+<!-- END pagination-->
 
 <div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
 

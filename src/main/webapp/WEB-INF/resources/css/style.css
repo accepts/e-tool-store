@@ -5,7 +5,7 @@ html {
 
 #main-content{
     margin-top: 80px;
-    margin-bottom: 40px;
+    margin-bottom: 80px;
     margin-left: 150px;
 }
 
@@ -100,6 +100,39 @@ html {
     border-color: #999999;
 }
 
+
+/*---------------------- Thumbnails Label ---------------------------------*/
+
+.label-image #action {
+    font-size: 30px;
+    color: #269abc;
+    position: absolute;
+    top: -12px;
+    right: 3px;
+    padding: 4px;
+    /*opacity: .55;*/
+}
+
+#label-image-text{
+    font-size: 12px;
+
+}
+
+.flesh{
+    color: #b92c28;
+}
+
+
+/*
+.labelimage #label-icon:hover{
+    font-size: 36px;
+    color: red;
+    opacity: 1;
+}*/
+
+
+/* -------------------Buttons sort -------------------------*/
+
 #button-blue-active{
     background-color: #56128e;
     border-color: #080808;
@@ -121,6 +154,20 @@ html {
     /*align-content: flex-end;*/
 }
 
+
+/* ------------- Pagination ------------------------------*/
+
+.pagination .disabled{
+    pointer-events: none;
+}
+
+#pagination-products{
+    position:absolute;
+    bottom: 10px;
+    left: 150px;
+    margin-top: 40px;
+    text-align: center;
+}
 
 /* ====================== Sidebar ===================== */
 
