@@ -85,37 +85,34 @@
                     <div class="thumbnail">
                         <img src="../resources/images/fein_kbh.jpg" th:src="@{/photo/} + ${p.id}" alt="">
                         <div class="caption">
-                            <h3 th:text="${{p.manufacturer}}">Fein</h3>
-                            <h4 th:text="${{p.name}}">Name</h4>
+                            <h3 th:text="${p.manufacturer}">Fein</h3>
+                            <h4 th:text="${p.name}">Name</h4>
                             <p th:text="${#numbers.formatDecimal(p.price, 0, 2)} + ' $'" class="thumbnail-price" >90.99 $</p>
-                            <p th:text="${{p.description}}" class="thumbnail-description">
+                            <p th:text="${p.description}" class="thumbnail-description">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                 Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat.
                                 Consectetur, culpa itaque odio similique suscipit
                             </p>
 
-<!--FRESH + SPECIAL-->
-
-                            <!--<div class="label-image">-->
-                                <!--<span class="fa-stack fa-lg" id="action">-->
-                                    <!--<i class="fa fa-bookmark  fa-stack-2x" ></i>-->
-                                    <!--<i class="fa fa-stack-1x fa-inverse" id="label-image-text">New!</i>-->
-                                <!--</span>-->
-                            <!--</div>-->
-
-                            <div class="label-image">
-                                <span class="fa-stack fa-lg" id="action">
-                                    <i class="fa fa-tag  fa-stack-2x flash" ></i>
-                                    <i class="fa fa-stack-1x fa-inverse" id="label-image-text"> -5% </i>
+                        <!--FRESH + SPECIAL label-->
+                            <th:block th:switch="${p.status}">
+                            <div th:case="${T(ua.kiev.toolstore.model.enums.ProductStatus).FRESH}" class="label-image" >
+                                <span   class="fa-stack fa-lg" id="action">
+                                    <i class="fa fa-stack-2x" ><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span></i>
+                                    <i class="fa fa-stack-1x fa-inverse" id="label-image-text" th:text="#{product.label.fresh}">_New!</i>
                                 </span>
                             </div>
 
-
-
-
+                            <div th:case="${T(ua.kiev.toolstore.model.enums.ProductStatus).SPECIAL}"  class="label-image">
+                                <span class="fa-stack fa-lg" id="action">
+                                    <i class="fa fa-tag  fa-stack-2x flash" ></i>
+                                    <!--<i class="fa fa-stack-2x flash" ><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></i>-->
+                                    <i class="fa fa-stack-1x fa-inverse" id="label-image-text" th:text="#{product.label.special}"> -x% </i>
+                                </span>
+                            </div>
+                            </th:block>
 
                          <p class="thumbnail-buttons">
-
                             <a href="#" sec:authorize="isAuthenticated()" th:if="${p.unitInStock} < 1"
                                id="btn-add-to-basket-lock" class="btn btn-info btn-sm" role="button">Out of stock</a>
 
@@ -128,7 +125,6 @@
 
                             <a href="#" th:href="@{/product/detail/{productId} (productId=${p.id}) }"
                                id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>
-
                          </p>
 
                         </div>
@@ -142,8 +138,9 @@
 
 <!-- Pagination -->
 <div class="container col-sm-10" id="pagination-products">
-    <ul class="pagination" th:if="${productsPage.totalPages} > 1"
-        th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
+    <ul class="pagination" th:if="${productsPage.totalPages} > 1">
+
+        <th:block th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
 
         <!-- First arrow -->
         <li th:class ="${productsPage.isFirst()} eq true ? 'disabled' : '' ">
@@ -180,6 +177,7 @@
                 Last &raquo; </a>
         </li>
 
+        </th:block>
     </ul>
 </div>
 <!-- END pagination-->
