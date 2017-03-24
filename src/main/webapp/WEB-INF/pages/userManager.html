@@ -1,57 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="template/header :: head">
+<head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
     <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
 </head>
 <body>
-<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+<div th:replace="template/fragments :: header" ></div>
+
+<div th:replace="template/fragments :: sidebar" ></div>
+
+<!--Main content-->
+<div id="main-content" class="row col-sm-10">
+
+    <h2>User manager:</h2>
+    <strong>Total users: </strong> <span th:text="${usersPage.totalElements}"
+                                            style="color: brown">_test_</span><br/>
+    <hr>
 
 
-<div class="main-content">
-
-    <!-- ************************************** Site menu  ****************************************** -->
-
-    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
-        <table border="2">
-            <tbody>
-            <tr style="background-color: darkturquoise">
-                <th>Test_title_1</th>
-                <th>TestTitle_2</th>
-                <th>reserv</th>
-            </tr>
-            <tr>
-                <td><a href="#">_test_Link1</a></td>
-                <td><a href="#">_test_Link2</a></td>
-                <td>reserv</td>
-            </tr>
-            </tbody>
-        </table>
-        <br/>
-        <br/>
-    </div>
-
-
-    <p>-----------------USER (ALL)-------------------</p>
-
-
-    <table border="2">
-        <tbody>
-        <tr style="background-color: limegreen">
+    <table class="table table-bordered compact-font filled-head">
+        <thead>
+        <tr>
             <th>ID</th>
-            <th>name</th>
-            <th>E-MAil</th>
-            <th>password</th>
-            <th>enabled</th>
-            <th>ROLES</th>
-            <th>first Name</th>
-            <th>last name</th>
+            <th>Name</th>
+            <th>E-Mail</th>
+            <th>Password</th>
+            <th>Enabled</th>
+            <th>Roles</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+
             <th>Switch</th>
             <th>Delete</th>
         </tr>
-        <tr th:each="u : ${users}">
+        <tbody>
+        <tr th:each="u : ${usersPage.content}">
             <td th:text="${u.id}">testID</td>
             <td th:text="${u.name}">name</td>
             <td th:text="${u.email}">email</td>
@@ -59,7 +45,7 @@
             <td th:text="#{|user.active.${u.enabled}|}">prod_status</td>
             <td>
                 <table>
-                    <tbody style="background-color: deeppink">
+                    <tbody style="background-color: #b2dba1">
                     <tr th:each="r, rowStat : ${u.roles}">
                         <td th:text="${rowStat.count}">1</td>
                         <td th:text="${r}">_title_</td>
@@ -70,46 +56,81 @@
             <td th:text="${u.firstName}">firstname</td>
             <td th:text="${u.lastName}">testLAstName</td>
 
-            <td th:switch="${u.enabled}" style="align-content: center">
-                <p th:case="true">
-                    <a href="#"
-                       th:href="@{/user/admin/manager/reset_user/{id}/false (id=${u.id})}"
-                       class="button-lock">Lock</a></p>
+            <td th:switch="${u.enabled}">
+                <th:block th:case="true">
+                    <a href="#" th:href="@{/user/admin/manage/reset_user/{id}/false?pageNumber={pageNumber} (id=${u.id}, pageNumber=${usersPage.number})}"
+                       id="button-orange" class="btn btn-default btn-xs">Lock</a>
+                </th:block>
 
-                <p th:case="false"><a href="#"
-                       th:href="@{/user/admin/manager/reset_user/{id}/true (id=${u.id})}"
-                       class="button-unlock">Unlock</a></p>
+                <th:block th:case="false">
+                    <a href="#" th:href="@{/user/admin/manage/reset_user/{id}/true?pageNumber={pageNumber} (id=${u.id}, pageNumber=${usersPage.number})}"
+                    id="button-green" class="btn btn-default btn-xs">Unlock</a>
+                </th:block>
             </td>
 
             <td>
-                <p>
-                    <a href="#"
-                       th:href="@{/user/admin/manager/delete_user/{id} (id=${u.id})}"
-                       class="button-delete">Delete</a>
-                </p>
+                <a href="#" th:href="@{/user/admin/manage/delete_user/{id}?pageNumber={pageNumber} (id=${u.id}, pageNumber=${usersPage.number})}"
+                   id="button-red" class="btn btn-default btn-xs">Delete</a>
             </td>
-
-
         </tr>
         </tbody>
     </table>
-
-    <br/>
-    <br/>
-
-
 </div>
-<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+<!-- END Main content-->
+
+
+<!-- Pagination -->
+<div class="container col-sm-10" id="pagination-products">
+    <ul class="pagination" th:if="${usersPage.totalPages} > 1">
+
+        <th:block
+                th:with="firstPage=0, lastPage=${usersPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
+
+            <!-- First arrow -->
+            <li th:class="${usersPage.isFirst()} eq true ? 'disabled' : '' ">
+                <a href="#"
+                   th:href="@{/user/admin/manage/page/{pageNumber} (pageNumber=0)}"> &laquo;
+                    First</a>
+            </li>
+
+            <!--Previous arrow -->
+            <li th:class="${usersPage.hasPrevious()} eq false ? 'disabled' : '' ">
+
+                <a href="#" th:href="@{/user/admin/manage/page/{pageNumber}
+                    (pageNumber=${usersPage.number} - 1)}"> &lsaquo; Prev </a>
+
+            </li>
+
+            <!-- Numerated List of all pages-->
+            <li th:each="ap : ${arrayOfPages}" th:class="${ap eq usersPage.number} ? 'active' : ''">
+                <a href="#"
+                   th:href="@{/user/admin/manage/page/{pageNumber} (pageNumber=${ap})}"
+                   th:text="${ap}+1">
+                    _test_page_number_
+                </a>
+            </li>
+
+            <!-- Next  arrow -->
+            <li th:class="${usersPage.hasNext()} eq false ? 'disabled' : '' ">
+                <a href="#" th:href="@{/user/admin/manage/page/{pageNumber}
+                                (pageNumber=${usersPage.number} + 1)}">
+                    Next &rsaquo;</a>
+            </li>
+
+            <!--Last arrow-->
+            <li th:class="${usersPage.isLast()} eq true ? 'disabled' : '' ">
+                <a href="#" th:href="@{/user/admin/manage/page/{pageNumber}
+                                (pageNumber=${usersPage.totalPages} -1) }">
+                    Last &raquo; </a>
+            </li>
+
+        </th:block>
+    </ul>
+</div>
+<!-- END pagination-->
+
+
+<div th:replace="template/fragments :: footer"><p>_test_footer_</p></div>
 </body>
 </html>
 
-
-
-
-
-
-<!--/admin/reset_user/{personId}/{value}-->
-<!--/admin/reset_user/{id}/{value}-->
-
-<!--<p th:case="true" th:text="#{messages.true}">_temp_enabled_</p>-->
-<!--<p th:case="false" th:text="#{messages.false}">_temp_disabled_</p>-->

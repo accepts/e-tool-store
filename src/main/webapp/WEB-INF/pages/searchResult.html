@@ -45,8 +45,6 @@
 
 <div id="main-content" class="row col-sm-10">
 
-    <!-- ************************************** Site menu  ****************************************** -->
-
     <div th:replace="productList :: #product-content-absent"></div>
 
     <div th:replace="productList :: #product-view"></div>
@@ -100,65 +98,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<span>-->
-        <!--<span th:if="${productsPage.isFirst() == false}">-->
-            <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=0)}"> <&#45;&#45;First</a>-->
-        <!--</span>-->
-
-        <!--<span th:if="${productsPage.isFirst()} ">-->
-            <!--<span class="button-disabled"> <&#45;&#45;First</span>-->
-        <!--</span>-->
-    <!--</span>-->
-
-<!--<span>-->
-        <!--<span th:if="${productsPage.hasPrevious()}">-->
-            <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} - 1)}"> <-Prev</a>-->
-        <!--</span>-->
-         <!--<span th:if="${productsPage.hasPrevious() == false} ">-->
-            <!--<span class="button-disabled"> <-Prev</span>-->
-         <!--</span>-->
-    <!--</span>-->
-
-<!--&lt;!&ndash; Numerated List of all pages&ndash;&gt;-->
-<!--<span th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">-->
-        <!--<span th:each="ap : ${arrayOfPages}">-->
-            <!--<span th:class="${ap eq productsPage.number} ? 'button-active' : ''">-->
-                <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${ap})}">-->
-                    <!--<span th:text="${ap}+1 + ', '"></span>-->
-                <!--</a>-->
-            <!--</span>-->
-        <!--</span>-->
-    <!--</span>-->
-
-<!--&lt;!&ndash; Next + Last arrows &ndash;&gt;-->
-<!--<span >-->
-        <!--<span th:if="${productsPage.hasNext()}">-->
-            <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} + 1)}"> Next-></a>-->
-        <!--</span>-->
-        <!--<span th:if="${productsPage.hasNext() == false} ">-->
-            <!--<span class="button-disabled"> Next-></span>-->
-        <!--</span>-->
-    <!--</span>-->
-
-<!--<span >-->
-        <!--<span th:if="${productsPage.isLast() == false}">-->
-            <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.totalPages} -1) }">  Last&ndash;&gt;>  </a>-->
-        <!--</span>-->
-         <!--<span th:if="${productsPage.isLast()} ">-->
-            <!--<span class="button-disabled"> Last&ndash;&gt;></span>-->
-        <!--</span>-->
-    <!--</span>-->

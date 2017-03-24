@@ -120,7 +120,7 @@
                             <a href="#" sec:authorize="isAuthenticated()" th:if="${p.unitInStock} > 0"
                                th:attr="ng-click='addToCart('+ ${p.id} +')'" id="btn-add-to-basket"
                                class="btn btn-info btn-sm" role="button" >
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to basket!</a>
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart</a>
 
                             <a href="#" sec:authorize="isAnonymous()" th:href="@{/login}" id="btn-add-to-basket-lock"
                                class="btn btn-info btn-sm" role="button">SignIN!</a>

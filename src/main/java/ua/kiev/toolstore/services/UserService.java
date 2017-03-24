@@ -1,9 +1,8 @@
 package ua.kiev.toolstore.services;
 
 
+import org.springframework.data.domain.Page;
 import ua.kiev.toolstore.model.security.User;
-
-import java.util.List;
 
 public interface UserService {
 
@@ -11,7 +10,7 @@ public interface UserService {
 
     long countByEmail(String email);
 
-    List<User> findAll();
+    Page<User> findAll(Integer pageNumber);
 
     void save(User user);
 
