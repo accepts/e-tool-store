@@ -51,10 +51,19 @@
                 <div  sec:authorize="isAnonymous()">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a id="navbar-log-in" href="#"  class="dropdown-toggle" data-toggle="dropdown">SignIn<b class="caret"></b></a>
+                            <a id="navbar-log-in" href="#"  class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                SignIn<b class="caret"></b>
+                            </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#" th:href="@{/login}">Login</a></li>
-                                <li><a href="#" th:href="@{/user/register}">Register</a></li>
+                                <li><a href="#" th:href="@{/login}">
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                    Login</a>
+                                </li>
+                                <li><a href="#" th:href="@{/user/register}">
+                                    <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                    Register</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -64,7 +73,11 @@
                 <!-- Sign Out -->
                 <div id="log-out" sec:authorize="isAuthenticated()">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#" th:href="@{/logout}">SignOut</a></li>
+                        <li><a href="#" th:href="@{/logout}">
+                            SignOut
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -72,16 +85,32 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Order -->
-                        <li><a href="#" th:href="@{/order/detail}">Order</a></li>
+                        <li><a href="#" th:href="@{/order/detail}">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            Order</a>
+                        </li>
+
                         <!--Admin manage-->
                         <li class="dropdown" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Admin-manage<span class="caret"></span></a>
+                               aria-expanded="false">
+                                <i class="fa fa-cogs" aria-hidden="true"></i>
+                                Admin-manage<span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#" th:href="@{/product/admin/manage/all/page/0}">Product manage</a></li>
-                                <li><a href="#" th:href="@{/order/admin/manage/all/page/0}">Order manage</a></li>
+                                <li><a href="#" th:href="@{/product/admin/manage/all/page/0}">
+                                    <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                                    Product manage</a>
+                                </li>
+                                <li><a href="#" th:href="@{/order/admin/manage/all/page/0}">
+                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    Order manage</a>
+                                </li>
                                 <li role="separator" class="divider"></li>
-                                <li><a sec:authorize="hasRole('ROLE_ADMIN')"  href="#" th:href="@{/user/admin/manage/page/0}">User manage</a></li>
+                                <li><a sec:authorize="hasRole('ROLE_ADMIN')"  href="#" th:href="@{/user/admin/manage/page/0}">
+                                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                                    User manage</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -140,264 +169,119 @@
     -->
     <div id="main-content" class="row col-sm-10">
 
-        <div id="sort-button-block" >
-            <a href="#" id="button-red"  class="btn btn-default btn-sm" role="button">Red</a>
-            <a href="#" id="button-blue-light"  class="btn btn-default btn-sm" role="button">Blue-light</a>
-            <a href="#" id="button-orange"  class="btn btn-default btn-sm" role="button">Orange</a>
-            <a href="#" id="button-yellow"  class="btn btn-default btn-sm" role="button">Yellow</a>
-            <a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">Green</a>
-            <a href="#" id="button-green-lite"  class="btn btn-default btn-sm" role="button">Green-lite</a>
-            <a href="#" id="button-grey"  class="btn btn-default btn-sm" role="button">Grey</a>
-            <a href="#" id="button-blue"  class="btn btn-default btn-xs" role="button">Blue</a>
-            <a href="#" id="button-blue"  class="btn btn-default btn-sm" role="button">Blue</a>
-            <a href="#" id="button-blue-active" class="btn btn-default btn-sm" role="button">Blue-Active</a>
+
+        <div class="container col-sm-6 product-detail">
+            <img src="../../resources/images/fein_kbh.jpg" alt="Detail photo" title="Detail photo" />
         </div>
 
+        <div class="container col-sm-5 product-detail">
 
-        <div class="col-xs-18 col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="../../../WEB-INF/resources/images/fein_kbh.jpg" alt="">
-                <div class="caption">
-                    <h3>Fein</h3>
-                    <h4>Name</h4>
-                    <p class="thumbnail-price">90.99 $</p>
-                    <p class="thumbnail-description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat.
-                        Consectetur, culpa itaque odio similique suscipit
-                    </p>
+        <h4> Fein KBH-95 </h4>
 
-                    <p class="thumbnail-buttons">
-                        <a href="#" id="btn-add-to-basket" class="btn btn-info btn-sm" role="button">Add to basket!</a>
-                        <a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>
-                    </p>
-                </div>
-            </div>
 
-            <div class="label-image">
-                <span class="fa-stack fa-lg" id="action">
-                        <i class="fa fa-circle fa-stack-2x" id="label-icon" ></i>
-                         <!--<i class="fa-bookmark-o"  aria-hidden="true" id="label-icon"></i>-->
-                        <i class="fa fa-flag fa-stack-1x fa-inverse" id="label-icon" ></i>
-                </span>
 
-                <!--<a href="#"> </a>-->
-                <!--<a href="#"> <i id="label-icon" aria-hidden="true">T</i></a>-->
-            </div>
+            <!--<div>-->
+                <!--<table border="1">-->
+                    <!--<thead>-->
+                    <!--<tr style="background-color: darkmagenta; color: #f0f0f0" >-->
+                        <!--<th>Name</th>-->
+                        <!--<th>description</th>-->
+                        <!--<th>manufacturer</th>-->
+                        <!--<th>price</th>-->
+                        <!--<th>unit</th>-->
+                        <!--<th>condition</th>-->
+                        <!--<th>category</th>-->
+                        <!--<th>status</th>-->
+                        <!--<th>Attributes - title, body, attribute</th>-->
+
 
         </div>
 
+        <!-- END Product-detail-->
 
 
-        <div class="col-xs-18 col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="../../../WEB-INF/resources/images/kjelberg.jpg" alt="">
-                <div class="caption">
-                    <h3>Kjelberg</h3>
-                    <h4>Name</h4>
-                    <p class="thumbnail-price">90.99 $</p>
-                    <p class="thumbnail-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-
-                    <p class="thumbnail-buttons">
-                        <a href="#" id="btn-add-to-basket-lock" class="btn btn-info btn-sm" role="button">Add to basket!</a>
-                        <a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-18 col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="../../../WEB-INF/resources/images/merkle.jpg" alt="">
-                <div class="caption">
-                    <h3>Merkle</h3>
-                    <h4>Name</h4>
-                    <p class="thumbnail-price">90.99 $</p>
-                    <p class="thumbnail-description">Lorem ipsum t</p>
-
-                    <p class="thumbnail-buttons">
-                        <a href="#" id="btn-add-to-basket" class="btn btn-info btn-sm" role="button">Add to basket!</a>
-                        <a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>
-                    </p>
-
-                </div>
-            </div>
-        </div>
+        <!--<div id="sort-button-block" >-->
+            <!--<a href="#" id="button-red"  class="btn btn-default btn-sm" role="button">Red</a>-->
+            <!--<a href="#" id="button-blue-light"  class="btn btn-default btn-sm" role="button">Blue-light</a>-->
+            <!--<a href="#" id="button-orange"  class="btn btn-default btn-sm" role="button">Orange</a>-->
+            <!--<a href="#" id="button-yellow"  class="btn btn-default btn-sm" role="button">Yellow</a>-->
+            <!--<a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">Green</a>-->
+            <!--<a href="#" id="button-green-lite"  class="btn btn-default btn-sm" role="button">Green-lite</a>-->
+            <!--<a href="#" id="button-grey"  class="btn btn-default btn-sm" role="button">Grey</a>-->
+            <!--<a href="#" id="button-blue"  class="btn btn-default btn-xs" role="button">Blue</a>-->
+            <!--<a href="#" id="button-blue"  class="btn btn-default btn-sm" role="button">Blue</a>-->
+            <!--<a href="#" id="button-blue-active" class="btn btn-default btn-sm" role="button">Blue-Active</a>-->
+        <!--</div>-->
 
 
+        <!--<div class="col-xs-18 col-sm-6 col-md-3">-->
+            <!--<div class="thumbnail">-->
+                <!--<img src="../../../WEB-INF/resources/images/fein_kbh.jpg" alt="">-->
+                <!--<div class="caption">-->
+                    <!--<h3>Fein</h3>-->
+                    <!--<h4>Name</h4>-->
+                    <!--<p class="thumbnail-price">90.99 $</p>-->
+                    <!--<p class="thumbnail-description">-->
+                        <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
+                        <!--Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat.-->
+                        <!--Consectetur, culpa itaque odio similique suscipit-->
+                    <!--</p>-->
 
+                    <!--<p class="thumbnail-buttons">-->
+                        <!--<a href="#" id="btn-add-to-basket" class="btn btn-info btn-sm" role="button">Add to basket!</a>-->
+                        <!--<a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</div>-->
 
+            <!--<div class="label-image">-->
+                <!--<span class="fa-stack fa-lg" id="action">-->
+                        <!--<i class="fa fa-circle fa-stack-2x" id="label-icon" ></i>-->
+                         <!--&lt;!&ndash;<i class="fa-bookmark-o"  aria-hidden="true" id="label-icon"></i>&ndash;&gt;-->
+                        <!--<i class="fa fa-flag fa-stack-1x fa-inverse" id="label-icon" ></i>-->
+                <!--</span>-->
 
-        <div class="col-xs-18 col-sm-6 col-md-3">
-            <div class="thumbnail">
-                <img src="../../../WEB-INF/resources/images/merkle.jpg" alt="">
-                <div class="caption">
-                    <h3>Merkle</h3>
-                    <h4>Name</h4>
-                    <p class="thumbnail-price">90.99 $</p>
-                    <p class="thumbnail-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+                <!--&lt;!&ndash;<a href="#"> </a>&ndash;&gt;-->
+                <!--&lt;!&ndash;<a href="#"> <i id="label-icon" aria-hidden="true">T</i></a>&ndash;&gt;-->
+            <!--</div>-->
 
-                    <p class="thumbnail-buttons">
-                        <a href="#" id="btn-add-to-basket" class="btn btn-info btn-sm" role="button">Add to basket!</a>
-                        <a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>
-                    </p>
+        <!--</div>-->
 
-                </div>
-            </div>
-        </div>
+        <!--<div class="col-xs-18 col-sm-6 col-md-3">-->
+            <!--<div class="thumbnail">-->
+                <!--<img src="../../../WEB-INF/resources/images/kjelberg.jpg" alt="">-->
+                <!--<div class="caption">-->
+                    <!--<h3>Kjelberg</h3>-->
+                    <!--<h4>Name</h4>-->
+                    <!--<p class="thumbnail-price">90.99 $</p>-->
+                    <!--<p class="thumbnail-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>-->
 
+                    <!--<p class="thumbnail-buttons">-->
+                        <!--<a href="#" id="btn-add-to-basket-lock" class="btn btn-info btn-sm" role="button">Add to basket!</a>-->
+                        <!--<a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
-
-
-
-
-
-
-        <!--
-                <div class="col-xs-18 col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/500x300" alt="">
-                        <div class="caption">
-                            <h4>Thumbnail label</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                            <p><a href="#" class="btn btn-info btn-xs" role="button">Button</a> <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-18 col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/500x300" alt="">
-                        <div class="caption">
-                            <h4>Thumbnail label</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                            <p><a href="#" class="btn btn-info btn-xs" role="button">Button</a> <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-xs-18 col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/500x300" alt="">
-                        <div class="caption">
-                            <h4>Thumbnail label</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                            <p><a href="#" class="btn btn-info btn-xs" role="button">Button</a> <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-18 col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/500x300" alt="">
-                        <div class="caption">
-                            <h4>Thumbnail label</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                            <p><a href="#" class="btn btn-info btn-xs" role="button">Button</a> <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-18 col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/500x300" alt="">
-                        <div class="caption">
-                            <h4>Thumbnail label</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                            <p><a href="#" class="btn btn-info btn-xs" role="button">Button</a> <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-18 col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/500x300" alt="">
-                        <div class="caption">
-                            <h4>Thumbnail label</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                            <p><a href="#" class="btn btn-info btn-xs" role="button">Button</a> <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
-                        </div>
-                    </div>
-                </div>-->
 
 
 
     </div><!-- End row -->
 
+    <!--PAGINATION example-->
+    <!--<div class="container col-sm-10" id="pagination-products">-->
+    <!--<ul class="pagination">-->
+        <!--<li class="disabled"><a href="#">&laquo;</a></li>-->
+        <!--<li class="active"><a href="#">&lsaquo; Prev</a></li>-->
+        <!--<li><a href="#">2</a></li>-->
+        <!--<li><a href="#">3</a></li>-->
+        <!--<li><a href="#">4</a></li>-->
+        <!--<li><a href="#">Next</a></li>-->
+        <!--<li><a href="#">&raquo;</a></li>-->
+    <!--</ul>-->
+<!--</div>-->
 
-
-
-
-
-
-
-
-
-
-
-<div class="container col-sm-10" id="pagination-products">
-    <ul class="pagination">
-        <li class="disabled"><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">&lsaquo; Prev</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">Next</a></li>
-        <li><a href="#">&raquo;</a></li>
-    </ul>
-</div>
-
-
-
-
-    <!--<div class="row row col-sm-10">-->
-        <!--<div class="span5">-->
-            <!--<table class="table table-striped table-condensed">-->
-                <!--<thead>-->
-                <!--<tr>-->
-                    <!--<th>Username</th>-->
-                    <!--<th>Date registered</th>-->
-                    <!--<th>Role</th>-->
-                    <!--<th>Status</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <!--<tbody>-->
-                <!--<tr>-->
-                    <!--<td>Donna R. Folse</td>-->
-                    <!--<td>2012/05/06</td>-->
-                    <!--<td>Editor</td>-->
-                    <!--<td><span class="label label-success">Active</span>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>Emily F. Burns</td>-->
-                    <!--<td>2011/12/01</td>-->
-                    <!--<td>Staff</td>-->
-                    <!--<td><span class="label label-important">Banned</span></td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>Andrew A. Stout</td>-->
-                    <!--<td>2010/08/21</td>-->
-                    <!--<td>User</td>-->
-                    <!--<td><span class="label">Inactive</span></td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>Mary M. Bryan</td>-->
-                    <!--<td>2009/04/11</td>-->
-                    <!--<td>Editor</td>-->
-                    <!--<td><span class="label label-warning">Pending</span></td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>Mary A. Lewis</td>-->
-                    <!--<td>2007/02/01</td>-->
-                    <!--<td>Staff</td>-->
-                    <!--<td><span class="label label-success">Active</span></td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
-        <!--</div>-->
-    <!--</div>-->
 
 
     <!-- FOOTER FRAGMENT-->

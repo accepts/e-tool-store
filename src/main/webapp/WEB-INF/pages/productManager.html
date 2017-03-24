@@ -15,14 +15,13 @@
 <!--Main content-->
 <div id="main-content" class="row col-sm-10">
 
-    <h2>Product manager:</h2>
+    <h2>Product manager</h2>
     <strong>Total elements: </strong> <span th:text="${productsPage.totalElements}"
                                             style="color: brown">_test_</span><br/>
     <strong>Product Status: </strong> <span th:text="${productStatus}">_test_</span><br/>
     <hr>
 
     <div id="sort-button-block">
-
         <a href="#" th:href="@{/product/admin/manage/all/page/0}" class="btn btn-default btn-sm"
            th:id="${productStatus} eq 'all' ? 'button-blue-active' : 'button-blue-light'"> ALL</a>
 
@@ -40,7 +39,6 @@
 
         <a href="#" th:href="@{/product/admin/manage/fresh/page/0}" class="btn btn-default btn-sm"
            th:id="${productStatus} eq 'fresh' ? 'button-blue-active' : 'button-blue'"> FRESH</a>
-
     </div>
 
 
@@ -154,23 +152,25 @@
             <!-- First arrow -->
             <li th:class="${productsPage.isFirst()} eq true ? 'disabled' : '' ">
                 <a href="#"
-                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber} (pageNumber=0, productStatus=${productStatus})}"> &laquo;
-                    First</a>
+                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber}
+                   (pageNumber=0, productStatus=${productStatus})}">
+                    &laquo; First</a>
             </li>
 
             <!--Previous arrow -->
             <li th:class="${productsPage.hasPrevious()} eq false ? 'disabled' : '' ">
 
                 <a href="#" th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber}
-                    (pageNumber=${productsPage.number} - 1, productStatus=${productStatus})}"> &lsaquo; Prev </a>
+                    (pageNumber=${productsPage.number} - 1, productStatus=${productStatus})}">
+                    &lsaquo; Prev </a>
 
             </li>
 
             <!-- Numerated List of all pages-->
             <li th:each="ap : ${arrayOfPages}" th:class="${ap eq productsPage.number} ? 'active' : ''">
                 <a href="#"
-                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber} (pageNumber=${ap}, productStatus=${productStatus})}"
-                   th:text="${ap}+1">
+                   th:href="@{/product/admin/manage/{productStatus}/page/{pageNumber}
+                   (pageNumber=${ap}, productStatus=${productStatus})}" th:text="${ap}+1">
                     _test_page_number_
                 </a>
             </li>

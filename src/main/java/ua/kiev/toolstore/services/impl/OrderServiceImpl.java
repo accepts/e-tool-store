@@ -1,6 +1,7 @@
 package ua.kiev.toolstore.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     protected static final LoggerWrapper LOG = LoggerWrapper.get(OrderServiceImpl.class);
+
+    @Value("${product.item.per.page.admin}")
+    private int PAGE_SIZE_ADMIN;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -113,7 +117,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     public Page<Order> findOrderByStatus(String status, Integer pageNumber) throws IllegalArgumentException{
-        PageRequest request = new PageRequest(pageNumber, 15);
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
 
         if (status.equalsIgnoreCase("all")){
             //return orderRepository.findAllByOrderByOrderStatusAsc(request);
@@ -146,7 +150,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         changeStatus(orderId, OrderStatus.valueOf(action.toUpperCase()));
-        PageRequest request = new PageRequest(pageNumber, 15);
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
 
         if (status.equalsIgnoreCase("all")){
             return orderRepository.findAllByOrderByIdDesc(request);

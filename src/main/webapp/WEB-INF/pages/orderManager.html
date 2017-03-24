@@ -1,52 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="template/header :: head">
+<head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
     <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
 </head>
 <body>
-<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
-<div class="main-content"  >
+<div th:replace="template/fragments :: header" ></div>
 
-    <!-- ************************************** Site menu  ****************************************** -->
+<div th:replace="template/fragments :: sidebar" ></div>
 
-    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
+<!--Main content-->
+<div id="main-content" class="row col-sm-10">
+
+    <h2>Order manager</h2>
+    <strong>Total elements: </strong> <span th:text="${ordersPage.totalElements}" style="color: brown">_test_</span><br/>
+    <strong>Order Status: </strong> <span th:text="${orderStatus}">_test_</span><br/>
+
+    <hr>
+
+    <div id="sort-button-block">
+        <a href="#" th:href="@{/order/admin/manage/all/page/0}" class="btn btn-default btn-sm"
+           th:id="${orderStatus} eq 'all' ? 'button-blue-active' : 'button-blue-light'">
+            <i class="fa fa-asterisk" aria-hidden="true"></i> ALL
+        </a>
+
+        <a href="#" th:href="@{/order/admin/manage/active/page/0}" class="btn btn-default btn-sm"
+           th:id="${orderStatus} eq 'active' ? 'button-blue-active' : 'button-blue'">
+            <i class="fa fa-refresh" aria-hidden="true"></i> ACTIVE
+        </a>
+
+        <a href="#" th:href="@{/order/admin/manage/confirmed/page/0}" class="btn btn-default btn-sm"
+           th:id="${orderStatus} eq 'confirmed' ? 'button-blue-active' : 'button-blue'">
+            <i class="fa fa-bolt" aria-hidden="true"></i> CONFIRMED
+        </a>
+
+        <a href="#" th:href="@{/order/admin/manage/canceled/page/0}" class="btn btn-default btn-sm"
+           th:id="${orderStatus} eq 'canceled' ? 'button-blue-active' : 'button-blue'">
+            <i class="fa fa-user-times" aria-hidden="true"></i> CANCELED
+        </a>
+
+        <a href="#" th:href="@{/order/admin/manage/processed/page/0}" class="btn btn-default btn-sm"
+           th:id="${orderStatus} eq 'processed' ? 'button-blue-active' : 'button-blue'">
+             <i class="fa fa-eye" aria-hidden="true"></i> PROCESSED
+        </a>
+
+        <a href="#" th:href="@{/order/admin/manage/declined/page/0}" class="btn btn-default btn-sm"
+           th:id="${orderStatus} eq 'declined' ? 'button-blue-active' : 'button-blue'">
+             <i class="fa fa-times" aria-hidden="true"></i> DECLINED
+        </a>
+
+        <a href="#" th:href="@{/order/admin/manage/shipped/page/0}" class="btn btn-default btn-sm"
+           th:id="${orderStatus} eq 'shipped' ? 'button-blue-active' : 'button-blue'">
+             <i class="fa fa-car" aria-hidden="true"></i> SHIPPED
+        </a>
+
+        <a href="#" th:href="@{/order/admin/manage/completed/page/0}" class="btn btn-default btn-sm"
+           th:id="${orderStatus} eq 'completed' ? 'button-blue-active' : 'button-blue'">
+             <i class="fa fa-check-square-o" aria-hidden="true"></i> COMPLETED
+        </a>
     </div>
 
 
-    <h1>Order manager:</h1>
-    <br/>
-    <strong>Total elements: </strong>    <span th:text="${ordersPage.totalElements}">_test_</span><br/>
 
-    <strong>Order Status: </strong>    <span th:text="${orderStatus}">_test_</span><br/>
-
-    <p>-----------------------------------------</p>
-
-    <a href="#" th:href="@{/order/admin/manage/all/page/0}" class="button-buy-active"> ALL</a>
-    <a href="#" th:href="@{/order/admin/manage/completed/page/0}" class="button-buy-active"> COMPLETED</a>
-    <a href="#" th:href="@{/order/admin/manage/confirmed/page/0}" class="button-buy-active"> CONFIRMED</a>
-    <a href="#" th:href="@{/order/admin/manage/active/page/0}" class="button-buy-active"> ACTIVE</a>
-    <br/>
-    <br/>
-
-    <table border="1">
+    <table class="table table-bordered compact-font filled-head">
         <thead>
-        <tr style="background-color: #99cc33">
+        <tr>
             <th>ID</th>
-            <th>e-mail</th>
-            <th>status</th>
-            <th style="background-color: brown">Decline</th>
-            <th style="background-color: crimson">Canceled</th>
-            <th>items</th>
+            <th>E-Mail</th>
+            <th>Status</th>
+            <th>Items</th>
             <th>SUM</th>
             <th>Address</th>
 
-            <th style="background-color: mediumseagreen">Processed</th>
-            <th style="background-color: green">Shipped</th>
-            <th style="background-color: cornflowerblue">Completed</th>
+            <th>Decline</th>
+            <th>Canceled</th>
+
+            <th>Processed</th>
+            <th>Shipped</th>
+            <th>Completed</th>
         </tr>
         </thead>
 
@@ -56,115 +90,118 @@
             <td >
                 <a href="#"
                    th:href="@{/order/detail/{id} (id=${o.id})}"
-                   class="button-blue"> <span th:text="${{o.id}}">_id_link_</span></a>
+                   id="button-blue" class="btn btn-default btn-xs"  th:text="${{o.id}}"> id</a>
             </td>
 
             <td th:text="${{o.user.email}}">user_email</td>
             <td th:text="${{o.orderStatus}}">status_order</td>
-
+            <td th:text="${{o.getItemsAmount()}}">amount</td>
+            <td th:text="${{o.getSumOfItems()}}">sum</td>
             <td>
+                <span th:text="${{o.address.country}} + ', ' "></span>
+                <span th:text="${{o.address.city}} + ', ' "></span>
+                <span th:text="${{o.address.street}} + ', ' "></span>
+                <span th:text="${{o.address.apartment}}"></span>
+            </td>
 
+
+            <!-- Buttons -->
+            <td>
                 <a href="#"
                    th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}/declined/{id}
                    (id=${o.id}, orderStatus=${orderStatus}, pageNumber=${ordersPage.number})}"
-                   class="button-delete">Decline!</a>
+                   id="button-red" class="btn btn-default btn-xs" >Decline</a>
             </td>
 
             <td>
                 <a href="#"
                    th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}/canceled/{id}
                    (id=${o.id}, orderStatus=${orderStatus}, pageNumber=${ordersPage.number})}"
-                   class="button-lock">Cancel!</a>
-            </td>
-
-            <td th:text="${{o.getItemsAmount()}}">amount</td>
-            <td th:text="${{o.getSumOfItems()}}">sum</td>
-            <td >
-                <span th:text="${{o.address.country}}"></span>,
-                <span th:text="${{o.address.city}}"></span>,
-                <span th:text="${{o.address.street}} "></span>
-                <span th:text="${{o.address.apartment}}"></span>
+                   id="button-orange" class="btn btn-default btn-xs" style="font-size: 9px">Canceled (by Customer)</a>
             </td>
 
             <td>
                 <a href="#"
                    th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}/processed/{id}
                    (id=${o.id}, orderStatus=${orderStatus}, pageNumber=${ordersPage.number})}"
-                   class="button-buy-active">Processed</a>
+                   id="button-green-lite" class="btn btn-default btn-xs">Processed</a>
             </td>
+
             <td>
                 <a href="#"
                    th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}/shipped/{id}
                    (id=${o.id}, orderStatus=${orderStatus}, pageNumber=${ordersPage.number})}"
-                   class="button-buy-active">Shipped</a>
+                   id="button-green" class="btn btn-default btn-xs">Shipped</a>
             </td>
+
             <td>
                 <a href="#"
                    th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}/completed/{id}
                    (id=${o.id}, orderStatus=${orderStatus}, pageNumber=${ordersPage.number})}"
-                   class="button-blue">Completed!</a>
+                   id="button-grey" class="btn btn-default btn-xs">Completed</a>
             </td>
+            <!-- END buttons in table-->
+
         </tr>
         </tbody>
     </table>
 
-
-
-
-
-    <div class="page-list-container">
-        <!-- Previous + First arrows -->
-    <span>
-        <span th:if="${ordersPage.isFirst() == false}">
-            <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber} (pageNumber=0, orderStatus=${orderStatus})}"> <--First</a>
-        </span>
-          <span th:if="${ordersPage.isFirst()} ">
-            <span class="button-disabled"> <--First</span>
-        </span>
-    </span>
-
-    <span>
-        <span th:if="${ordersPage.hasPrevious()}">
-            <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber} (pageNumber=${ordersPage.number} - 1, orderStatus=${orderStatus})}"> <-Prev</a>
-        </span>
-         <span th:if="${ordersPage.hasPrevious() == false} ">
-            <span class="button-disabled"> <-Prev</span>
-         </span>
-    </span>
-
-        <!-- Numerated List of all pages-->
-    <span th:with="firstPage=0, lastPage=${ordersPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
-        <span th:each="ap : ${arrayOfPages}">
-            <span th:class="${ap eq ordersPage.number} ? 'button-active' : ''">
-                <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber} (pageNumber=${ap}, orderStatus=${orderStatus})}">
-                    <span th:text="${ap}+1 + ', '"></span>
-                </a>
-            </span>
-        </span>
-    </span>
-
-        <!-- Next + Last arrows -->
-    <span >
-        <span th:if="${ordersPage.hasNext()}">
-            <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber} (pageNumber=${ordersPage.number} + 1, orderStatus=${orderStatus})}"> Next-></a>
-        </span>
-        <span th:if="${ordersPage.hasNext() == false} ">
-            <span class="button-disabled"> Next-></span>
-        </span>
-    </span>
-
-    <span >
-        <span th:if="${ordersPage.isLast() == false}">
-            <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber} (pageNumber=${ordersPage.totalPages} -1, orderStatus=${orderStatus}) }">  Last-->>  </a>
-        </span>
-         <span th:if="${ordersPage.isLast()} ">
-            <span class="button-disabled"> Last-->></span>
-        </span>
-    </span>
-    </div>
-
-
-
 </div>
+<!-- END Main content-->
+
+
+<!-- Pagination -->
+<div class="container col-sm-10" id="pagination-products">
+    <ul class="pagination" th:if="${ordersPage.totalPages} > 1">
+
+        <th:block
+                th:with="firstPage=0, lastPage=${ordersPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
+
+            <!-- First arrow -->
+            <li th:class="${ordersPage.isFirst()} eq true ? 'disabled' : '' ">
+                <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}
+                   (pageNumber=0, orderStatus=${orderStatus})}">
+                    &laquo; First</a>
+            </li>
+
+            <!--Previous arrow -->
+            <li th:class="${ordersPage.hasPrevious()} eq false ? 'disabled' : '' ">
+                <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}
+                        (pageNumber=${ordersPage.number} - 1, orderStatus=${orderStatus})}">
+                    &lsaquo; Prev </a>
+            </li>
+
+            <!-- Numerated List of all pages-->
+            <li th:each="ap : ${arrayOfPages}" th:class="${ap eq ordersPage.number} ? 'active' : ''">
+                <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}
+                   (pageNumber=${ap}, orderStatus=${orderStatus})}" th:text="${ap}+1">  55 </a>
+            </li>
+
+            <!-- Next  arrow -->
+            <li th:class="${ordersPage.hasNext()} eq false ? 'disabled' : '' ">
+                <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}
+                            (pageNumber=${ordersPage.number} + 1, orderStatus=${orderStatus})}">
+                    Next &rsaquo;</a>
+            </li>
+
+            <!--Last arrow-->
+            <li th:class="${ordersPage.isLast()} eq true ? 'disabled' : '' ">
+                <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}
+                            (pageNumber=${ordersPage.totalPages} -1, orderStatus=${orderStatus}) }">
+                    Last &raquo; </a>
+            </li>
+
+        </th:block>
+    </ul>
+</div>
+<!-- END pagination-->
+
+<div th:replace="template/fragments :: footer"><p>_test_footer_</p></div>
+
+
 </body>
 </html>
+
+
+
+

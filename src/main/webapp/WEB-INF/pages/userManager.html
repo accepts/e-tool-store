@@ -15,9 +15,8 @@
 <!--Main content-->
 <div id="main-content" class="row col-sm-10">
 
-    <h2>User manager:</h2>
-    <strong>Total users: </strong> <span th:text="${usersPage.totalElements}"
-                                            style="color: brown">_test_</span><br/>
+    <h2>User manager</h2>
+    <strong>Total users: </strong> <span th:text="${usersPage.totalElements}" style="color: brown">_test_</span><br/>
     <hr>
 
 
@@ -47,7 +46,7 @@
                 <table>
                     <tbody style="background-color: #b2dba1">
                     <tr th:each="r, rowStat : ${u.roles}">
-                        <td th:text="${rowStat.count}">1</td>
+                        <td th:text="${rowStat.count} + '-'">1</td>
                         <td th:text="${r}">_title_</td>
                     </tr>
                     </tbody>
