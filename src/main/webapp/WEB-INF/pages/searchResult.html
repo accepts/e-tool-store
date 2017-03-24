@@ -1,104 +1,164 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="template/header :: head">
+<head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
     <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
 </head>
 <body>
-<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
-<div th:replace="template/menu :: searchform" class="search-form"><p>_test_search form_</p></div>
+<div th:replace="template/fragments :: header"><p>_test_header_</p></div>
+
+<div th:replace="template/fragments :: sidebar" class="col-sm-1" >
+    <div id="sidebar-wrapper">
+        <nav id="spy">
+            <ul class="sidebar-nav nav">
+                <li class="sidebar-brand">
+                    <a href="#home"><span class="fa fa-home solo">All</span></a>
+                </li>
+                <li>
+                    <a href="#anch1" data-scroll>
+                        <span class="fa fa-anchor solo">Hand Tool</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch2" data-scroll>
+                        <span class="fa fa-anchor solo">Electric </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch3" data-scroll>
+                        <span class="fa fa-anchor solo">Hydraulic </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch4" data-scroll>
+                        <span class="fa fa-anchor solo">Pneumatic </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 
 
-<div class="main-content">
+<div id="main-content" class="row col-sm-10">
 
     <!-- ************************************** Site menu  ****************************************** -->
 
-    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
-        <table border="2">
-            <tbody>
-            <tr style="background-color: darkturquoise">
-                <th>Test_title_1</th>
-                <th>TestTitle_2</th>
-                <th>reserv</th>
-            </tr>
-            <tr>
-                <td><a href="#">_test_Link1</a></td>
-                <td><a href="#">_test_Link2</a></td>
-                <td>reserv</td>
-            </tr>
-            </tbody>
-        </table>
-
-        <br/> <br/>
-    </div>
-
-    <div th:replace="template/menu :: productmenu" class="product-menu" ></div>
+    <div th:replace="productList :: #product-content-absent"></div>
 
     <div th:replace="productList :: #product-view"></div>
 
-    <div th:replace="productList :: #product-content-absent"></div>
-
-    <br/><br/>
-
-    <div th:if="${productsPage.hasContent()} eq true" >
-
-    <div class="page-list-container">
-        <!-- Previous + First arrows -->
-    <span>
-        <span th:if="${productsPage.isFirst() == false}">
-            <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=0)}"> <--First</a>
-        </span>
-
-        <span th:if="${productsPage.isFirst()} ">
-            <span class="button-disabled"> <--First</span>
-        </span>
-    </span>
-
-    <span>
-        <span th:if="${productsPage.hasPrevious()}">
-            <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} - 1)}"> <-Prev</a>
-        </span>
-         <span th:if="${productsPage.hasPrevious() == false} ">
-            <span class="button-disabled"> <-Prev</span>
-         </span>
-    </span>
-
-        <!-- Numerated List of all pages-->
-    <span th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
-        <span th:each="ap : ${arrayOfPages}">
-            <span th:class="${ap eq productsPage.number} ? 'button-active' : ''">
-                <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${ap})}">
-                    <span th:text="${ap}+1 + ', '"></span>
-                </a>
-            </span>
-        </span>
-    </span>
-
-        <!-- Next + Last arrows -->
-    <span >
-        <span th:if="${productsPage.hasNext()}">
-            <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} + 1)}"> Next-></a>
-        </span>
-        <span th:if="${productsPage.hasNext() == false} ">
-            <span class="button-disabled"> Next-></span>
-        </span>
-    </span>
-
-    <span >
-        <span th:if="${productsPage.isLast() == false}">
-            <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.totalPages} -1) }">  Last-->>  </a>
-        </span>
-         <span th:if="${productsPage.isLast()} ">
-            <span class="button-disabled"> Last-->></span>
-        </span>
-    </span>
-    </div>
-    </div>
-
-
 </div>
+
+
+<!-- Pagination -->
+<div class="container col-sm-10" id="pagination-products">
+    <ul class="pagination" th:if="${productsPage.hasContent()} eq true">
+
+        <th:block th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
+
+            <!-- First arrow -->
+            <li th:class ="${productsPage.isFirst()} eq true ? 'disabled' : '' ">
+                <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=0)}">&laquo; First</a>
+            </li>
+
+            <!--Previous arrow -->
+            <li th:class ="${productsPage.hasPrevious()} eq false ? 'disabled' : '' ">
+                <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} - 1)}">
+                    &lsaquo; Prev</a>
+            </li>
+
+            <!-- Numerated List of all pages-->
+            <li th:each="ap : ${arrayOfPages}" th:class="${ap eq productsPage.number} ? 'active' : ''">
+                <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${ap})}" th:text="${ap}+1">
+                    _test_page_number_
+                </a>
+            </li>
+
+            <!-- Next  arrow -->
+            <li th:class ="${productsPage.hasNext()} eq false ? 'disabled' : '' ">
+                <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} + 1)}">
+                    Next &rsaquo;</a>
+            </li>
+
+            <!--Last arrow-->
+            <li th:class ="${productsPage.isLast()} eq true ? 'disabled' : '' ">
+                <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.totalPages} -1) }">
+                    Last &raquo; </a>
+            </li>
+
+        </th:block>
+    </ul>
+</div>
+<!-- END pagination-->
+
+
+<div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<span>-->
+        <!--<span th:if="${productsPage.isFirst() == false}">-->
+            <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=0)}"> <&#45;&#45;First</a>-->
+        <!--</span>-->
+
+        <!--<span th:if="${productsPage.isFirst()} ">-->
+            <!--<span class="button-disabled"> <&#45;&#45;First</span>-->
+        <!--</span>-->
+    <!--</span>-->
+
+<!--<span>-->
+        <!--<span th:if="${productsPage.hasPrevious()}">-->
+            <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} - 1)}"> <-Prev</a>-->
+        <!--</span>-->
+         <!--<span th:if="${productsPage.hasPrevious() == false} ">-->
+            <!--<span class="button-disabled"> <-Prev</span>-->
+         <!--</span>-->
+    <!--</span>-->
+
+<!--&lt;!&ndash; Numerated List of all pages&ndash;&gt;-->
+<!--<span th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">-->
+        <!--<span th:each="ap : ${arrayOfPages}">-->
+            <!--<span th:class="${ap eq productsPage.number} ? 'button-active' : ''">-->
+                <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${ap})}">-->
+                    <!--<span th:text="${ap}+1 + ', '"></span>-->
+                <!--</a>-->
+            <!--</span>-->
+        <!--</span>-->
+    <!--</span>-->
+
+<!--&lt;!&ndash; Next + Last arrows &ndash;&gt;-->
+<!--<span >-->
+        <!--<span th:if="${productsPage.hasNext()}">-->
+            <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} + 1)}"> Next-></a>-->
+        <!--</span>-->
+        <!--<span th:if="${productsPage.hasNext() == false} ">-->
+            <!--<span class="button-disabled"> Next-></span>-->
+        <!--</span>-->
+    <!--</span>-->
+
+<!--<span >-->
+        <!--<span th:if="${productsPage.isLast() == false}">-->
+            <!--<a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.totalPages} -1) }">  Last&ndash;&gt;>  </a>-->
+        <!--</span>-->
+         <!--<span th:if="${productsPage.isLast()} ">-->
+            <!--<span class="button-disabled"> Last&ndash;&gt;></span>-->
+        <!--</span>-->
+    <!--</span>-->

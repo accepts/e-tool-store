@@ -137,8 +137,14 @@ html {
 
 /* -------------------Buttons sort -------------------------*/
 
+#sort-button-block{
+    text-align: right;
+    margin-bottom: 50px;
+}
+
+
 #button-blue-active{
-    background-color: #56128e;
+    background-color: #155567;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
@@ -151,12 +157,78 @@ html {
     color: #eeeeee;
 }
 
-
-#sort-button-block{
-    text-align: right;
-    margin-bottom: 50px;
-    /*align-content: flex-end;*/
+#button-blue-light{
+    background-color: #68c5e0;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
 }
+
+#button-red{
+    background-color: #b92c28;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
+}
+
+#button-orange{
+    background-color: #f0631f;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
+}
+
+#button-yellow{
+    background-color: #e5991c;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
+}
+
+#button-grey{
+    background-color: #7b8852;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
+}
+
+#button-green{
+    background-color: #36ad1e;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
+}
+
+#button-green-lite{
+    background-color: #99cc33;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
+}
+
+
+/* -------------- Table for Admin manager-------------------*/
+
+.compact-font{
+    font-size: 12px;
+    border-color: #555555;
+}
+
+.filled-head th{
+    /*background-color: #b2dba1;*/
+    background-color: #9da695;
+    font-size: 14px;
+}
+
+.filled-head td{
+    border: #737373 solid 1px !important;
+}
+
+.filled-head th{
+    border: #737373 solid 1px !important;
+}
+
+
 
 
 /* ------------- Pagination ------------------------------*/

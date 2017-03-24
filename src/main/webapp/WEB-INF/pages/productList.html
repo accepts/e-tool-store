@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div th:replace="template/fragments :: header" class="header"><p>_test_header_</p></div>
+<div th:replace="template/fragments :: header"><p>_test_header_</p></div>
 
 <div th:replace="template/fragments :: sidebar" class="col-sm-1" >
     <div id="sidebar-wrapper">
@@ -48,31 +48,32 @@
 <div id="main-content" class="row col-sm-10">
 
     <!-- TODO  If content is absent-->
-    <div th:if="${productsPage.hasContent()} eq false">
-        <h1 th:text="#{searching.get.no.result}">test_There is no Product! </h1>
+    <div th:if="${productsPage.hasContent()} eq false" id="product-content-absent">
+        <h4 th:text="#{searching.get.no.result}">test_There is no Product! </h4>
     </div>
 
 
     <!-- Sort button -->
     <div id="sort-button-block"  >
 
-        <a href="#" th:href="@{?}" class="btn btn-success btn-sm" id="button-blue"> All Products</a>
+        <a href="#" th:href="@{?}" class="btn btn-success btn-sm" id="button-blue-light">
+            <i class="fa fa-asterisk fa-lg" aria-hidden="true"></i> All Products</a>
 
         <a href="#" th:href="@{?orderBy=price&sortBy=asc}" class="btn btn-default btn-sm"
            th:id="${sortBy} eq 'asc' and ${orderBy} eq 'price' ? 'button-blue-active' : 'button-blue' ">
-            PRICE-ASC(V)</a>
+            Price <i class="fa fa-sort-numeric-asc fa-lg" aria-hidden="true"></i> </a>
 
         <a href="#" th:href="@{?orderBy=price&sortBy=desc}" class="btn btn-default btn-sm"
            th:id="${sortBy} eq 'desc' and ${orderBy} eq 'price' ? 'button-blue-active' : 'button-blue'">
-            PRICE-DESC(^)</a>
+            Price <i class="fa fa-sort-numeric-desc fa-lg" aria-hidden="true"></i> </a>
 
         <a href="#" th:href="@{?orderBy=manufacturer&sortBy=asc}" class="btn btn-default btn-sm"
            th:id="${sortBy} eq 'asc' and ${orderBy} eq 'manufacturer' ? 'button-blue-active' : 'button-blue'">
-            Brand-Asc(V)</a>
+            Brand <i class="fa fa-sort-alpha-asc fa-lg" aria-hidden="true"></i> </a>
 
         <a href="#" th:href="@{?orderBy=manufacturer&sortBy=desc}" class="btn btn-default btn-sm"
            th:id="${sortBy} eq 'desc' and ${orderBy} eq 'manufacturer' ? 'button-blue-active' : 'button-blue'">
-            Brand-DESC(^)</a>
+            Brand <i class="fa fa-sort-alpha-desc fa-lg" aria-hidden="true"></i> </a>
     </div>
 
 
@@ -118,7 +119,8 @@
 
                             <a href="#" sec:authorize="isAuthenticated()" th:if="${p.unitInStock} > 0"
                                th:attr="ng-click='addToCart('+ ${p.id} +')'" id="btn-add-to-basket"
-                               class="btn btn-info btn-sm" role="button" >Add to basket!</a>
+                               class="btn btn-info btn-sm" role="button" >
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to basket!</a>
 
                             <a href="#" sec:authorize="isAnonymous()" th:href="@{/login}" id="btn-add-to-basket-lock"
                                class="btn btn-info btn-sm" role="button">SignIN!</a>
