@@ -170,34 +170,73 @@
     <div id="main-content" class="row col-sm-10">
 
 
+        <!-- Product Detail -->
         <div class="container col-sm-6 product-detail">
             <img src="../../resources/images/fein_kbh.jpg" alt="Detail photo" title="Detail photo" />
         </div>
 
+
         <div class="container col-sm-5 product-detail">
 
-        <h4> Fein KBH-95 </h4>
+            <h2> Manufacturer Name-of-Model </h2>
+
+            <hr/>
+
+            <p id="price-title">Price:</p>
+
+            <div class="container row col-md-12 price-block">
+                <div class="col-md-7 ">
+                    <h3>$ 1999.99</h3>
+                </div>
+                <div class=" col-md-5">
+
+                    <a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} < 1"
+                       id="button-grey-light" class="btn btn-default btn-sm" role="button">Out of stock...</a>
+
+                    <a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} > 0" th:attr="ng-click='addToCart('+ *{id} +')'"
+                       id="button-green" class="btn btn-default btn-sm" role="button" >
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> <span style="margin-left: 6px">Add to Cart!</span> </a>
+
+                    <a href="#" sec:authorize="isAnonymous()" th:href="@{/login}"
+                       id="button-grey-light"  class="btn btn-default btn-sm" role="button">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i> SignIN!</a>
 
 
+                    <a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>  Add to Cart</a>
+                </div>
+            </div>
 
-            <!--<div>-->
-                <!--<table border="1">-->
-                    <!--<thead>-->
-                    <!--<tr style="background-color: darkmagenta; color: #f0f0f0" >-->
-                        <!--<th>Name</th>-->
-                        <!--<th>description</th>-->
-                        <!--<th>manufacturer</th>-->
-                        <!--<th>price</th>-->
-                        <!--<th>unit</th>-->
-                        <!--<th>condition</th>-->
-                        <!--<th>category</th>-->
-                        <!--<th>status</th>-->
-                        <!--<th>Attributes - title, body, attribute</th>-->
+            <p><strong>Condition:</strong> Brand NEW!!!</p>
+            <p><strong>Unit:</strong> several left\large\huge</p>
 
+            <hr/>
+
+            <h3>Description</h3>
+            <div class="product-description">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Aliquam cupiditate dicta expedita harum hic illo iusto laudantium nesciunt nostrum,
+                quam! Accusamus adipisci corporis eligendi est expedita id iure numquam ratione.
+            </p>
+            </div>
+
+            <hr/>
+
+            <!--Attributes - title, body, attribute-->
+            <div class="product-characterictic">
+                <h3>Characteristic: </h3>
+
+                <ul class="fa-ul">
+                    <li><i class="fa-li fa fa-caret-right"></i>Power 600 wt</li>
+                    <li><i class="fa-li fa fa-caret-right"></i>Voltage: 220 V</li>
+                    <li><i class="fa-li fa fa-caret-right"></i>Color: Orange</li>
+                </ul>
+
+            </div>
 
         </div>
-
         <!-- END Product-detail-->
+
 
 
         <!--<div id="sort-button-block" >-->

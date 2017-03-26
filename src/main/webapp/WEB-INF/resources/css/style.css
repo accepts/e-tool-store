@@ -199,6 +199,13 @@ html {
     color: #eeeeee;
 }
 
+#button-grey-light{
+    background-color: #9d9d9d;
+    border-color: #080808;
+    text-shadow: none;
+    color: #eeeeee;
+}
+
 #button-green{
     background-color: #36ad1e;
     border-color: #080808;
@@ -254,18 +261,71 @@ html {
 
 /*===================== Product Detail ====================== */
 .product-detail{
-    border: #d4d4d4 solid 1px;
-    border-radius: 3%;
+    /*border: #d4d4d4 solid 1px;*/
+    /*border-radius: 3%;*/
 }
 
 .product-detail img{
+    padding-top: 66px;
     width: 100%;
 }
 
-.product-detail h4{
+.product-detail h2{
     color: #204d74;
     font-size: 30px;
+    font-family: Arial;
+
 }
+
+.price-block{
+    /*text-align: center;*/
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin-bottom: 20px;
+}
+
+.price-block h3{
+    color: #843534;
+    font-family: Consolas;
+}
+
+.price-block a {
+    margin-top: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+#price-title{
+    font-style: normal;
+    font-family: Consolas;
+    color: #9d9d9d;
+    font-size: 18px;
+    margin-bottom: -4px;
+}
+
+.product-description{
+    color: #737373;
+    font-family: Arial;
+    text-align: start;
+    vertical-align: middle;
+    line-height: 24px;
+    border-radius: 5px;
+    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.05);
+}
+
+.product-characterictic ul{
+    padding: 10px;
+    margin-left: 30px;
+}
+
+.product-characterictic li{
+    padding-left: 10px;
+    margin: 0 0 4px 0;
+}
+
+
 
 /* ====================== Sidebar ===================== */
 
