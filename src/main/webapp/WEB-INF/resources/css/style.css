@@ -316,14 +316,20 @@ html {
 }
 
 .product-characterictic ul{
-    padding: 10px;
+    padding: 6px;
     margin-left: 30px;
+    margin-top: -12px;
 }
 
 .product-characterictic li{
     padding-left: 10px;
-    margin: 0 0 4px 0;
+    margin: -10px 0 4px -10px;
 }
+
+/*.product-characterictic li span{*/
+    /*padding-left: 10px;*/
+    /*margin: -10px 0 4px 0;*/
+/*}*/
 
 
 

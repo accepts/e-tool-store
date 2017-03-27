@@ -105,12 +105,12 @@
         </th:block>
         </p>
 
-
-
-
-
-        <!-- TODO for fresh and special therms items-->
-        <p><strong>Additional info:</strong> <span th:text="#{|product.status.${productDetailed.status}|}">Action! - 15% </span> </p>
+        <th:block th:switch="*{status}">
+        <p th:case="${T(ua.kiev.toolstore.model.enums.ProductStatus).SPECIAL}">
+            <strong>Additional info:</strong>
+            <span th:if="${productDetailed.status}" th:text="#{|product.status.special.${productDetailed.status}|}">Action! - 15% </span>
+        </p>
+        </th:block>
 
         <hr/>
 
@@ -124,54 +124,22 @@
 
         <hr/>
 
-        <h3>Characteristic: </h3>
+        <h3 style="padding-bottom: 16px">Characteristic: </h3>
         <div class="product-characterictic" th:each="f : *{features}">
             <ul class="fa-ul">
                 <li><i class="fa-li fa fa-caret-right"></i>
-                    <span th:text="${f.title}">Title </span>
-                    <span th:text="${f.body}"> body </span>
-                    <span th:text="${f.attribute}"> attr </span>
+                    <span th:text="${f.title} + ' ' + ${f.body} + ' ' + ${f.attribute} ">Title </span>
                 </li>
             </ul>
 
         </div>
 
-
     </div>
     <!-- END Product-detail-->
 
-
     </div>
 
-
-
-
-<!--<tr th:object="${productDetailed}"  >-->
-    <!--<td th:text="*{name}">name_product</td>-->
-    <!--<td th:text="*{{description}}">description_product</td>-->
-    <!--<td th:text="*{{manufacturer}}">product_manufact</td>-->
-    <!--<td th:text="*{#numbers.formatDecimal(price, 0, 2)}">product_price</td>-->
-    <!--<td th:text="*{{unitInStock}}">product_quantity</td>-->
-
-    <!--<td th:text="#{|product.condition.${productDetailed.condition}|}">prod_confition</td>-->
-    <!--<td th:text="#{|product.category.${productDetailed.category}|}">prod_category</td>-->
-    <!--<td th:text="#{|product.status.${productDetailed.status}|}">prod_status</td>-->
-
-    <!--<td >-->
-        <!--<table>-->
-            <!--<tbody style="background-color: greenyellow">-->
-            <!--<tr th:each="f, rowStat : *{features}">-->
-                <!--<td th:text="${rowStat.count}">1</td>-->
-                <!--<td th:text="${f.title}">_title_</td>-->
-                <!--<td th:text="${f.body}">_body_</td>-->
-                <!--<td th:text="${f.attribute}">_attributes_map_</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-        <!--</table>-->
-    <!--</td>-->
-
     <div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
-
 </body>
 </html>
 
