@@ -127,7 +127,8 @@
         <h3 style="padding-bottom: 16px">Characteristic: </h3>
         <div class="product-characterictic" th:each="f : *{features}">
             <ul class="fa-ul">
-                <li><i class="fa-li fa fa-caret-right"></i>
+                <li>
+                    <i class="fa-li fa fa-caret-right"></i>
                     <span th:text="${f.title} + ' ' + ${f.body} + ' ' + ${f.attribute} ">Title </span>
                 </li>
             </ul>
@@ -142,65 +143,3 @@
     <div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-<!--
-
-<div>
-    <img src="#" alt="Detail photo" title="Detail photo" th:src="@{/photo/} + ${productDetailed.id}" style="width: auto" />
-</div>
-
-<div>
-    <table border="1">
-        <thead>
-        <tr style="background-color: darkmagenta; color: #f0f0f0" >
-            <th>Name</th>
-            <th>description</th>
-            <th>manufacturer</th>
-            <th>price</th>
-            <th>unit</th>
-
-            <th>condition</th>
-            <th>category</th>
-            <th>status</th>
-            <th>Attributes</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:object="${productDetailed}"  >
-            <td th:text="*{name}">name_product</td>
-            <td th:text="*{{description}}">description_product</td>
-            <td th:text="*{{manufacturer}}">product_manufact</td>
-            <td th:text="*{#numbers.formatDecimal(price, 0, 2)}">product_price</td>
-            <td th:text="*{{unitInStock}}">product_quantity</td>
-
-            <td th:text="#{|product.condition.${productDetailed.condition}|}">prod_confition</td>
-            <td th:text="#{|product.category.${productDetailed.category}|}">prod_category</td>
-            <td th:text="#{|product.status.${productDetailed.status}|}">prod_status</td>
-
-            <td >
-                <table>
-                    <tbody style="background-color: greenyellow">
-                    <tr th:each="f, rowStat : *{features}">
-                        <td th:text="${rowStat.count}">1</td>
-                        <td th:text="${f.title}">_title_</td>
-                        <td th:text="${f.body}">_body_</td>
-                        <td th:text="${f.attribute}">_attributes_map_</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-
-        </tr>
-        </tbody>
-    </table>
-
-</div>-->

@@ -1,108 +1,229 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="template/header :: head">
+<head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
-    <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
+    <title th:text="#{title.application}">_Store_test_title_</title>
+
 </head>
 <body>
-<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
+<div th:replace="template/fragments :: header"><p>_test_header_</p></div>
 
-<div class="main-content">
-    <h2> CART detail items</h2>
-    <h2 th:text="#{testing.test.message}">_test_text_</h2>
-
-    <div th:replace="template/menu :: tablecontroller" class="table-controller" >
-        <table border="2">
-            <tbody>
-            <tr style="background-color: cornflowerblue">
-                <th>Home</th>
-            </tr>
-            <tr>
-                <td><a href="#" >Home</a></td>
-            </tr>
-            </tbody>
-        </table>
-        <br/>
-        <br/>
+<div th:replace="template/fragments :: sidebar" class="col-sm-1" >
+    <div id="sidebar-wrapper">
+        <nav id="spy">
+            <ul class="sidebar-nav nav">
+                <li class="sidebar-brand">
+                    <a href="#home"><span class="fa fa-home solo">All</span></a>
+                </li>
+                <li>
+                    <a href="#anch1" data-scroll>
+                        <span class="fa fa-anchor solo">Hand Tool</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch2" data-scroll>
+                        <span class="fa fa-anchor solo">Electric </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch3" data-scroll>
+                        <span class="fa fa-anchor solo">Hydraulic </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch4" data-scroll>
+                        <span class="fa fa-anchor solo">Pneumatic </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
+</div>
 
-    <div th:replace="template/menu :: productmenu" class="product-menu" ></div>
+<div id="main-content" class="row col-sm-10">
 
+    <!-- Order Detail -->
+    <div class="row col-md-8 col-sm-offset-1 order-detail">
+
+        <h2>Order items</h2>
+        <hr/>
+
+        <div class="order-brief-info">
+            <p>
+                <strong>Shipping Address:</strong>
+                <span th:text="${activeOrder.address.country} + ', ' + ${activeOrder.address.city} + ', '
+                                + ${activeOrder.address.street} + ', ' + ${activeOrder.address.apartment}">Ukraine, Kiev, Shevchenka 88</span>
+            </p>
+            <p>
+                <strong >Total items:</strong> <span th:text="${#lists.size(activeOrder.lineItems)}"
+                                                     style="color: #843534; font-weight: bold" >66</span>
+            </p>
+        </div>
+
+
+        <div th:if="${#lists.isEmpty(activeOrder.lineItems)} ">
+            <h4>You order is Empty!</h4>
+        </div>
+
+
+
+        <th:block th:if="${#lists.size(activeOrder.lineItems) > 0}">
+
+        <h4>List of items in current order</h4>
+
+        <table class="table table-bordered compact-font filled-head" id="aligned">
+            <tr style="background-color: cornflowerblue">
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Manufacturer</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="item : ${activeOrder.lineItems}">
+                <td>
+                    <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}" />
+                </td>
+                <td th:text="${item.product.name}">Drill</td>
+                <td th:text="${item.product.manufacturer}">DUSS</td>
+                <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
+                <td th:text="${item.amount}">amount</td>
+                <td th:text="'$ ' + ${item.product.price}">$ 50</td>
+                <td><a href="#" th:href="@{/order/item/delete/{itemId} (itemId=${item.id}) }"
+                       id="button-orange" class="btn btn-default btn-xs" >
+                    <i class="fa fa-times" aria-hidden="true"></i> Remove</a>
+                </td>
+
+            </tr>
+            <tr >
+                <td colspan="4"><strong>Total Amount and Sum of Order:</strong></td>
+                <td>
+                    <span th:text="${activeOrder.getItemsAmount()}" style="color: darkgreen; font-size: 14px;">4</span>
+                </td>
+                <td>
+                    <span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
+                </td>
+                <td>
+                    <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id})}"
+                       id="button-red" class="btn btn-default btn-xs">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        Clear Order</a>
+                </td>
+            </tr>
+        </table>
+
+        <hr/>
+
+        <div class="row col-sm-offset-10">
+            <a href="#" th:href="@{/order/confirm/address}" id="button-green" class="btn btn-default btn-sm" >
+                Confirm Order <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        </th:block>
+
+    </div>
+    <!-- END Order Detail -->
+
+
+</div>
+<!--END main Content-->
+
+<div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
 
 <h2>ORDER ITEMS</h2>
 
-<p>------------------------------------------------</p>
-    <p>
-        Active order status: <span th:text="${activeOrder.orderStatus}">_test_order_status_</span>
-    </p>
-    <p>
-        Shipping Address: <span th:text="${activeOrder.address.country}">_test_country_</span>
-    </p>
-    <p>
-        Total elements in List(lineItems): <span th:text="${#lists.size(activeOrder.lineItems)} ">_test_country_</span>
-    </p>
+<p>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>
+
+<p>
+    Shipping Address: <span th:text="${activeOrder.address.country}">_test_country_</span>
+</p>
+<p>
+    Total elements in List(lineItems): <span th:text="${#lists.size(activeOrder.lineItems)} ">_test_country_</span>
+</p>
+<br/>
+
+<p>
+<div th:if="${#lists.isEmpty(activeOrder.lineItems)} ">
+    <p>You order is EMPTY!</p>
+</div>
+
+
+<div th:if="${#lists.size(activeOrder.lineItems) > 0} ">
+    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; List of items -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
     <br/>
+    <table border="1">
+        <tr style="background-color: cornflowerblue">
+            <th>photo</th>
+            <th>name</th>
+            <th>manufacturer</th>
+            <th>category</th>
+            <th>amount</th>
+            <th>price</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="item : ${activeOrder.lineItems}">
+            <td>
+                <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}" style="width: 40px" />
+            </td>
+            <td th:text="${item.product.name}">Drill</td>
+            <td th:text="${item.product.manufacturer}">DUSS</td>
+            <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
+            <td th:text="${item.amount}">amount</td>
+            <td th:text="${item.product.price} + ' $' ">50</td>
+            <td><a href="#" th:href="@{/order/item/delete/{itemId} (itemId=${item.id}) }" class="button-lock">Delete</a></td>
 
-    <p>
-       <div th:if="${#lists.isEmpty(activeOrder.lineItems)} ">
-           <p>You order is EMPTY!</p>
-       </div>
+        </tr>
+        <tr >
+            <td colspan="4">Total amount and SUM of Order: </td>
+            <td>
+                <span th:text="${activeOrder.getItemsAmount()}" style="color: darkgreen; font-size: 14px" >4</span>
+            </td>
+            <td>
+                <span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
+            </td>
+            <td>
+                <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id}) }"
+                   class="button-delete">Clear Order</a>
+            </td>
+        </tr>
+    </table>
 
-
-        <div th:if="${#lists.size(activeOrder.lineItems) > 0} ">
-            ---------------------- List of items ---------------------
-            <br/>
-            <table border="1">
-                <tr style="background-color: cornflowerblue">
-                    <th>photo</th>
-                    <th>name</th>
-                    <th>manufacturer</th>
-                    <th>category</th>
-                    <th>amount</th>
-                    <th>price</th>
-                    <th>Delete</th>
-                </tr>
-                <tr th:each="item : ${activeOrder.lineItems}">
-                    <td>
-                    <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}" style="width: 40px" />
-                    </td>
-                    <td th:text="${item.product.name}">Drill</td>
-                    <td th:text="${item.product.manufacturer}">DUSS</td>
-                    <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
-                    <td th:text="${item.amount}">amount</td>
-                    <td th:text="${item.product.price} + ' $' ">50</td>
-                    <td><a href="#" th:href="@{/order/item/delete/{itemId} (itemId=${item.id}) }" class="button-lock">Delete</a></td>
-
-                </tr>
-                <tr >
-                   <td colspan="4">Total amount and SUM of Order: </td>
-                    <td>
-                        <span th:text="${activeOrder.getItemsAmount()}" style="color: darkgreen; font-size: 14px" >4</span>
-                    </td>
-                    <td>
-                        <span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
-                    </td>
-                    <td>
-                        <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id}) }"
-                           class="button-delete">Clear Order</a>
-                    </td>
-                </tr>
-            </table>
-
-            <br/>
-            <br/>
-            <a href="#" th:href="@{/order/confirm/address}" class="button-delete">CONFIRM !</a>
-
-        </div>
-
-    </p>
-
-<p>------------------------------------------------</p>
+    <br/>
+    <br/>
+    <a href="#" th:href="@{/order/confirm/address}" class="button-delete">CONFIRM !</a>
 
 </div>
-<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
-</body>
-</html>
+
+</p>
+
+<p>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>
+-->

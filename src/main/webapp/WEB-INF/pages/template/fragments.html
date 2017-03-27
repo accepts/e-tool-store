@@ -169,73 +169,166 @@
     -->
     <div id="main-content" class="row col-sm-10">
 
+        <!-- **************************************************************************************************** -->
+
+
+        <!-- Order Detail -->
+            <div class="row col-md-8 col-sm-offset-1 order-detail">
+
+                <h2>Order items</h2>
+                <hr/>
+
+                <div class="order-brief-info">
+                <p>
+
+                    <strong><i class="fa-li fa fa-caret-right" aria-hidden="true"></i> Shipping Address:</strong> Ukraine, Kiev, Shevchenka 88
+                </p>
+                <p>
+
+                    <strong ><i class="fa-li fa fa-caret-right" aria-hidden="true"></i> Total items:</strong> <span style="color: #843534; font-weight: bold" >66</span>
+                </p>
+                </div>
+
+                <div th:if="${#lists.isEmpty(activeOrder.lineItems)} ">
+                    <h4>You order is Empty!</h4>
+                </div>
+
+
+                <h4>List of items in current order</h4>
+
+                <table class="table table-bordered compact-font filled-head" id="aligned">
+                    <tr style="background-color: cornflowerblue">
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Manufacturer</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr th:each="item : ${activeOrder.lineItems}">
+                        <td>
+                            <img src="../../resources/images/kjelberg.jpg" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}" />
+                        </td>
+                        <td>Drill</td>
+                        <td>DUSS</td>
+                        <td>ELECTRO</td>
+                        <td>amount</td>
+                        <td>$ 50</td>
+                        <td><a href="#" id="button-orange" class="btn btn-default btn-xs" >
+                            <i class="fa fa-times" aria-hidden="true"></i> Remove</a>
+                        </td>
+
+                    </tr>
+                    <tr >
+                        <td colspan="4"><strong>Total Amount and Sum of Order:</strong></td>
+                        <td>
+                            <span th:text="${activeOrder.getItemsAmount()}" style="color: darkgreen; font-size: 14px; ">4</span>
+                        </td>
+                        <td>
+                            <span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px; text-align: center" >66</span>
+                        </td>
+                        <td>
+                            <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id}) }"
+                               id="button-red" class="btn btn-default btn-xs">
+                                <i class="fa fa-window-close-o" aria-hidden="true"></i>
+                                Clear Order</a>
+                        </td>
+                    </tr>
+                </table>
+
+                <hr/>
+
+                <div class="row col-sm-offset-10">
+                    <a href="#" th:href="@{/order/confirm/address}" id="button-green" class="btn btn-default btn-sm" >
+                        Confirm Order <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+             </div>
+            <!-- END Order Detail -->
+
+
+
+
+
+
+
+
+
+
+        <!-- **************************************************************************************************** -->
 
         <!-- Product Detail -->
-        <div class="container col-sm-6 product-detail">
-            <img src="../../resources/images/fein_kbh.jpg" alt="Detail photo" title="Detail photo" />
-        </div>
+        <!--<div class="container col-sm-6 product-detail">-->
+            <!--<img src="../../resources/images/fein_kbh.jpg" alt="Detail photo" title="Detail photo" />-->
+        <!--</div>-->
 
 
-        <div class="container col-sm-5 product-detail">
+        <!--<div class="container col-sm-5 product-detail">-->
 
-            <h2> Manufacturer Name-of-Model </h2>
+            <!--<h2> Manufacturer Name-of-Model </h2>-->
 
-            <hr/>
+            <!--<hr/>-->
 
-            <p id="price-title">Price:</p>
+            <!--<p id="price-title">Price:</p>-->
 
-            <div class="container row col-md-12 price-block">
-                <div class="col-md-7 ">
-                    <h3>$ 1999.99</h3>
-                </div>
-                <div class=" col-md-5">
+            <!--<div class="container row col-md-12 price-block">-->
+                <!--<div class="col-md-7 ">-->
+                    <!--<h3>$ 1999.99</h3>-->
+                <!--</div>-->
+                <!--<div class=" col-md-5">-->
 
-                    <a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} < 1"
-                       id="button-grey-light" class="btn btn-default btn-sm" role="button">Out of stock...</a>
+                    <!--<a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} < 1"-->
+                       <!--id="button-grey-light" class="btn btn-default btn-sm" role="button">Out of stock...</a>-->
 
-                    <a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} > 0" th:attr="ng-click='addToCart('+ *{id} +')'"
-                       id="button-green" class="btn btn-default btn-sm" role="button" >
-                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> <span style="margin-left: 6px">Add to Cart!</span> </a>
+                    <!--<a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} > 0" th:attr="ng-click='addToCart('+ *{id} +')'"-->
+                       <!--id="button-green" class="btn btn-default btn-sm" role="button" >-->
+                        <!--<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> <span style="margin-left: 6px">Add to Cart!</span> </a>-->
 
-                    <a href="#" sec:authorize="isAnonymous()" th:href="@{/login}"
-                       id="button-grey-light"  class="btn btn-default btn-sm" role="button">
-                        <i class="fa fa-sign-in" aria-hidden="true"></i> SignIN!</a>
+                    <!--<a href="#" sec:authorize="isAnonymous()" th:href="@{/login}"-->
+                       <!--id="button-grey-light"  class="btn btn-default btn-sm" role="button">-->
+                        <!--<i class="fa fa-sign-in" aria-hidden="true"></i> SignIN!</a>-->
 
 
-                    <a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">
-                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>  Add to Cart</a>
-                </div>
-            </div>
+                    <!--<a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">-->
+                        <!--<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>  Add to Cart</a>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <p><strong>Condition:</strong> Brand NEW!!!</p>
-            <p><strong>Unit:</strong> several left\large\huge</p>
+            <!--<p><strong>Condition:</strong> Brand NEW!!!</p>-->
+            <!--<p><strong>Unit:</strong> several left\large\huge</p>-->
 
-            <hr/>
+            <!--<hr/>-->
 
-            <h3>Description</h3>
-            <div class="product-description">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Aliquam cupiditate dicta expedita harum hic illo iusto laudantium nesciunt nostrum,
-                quam! Accusamus adipisci corporis eligendi est expedita id iure numquam ratione.
-            </p>
-            </div>
+            <!--<h3>Description</h3>-->
+            <!--<div class="product-description">-->
+            <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
+                <!--Aliquam cupiditate dicta expedita harum hic illo iusto laudantium nesciunt nostrum,-->
+                <!--quam! Accusamus adipisci corporis eligendi est expedita id iure numquam ratione.-->
+            <!--</p>-->
+            <!--</div>-->
 
-            <hr/>
+            <!--<hr/>-->
 
-            <!--Attributes - title, body, attribute-->
-            <div class="product-characterictic">
-                <h3 style="padding-bottom: 16px">Characteristic: </h3>
+            <!--&lt;!&ndash;Attributes - title, body, attribute&ndash;&gt;-->
+            <!--<div class="product-characterictic">-->
+                <!--<h3 style="padding-bottom: 16px">Characteristic: </h3>-->
 
-                <ul class="fa-ul">
-                    <li><i class="fa-li fa fa-caret-right"></i>Power 600 wt</li>
-                    <li><i class="fa-li fa fa-caret-right"></i>Voltage: 220 V</li>
-                    <li><i class="fa-li fa fa-caret-right"></i>Color: Orange</li>
-                </ul>
+                <!--<ul class="fa-ul">-->
+                    <!--<li><i class="fa-li fa fa-caret-right"></i>Power 600 wt</li>-->
+                    <!--<li><i class="fa-li fa fa-caret-right"></i>Voltage: 220 V</li>-->
+                    <!--<li><i class="fa-li fa fa-caret-right"></i>Color: Orange</li>-->
+                <!--</ul>-->
 
-            </div>
+            <!--</div>-->
 
-        </div>
+        <!--</div>-->
         <!-- END Product-detail-->
+
+
+
+        <!-- **************************************************************************************************** -->
 
 
 
@@ -251,6 +344,9 @@
             <!--<a href="#" id="button-blue"  class="btn btn-default btn-sm" role="button">Blue</a>-->
             <!--<a href="#" id="button-blue-active" class="btn btn-default btn-sm" role="button">Blue-Active</a>-->
         <!--</div>-->
+
+
+        <!-- **************************************************************************************************** -->
 
 
         <!--<div class="col-xs-18 col-sm-6 col-md-3">-->
@@ -303,6 +399,8 @@
             <!--</div>-->
         <!--</div>-->
 
+
+        <!-- **************************************************************************************************** -->
 
 
 
