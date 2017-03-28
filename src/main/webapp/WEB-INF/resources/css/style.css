@@ -376,21 +376,31 @@ html {
 }
 
 
+/*===================== Order Confirm Comment ====================== */
+
+#btn-confirm-comment{
+    background-color: #36ad1e;
+    color: white;
+    border-color: #080808;
+    font-weight: normal;
+    text-shadow: none;
+}
 
 
+.center{
+    position: fixed; /* or absolute */
+    top: 40%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #3c3c3c;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+#hand-shake{
+    font-size: 66px;
+    color: #36ad1e;
+}
 
 /* ====================== Sidebar ===================== */
 

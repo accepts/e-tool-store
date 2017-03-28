@@ -97,6 +97,7 @@ public class OrderController {
     @RequestMapping(value = "/confirm/comment", method = RequestMethod.POST, params = {"saveComment"})
     public String confirmOrderComment(HttpServletRequest req){
         String comment = String.valueOf(req.getParameter("commentToOrder"));
+        LOG.debug("<---Comment to confirmed order: " + comment);
         orderService.confirmOrder(null, comment);
         return "orderConfirmed";
     }

@@ -12,15 +12,15 @@
             th:src="@{/resources/component/bootstrap/js/bootstrap.min.js}"></script>
 
     <!-- Custom CSS styles-->
-    <link rel="stylesheet" href="../resources/css/style.css"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet" href="../resources/css/style.css" th:href="@{/css/style.css}"/>
 
     <!-- Bootstrap styles-->
     <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap-theme.min.css"
-          th:href="@{/resources/component/bootstrap/css/bootstrap-theme.min.css}" />
+          th:href="@{/resources/component/bootstrap/css/bootstrap-theme.min.css}"/>
     <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap.min.css"
-          th:href="@{/resources/component/bootstrap/css/bootstrap.min.css}" />
+          th:href="@{/resources/component/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="../resources/component/font-awesome/css/font-awesome.min.css"
-          th:href="@{/resources/component/font-awesome/css/font-awesome.min.css}" />
+          th:href="@{/resources/component/font-awesome/css/font-awesome.min.css}"/>
 
     <!-- AngularJS-->
     <script src="../resources/js/angular.js" th:src="@{/js/angular.js}"></script>
@@ -33,7 +33,7 @@
     <p>_test_header_</p>
 </div>
 
-<div th:replace="template/fragments :: sidebar" class="col-sm-1" >
+<div th:replace="template/fragments :: sidebar" class="col-sm-1">
     <div id="sidebar-wrapper">
         <nav id="spy">
             <ul class="sidebar-nav nav">
@@ -67,103 +67,153 @@
 
 <div id="main-content" class="row col-sm-10">
 
-    <!-- Order Confirm Address-->
-    <div class="row col-md-8 col-sm-offset-1 order-detail">
+    <!-- Order Confirm Comment-->
+    <div class="row col-md-9 col-sm-offset-1 order-detail">
 
 
+        <div class="row">
+
+            <!-- Info + Address-->
+            <div class="col-md-5">
+                <h4>Personal info:</h4>
+                <hr/>
+
+                <p>
+                    <strong>Name:</strong> <span th:text="${order.user.firstName}">Sergio</span>
+                </p>
+
+                <p>
+                    <strong>Last Name:</strong> <span th:text="${order.user.lastName}">Leone</span>
+                </p>
+
+                <p>
+                    <strong>Phone:</strong> <span th:text="${order.user.phone}">999-666-55</span>
+                </p>
+
+                <hr/>
 
 
-    <p>--------------Save to Admin--------------</p>
+                <h4>Address Confirmed:</h4>
+                <hr/>
 
+                <th:block th:object="${order.address}">
+                    <p>
+                        <strong>Country:</strong> <span th:text="*{country}">Ukraine</span>
+                    </p>
 
-             ---------------------------<br/>
-            Personal info: <br/>
-            ---------------------------<br/>
-            <p>
-                <strong>Name:</strong>  <span th:text="${order.user.firstName}">_test_name</span><br/>
-                <strong>Last Name:</strong> <span th:text="${order.user.lastName}">_test_name</span><br/>
-                <strong>Phone:</strong> <span th:text="${order.user.phone}">_test_name</span><br/>
-                <br>
-            </p>
+                    <p>
+                        <strong>State:</strong> <span th:text="*{state}">Chernigov</span>
+                    </p>
 
-            ---------------------------<br/>
-            Address Confirmed:<br/>
-            ---------------------------<br/>
-            <br/>
-            <span th:object="${order.address}" >
-            <strong>Country:</strong> <span th:text="*{country}"></span> <br/>
-            <strong>State:</strong> <span th:text="*{state}"></span> <br/>
-            <strong>City:</strong> <span th:text="*{city}"></span> <br/>
-            <strong>Street:</strong> <span th:text="*{street}"></span> <br/>
-            <strong>Apartment:</strong> <span th:text="*{apartment}"></span> <br/>
-            <strong>ZIP:</strong> <span th:text="*{zipCode}"></span> <br/>
-            </span>
+                    <p>
+                        <strong>City:</strong> <span th:text="*{city}">Kiew</span>
+                    </p>
+
+                    <p>
+                        <strong>Street:</strong> <span th:text="*{street}">Pechersk</span>
+                    </p>
+
+                    <p>
+                        <strong>Apartment:</strong> <span th:text="*{apartment}">66</span>
+                    </p>
+
+                    <p>
+                        <strong>ZIP:</strong> <span th:text="*{zipCode}">17400</span>
+                    </p>
+                </th:block>
+                <hr/>
+            </div>
+            <!-- END Info + Address-->
+
+            <!-- Items table -->
+
+            <div class="col-md-6 col-md-offset-1">
+
+                <h4>Items info:</h4>
+                <hr/>
+
+                <table class="table table-bordered compact-font filled-head" id="aligned">
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                    </tr>
+                    <tr th:each="item : ${order.lineItems}">
+                        <td>
+                            <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}"/>
+
+                        </td>
+                        <td th:text="${item.product.manufacturer} + ${item.product.name}">DUSS Drill</td>
+                        <td th:text="${item.amount}">amount</td>
+                        <td th:text="'$ ' + ${item.product.price} ">50</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Total amount and sum of Order:</td>
+                        <td>
+                            <span th:text="${order.getItemsAmount()}" style="color: darkgreen; font-size: 14px">4</span>
+                        </td>
+                        <td>
+                            <span th:text="${order.getSumOfItems()}" style="color: brown; font-size: 14px">66</span>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <!-- END Items table -->
+
         </div>
+        <!-- END Row-->
 
-        <div id="right">
-            ---------------------------<br/>
-            Item List + Price:<br/>
-            ---------------------------<br/>
-            <table border="1">
-                <tr style="background-color: cornflowerblue">
-                    <th>name</th>
-                    <th>manufacturer</th>
-                    <th>category</th>
-                    <th>amount</th>
-                    <th>price</th>
-                </tr>
-                <tr th:each="item : ${order.lineItems}">
-                    <td th:text="${item.product.name}">Drill</td>
-                    <td th:text="${item.product.manufacturer}">DUSS</td>
-                    <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
-                    <td th:text="${item.amount}">amount</td>
-                    <td th:text="${item.product.price} + ' $' ">50</td>
-                </tr>
-                <tr >
-                    <td colspan="3">Total amount and SUM of Order: </td>
-                    <td>
-                        <span th:text="${order.getItemsAmount()}" style="color: darkgreen; font-size: 14px" >4</span>
-                    </td>
-                    <td>
-                        <span th:text="${order.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
-                    </td>
-                </tr>
-            </table>
+        <!-- Comment -->
+        <div class="row">
+            <div class="col-md-12">
+                <h4 style="color: #761c19; text-align: left">Comment to Order:</h4>
 
 
+                <form action="#" th:action="@{/order/confirm/comment}" method="post" id="commentForm">
+                    <fieldset>
+                        <textarea class="form-control" rows="2" name="commentToOrder" form="commentForm"
+                                  placeholder="Enter your comment to order..."></textarea>
 
-    <p>
-        Comment to Order:
-    <form action="#" th:action="@{/order/confirm/comment}" method="post">
-        <fieldset>
-            <div>
-                 <input type="text" id="comment" name="commentToOrder" value="Enter your comment..." />
+                        <div class="row" style="padding-top: 30px">
+                            <div class="col-md-5">
+
+                                <a href="#" th:href="@{/order/detail}" id="button-green-lite"
+                                   class="btn btn-default btn-sm">
+                                    <i class="fa fa-step-backward" aria-hidden="true"></i>
+                                    Back (to Order detail)
+                                </a>
+
+                                <a href="#" th:href="@{/order/confirm/address}" id="button-green-lite"
+                                   class="btn btn-default btn-sm">
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                    Back to Address
+                                </a>
+
+                            </div>
+
+                            <div class="col-md-2 col-md-offset-5">
+                                <button type="submit" name="saveComment" class="btn btn-default btn-sm"
+                                        id="btn-confirm-comment">
+                                    <i class="fa fa-check" aria-hidden="true" style="padding-right: 5px"></i>
+                                    Confirm!
+                                </button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+
             </div>
 
-            <p>
-                <a href="#" th:href="@{/order/confirm/address}" class="button-buy-active"> <-- Back to Address</a>
-                <button type="submit"  name="saveComment" class="btn-link">Confirm! </button>
-            </p>
-        </fieldset>
-    </form>
-
-    <br/>
-    <a href="#" th:href="@{/order/detail}" class="button-delete"> Back to Order page !</a>
-    </p>
-
-
-
-
-    <br>
-    <p>------------------------------------------------</p>
-
-
-
-
+        </div>
+        <!-- END comment -->
 
 
     </div>
-    <!--END Order Confirm Address-->
+    <!--END Order Confirm Comment -->
 
 
 </div>
@@ -172,3 +222,148 @@
 <div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
 </body>
 </html>
+
+
+
+
+<!--<div class="row">-->
+
+    <!--&lt;!&ndash; Info + Address&ndash;&gt;-->
+    <!--<div class="col-md-5">-->
+        <!--<h4>Personal info:</h4>-->
+        <!--<hr/>-->
+
+        <!--<p>-->
+            <!--<strong>Name:</strong>  <span th:text="${order.user.firstName}">Sergio</span>-->
+        <!--</p>-->
+        <!--<p>-->
+            <!--<strong>Last Name:</strong> <span th:text="${order.user.lastName}">Leone</span>-->
+        <!--</p>-->
+        <!--<p>-->
+            <!--<strong>Phone:</strong> <span th:text="${order.user.phone}">999-666-55</span>-->
+        <!--</p>-->
+
+        <!--<hr/>-->
+
+
+        <!--<h4>Address Confirmed:</h4>-->
+        <!--<hr/>-->
+
+        <!--<th:block th:object="${order.address}">-->
+            <!--<p>-->
+                <!--<strong>Country:</strong> <span th:text="*{country}">Ukraine</span>-->
+            <!--</p>-->
+            <!--<p>-->
+                <!--<strong>State:</strong> <span th:text="*{state}">Chernigov</span>-->
+            <!--</p>-->
+            <!--<p>-->
+                <!--<strong>City:</strong> <span th:text="*{city}">Kiew</span>-->
+            <!--</p>-->
+            <!--<p>-->
+                <!--<strong>Street:</strong> <span th:text="*{street}">Pechersk</span>-->
+            <!--</p>-->
+            <!--<p>-->
+                <!--<strong>Apartment:</strong> <span th:text="*{apartment}">66</span>-->
+            <!--</p>-->
+            <!--<p>-->
+                <!--<strong>ZIP:</strong> <span th:text="*{zipCode}">17400</span>-->
+            <!--</p>-->
+        <!--</th:block>-->
+        <!--<hr/>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; END Info + Address&ndash;&gt;-->
+
+    <!--&lt;!&ndash; Items table &ndash;&gt;-->
+
+    <!--<div class="col-md-6 col-md-offset-1">-->
+
+        <!--<h4>Items info:</h4>-->
+        <!--<hr/>-->
+
+        <!--<table class="table table-bordered compact-font filled-head" id="aligned">-->
+            <!--<tr>-->
+                <!--<th>Photo</th>-->
+                <!--<th>Name</th>-->
+                <!--<th>Amount</th>-->
+                <!--<th>Price</th>-->
+            <!--</tr>-->
+            <!--<tr th:each="item : ${order.lineItems}">-->
+                <!--<td>-->
+                    <!--<img src="../../resources/images/fein_kbh.jpg" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}"-->
+                            <!--/>-->
+                <!--</td>-->
+                <!--<td th:text="${item.product.manufacturer} + ${item.product.name}">DUSS Drill</td>-->
+                <!--<td th:text="${item.amount}">amount</td>-->
+                <!--<td th:text="${item.product.price} + ' $' ">50</td>-->
+            <!--</tr>-->
+            <!--<tr >-->
+                <!--<td colspan="2">Total amount and sum of Order: </td>-->
+                <!--<td>-->
+                    <!--<span th:text="${order.getItemsAmount()}" style="color: darkgreen; font-size: 14px" >4</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span th:text="${order.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+
+    <!--</div>-->
+    <!--&lt;!&ndash; END Items table &ndash;&gt;-->
+
+<!--</div>-->
+<!--&lt;!&ndash; END Row&ndash;&gt;-->
+
+<!--&lt;!&ndash; Comment &ndash;&gt;-->
+<!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+        <!--<h4 style="color: #761c19; text-align: left">Comment to Order:</h4>-->
+
+
+        <!--<form action="#" th:action="@{/order/confirm/comment}" method="post" id="commentForm">-->
+            <!--<fieldset>-->
+                            <!--<textarea class="form-control" rows="2" name="commentToOrder" form="commentForm"-->
+                                      <!--placeholder="Enter your comment to order..."  ></textarea>-->
+
+                <!--&lt;!&ndash;<input type="text" name="commentToOrder" class="form-control"&ndash;&gt;-->
+                <!--&lt;!&ndash;id="comment-to-order" placeholder="Enter your comment to order..."  />&ndash;&gt;-->
+
+
+                <!--<div class="row" style="padding-top: 30px">-->
+                    <!--<div class="col-md-5">-->
+
+                        <!--<a href="#" th:href="@{/order/detail}" id="button-green-lite"  class="btn btn-default btn-sm" >-->
+                            <!--<i class="fa fa-step-backward" aria-hidden="true"></i>-->
+                            <!--Back (to Order detail)-->
+                        <!--</a>-->
+
+                        <!--<a href="#" th:href="@{/order/confirm/address}" id="button-green-lite"  class="btn btn-default btn-sm" >-->
+                            <!--<i class="fa fa-arrow-left" aria-hidden="true"></i>-->
+                            <!--Back to Address-->
+                        <!--</a>-->
+
+                    <!--</div>-->
+
+                    <!--<div class="col-md-2 col-md-offset-5">-->
+                        <!--<button type="submit"  name="saveComment" class="btn btn-default btn-sm" id="btn-confirm-comment">-->
+                            <!--<i class="fa fa-check" aria-hidden="true" style="padding-right: 5px"></i>-->
+                            <!--Confirm! </button>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
+
+
+
+                <!--<p>-->
+                    <!--&lt;!&ndash;<a href="#" th:href="@{/order/detail}" class="button-delete"> <<&#45;&#45;  Back to Order detail</a>&ndash;&gt;-->
+
+                <!--</p>-->
+            <!--</fieldset>-->
+        <!--</form>-->
+
+
+    <!--</div>-->
+
+<!--</div>-->
+<!--&lt;!&ndash; END comment &ndash;&gt;-->
+

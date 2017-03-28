@@ -171,143 +171,23 @@
 
 
         <!-- Order Confirm Comment-->
-        <div class="row col-md-8 col-sm-offset-1 order-detail">
-
-
-            <div class="row">
-
-                <!-- Info + Address-->
-                <div class="col-md-5">
-                       <h4>Personal info:</h4>
-                    <hr/>
-
-                    <p>
-                        <strong>Name:</strong>  <span th:text="${order.user.firstName}">Sergio</span>
-                    </p>
-                    <p>
-                        <strong>Last Name:</strong> <span th:text="${order.user.lastName}">Leone</span>
-                    </p>
-                    <p>
-                        <strong>Phone:</strong> <span th:text="${order.user.phone}">999-666-55</span>
-                    </p>
-
-                    <hr/>
-
-
-                    <h4>Address Confirmed:</h4>
-                    <hr/>
-
-                    <th:block th:object="${order.address}">
-                        <p>
-                            <strong>Country:</strong> <span th:text="*{country}">Ukraine</span>
-                        </p>
-                        <p>
-                            <strong>State:</strong> <span th:text="*{state}">Chernigov</span>
-                        </p>
-                        <p>
-                            <strong>City:</strong> <span th:text="*{city}">Kiew</span>
-                        </p>
-                        <p>
-                            <strong>Street:</strong> <span th:text="*{street}">Pechersk</span>
-                        </p>
-                        <p>
-                            <strong>Apartment:</strong> <span th:text="*{apartment}">66</span>
-                        </p>
-                        <p>
-                            <strong>ZIP:</strong> <span th:text="*{zipCode}">17400</span>
-                        </p>
-                    </th:block>
-                    <hr/>
-                </div>
-                <!-- END Info + Address-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <!-- Item table -->
-
-                <div class="col-md-6 col-md-offset-1">
-
-
-                    ---------------------------<br/>
-                    Item List + Price:<br/>
-                    ---------------------------<br/>
-                    <table border="1">
-                        <tr style="background-color: cornflowerblue">
-                            <th>name</th>
-                            <th>manufacturer</th>
-                            <th>category</th>
-                            <th>amount</th>
-                            <th>price</th>
-                        </tr>
-                        <tr th:each="item : ${order.lineItems}">
-                            <td th:text="${item.product.name}">Drill</td>
-                            <td th:text="${item.product.manufacturer}">DUSS</td>
-                            <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
-                            <td th:text="${item.amount}">amount</td>
-                            <td th:text="${item.product.price} + ' $' ">50</td>
-                        </tr>
-                        <tr >
-                            <td colspan="3">Total amount and SUM of Order: </td>
-                            <td>
-                                <span th:text="${order.getItemsAmount()}" style="color: darkgreen; font-size: 14px" >4</span>
-                            </td>
-                            <td>
-                                <span th:text="${order.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-            </div>
-
-
-
-
-
-
-
-
-
-
+        <div class="center">
             <p>
-                Comment to Order:
-            <form action="#" th:action="@{/order/confirm/comment}" method="post">
-                <fieldset>
-                    <div>
-                        <input type="text" id="comment" name="commentToOrder" value="Enter your comment..." />
-                    </div>
-
-                    <p>
-                        <a href="#" th:href="@{/order/confirm/address}" class="button-buy-active"> <-- Back to Address</a>
-                        <button type="submit"  name="saveComment" class="btn-link">Confirm! </button>
-                    </p>
-                </fieldset>
-            </form>
-
-            <br/>
-            <a href="#" th:href="@{/order/detail}" class="button-delete"> Back to Order page !</a>
+                <i class="fa fa-handshake-o" aria-hidden="true" id="hand-shake" ></i>
             </p>
 
+            <h2>
+                You Order confirmed. We will call you! :)
+            </h2>
 
-
-
-
-
-
-
+            <hr/>
+            <a href="#" th:href="@{/order/detail}" id="button-green"  class="btn btn-default btn-sm" >
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                Back (to Order detail)
+            </a>
 
         </div>
-
+        <!--END Order Confirm Comment -->
 
 
 
