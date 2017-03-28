@@ -164,89 +164,111 @@
     </div>
 
 
-    <!-- THUMBNAILS example
-    http://bootsnipp.com/snippets/featured/thumbnail-with-caption-amp-buttons
-    -->
+
+    <!-- MAIN CONTENT -->
     <div id="main-content" class="row col-sm-10">
 
-        <!-- **************************************************************************************************** -->
 
 
-        <!-- Order Detail -->
-            <div class="row col-md-8 col-sm-offset-1 order-detail">
+        <!-- Order Confirm Comment-->
+        <div class="row col-md-8 col-sm-offset-1 order-detail">
 
-                <h2>Order items</h2>
-                <hr/>
 
-                <div class="order-brief-info">
-                <p>
+            <div class="row">
 
-                    <strong><i class="fa-li fa fa-caret-right" aria-hidden="true"></i> Shipping Address:</strong> Ukraine, Kiev, Shevchenka 88
-                </p>
-                <p>
+                <!-- Info + Address-->
+                <div class="col-md-5">
+                       <h4>Personal info:</h4>
+                    <hr/>
 
-                    <strong ><i class="fa-li fa fa-caret-right" aria-hidden="true"></i> Total items:</strong> <span style="color: #843534; font-weight: bold" >66</span>
-                </p>
+                    <p>
+                        <strong>Name:</strong>  <span th:text="${order.user.firstName}">Sergio</span>
+                    </p>
+                    <p>
+                        <strong>Last Name:</strong> <span th:text="${order.user.lastName}">Leone</span>
+                    </p>
+                    <p>
+                        <strong>Phone:</strong> <span th:text="${order.user.phone}">999-666-55</span>
+                    </p>
+
+                    <hr/>
+
+
+                    <h4>Address Confirmed:</h4>
+                    <hr/>
+
+                    <th:block th:object="${order.address}">
+                        <p>
+                            <strong>Country:</strong> <span th:text="*{country}">Ukraine</span>
+                        </p>
+                        <p>
+                            <strong>State:</strong> <span th:text="*{state}">Chernigov</span>
+                        </p>
+                        <p>
+                            <strong>City:</strong> <span th:text="*{city}">Kiew</span>
+                        </p>
+                        <p>
+                            <strong>Street:</strong> <span th:text="*{street}">Pechersk</span>
+                        </p>
+                        <p>
+                            <strong>Apartment:</strong> <span th:text="*{apartment}">66</span>
+                        </p>
+                        <p>
+                            <strong>ZIP:</strong> <span th:text="*{zipCode}">17400</span>
+                        </p>
+                    </th:block>
+                    <hr/>
+                </div>
+                <!-- END Info + Address-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- Item table -->
+
+                <div class="col-md-6 col-md-offset-1">
+
+
+                    ---------------------------<br/>
+                    Item List + Price:<br/>
+                    ---------------------------<br/>
+                    <table border="1">
+                        <tr style="background-color: cornflowerblue">
+                            <th>name</th>
+                            <th>manufacturer</th>
+                            <th>category</th>
+                            <th>amount</th>
+                            <th>price</th>
+                        </tr>
+                        <tr th:each="item : ${order.lineItems}">
+                            <td th:text="${item.product.name}">Drill</td>
+                            <td th:text="${item.product.manufacturer}">DUSS</td>
+                            <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
+                            <td th:text="${item.amount}">amount</td>
+                            <td th:text="${item.product.price} + ' $' ">50</td>
+                        </tr>
+                        <tr >
+                            <td colspan="3">Total amount and SUM of Order: </td>
+                            <td>
+                                <span th:text="${order.getItemsAmount()}" style="color: darkgreen; font-size: 14px" >4</span>
+                            </td>
+                            <td>
+                                <span th:text="${order.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
-                <div th:if="${#lists.isEmpty(activeOrder.lineItems)} ">
-                    <h4>You order is Empty!</h4>
-                </div>
-
-
-                <h4>List of items in current order</h4>
-
-                <table class="table table-bordered compact-font filled-head" id="aligned">
-                    <tr style="background-color: cornflowerblue">
-                        <th>Photo</th>
-                        <th>Name</th>
-                        <th>Manufacturer</th>
-                        <th>Category</th>
-                        <th>Amount</th>
-                        <th>Price</th>
-                        <th>Delete</th>
-                    </tr>
-                    <tr th:each="item : ${activeOrder.lineItems}">
-                        <td>
-                            <img src="../../resources/images/kjelberg.jpg" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}" />
-                        </td>
-                        <td>Drill</td>
-                        <td>DUSS</td>
-                        <td>ELECTRO</td>
-                        <td>amount</td>
-                        <td>$ 50</td>
-                        <td><a href="#" id="button-orange" class="btn btn-default btn-xs" >
-                            <i class="fa fa-times" aria-hidden="true"></i> Remove</a>
-                        </td>
-
-                    </tr>
-                    <tr >
-                        <td colspan="4"><strong>Total Amount and Sum of Order:</strong></td>
-                        <td>
-                            <span th:text="${activeOrder.getItemsAmount()}" style="color: darkgreen; font-size: 14px; ">4</span>
-                        </td>
-                        <td>
-                            <span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px; text-align: center" >66</span>
-                        </td>
-                        <td>
-                            <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id}) }"
-                               id="button-red" class="btn btn-default btn-xs">
-                                <i class="fa fa-window-close-o" aria-hidden="true"></i>
-                                Clear Order</a>
-                        </td>
-                    </tr>
-                </table>
-
-                <hr/>
-
-                <div class="row col-sm-offset-10">
-                    <a href="#" th:href="@{/order/confirm/address}" id="button-green" class="btn btn-default btn-sm" >
-                        Confirm Order <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-
-             </div>
-            <!-- END Order Detail -->
+            </div>
 
 
 
@@ -257,74 +279,42 @@
 
 
 
-        <!-- **************************************************************************************************** -->
+            <p>
+                Comment to Order:
+            <form action="#" th:action="@{/order/confirm/comment}" method="post">
+                <fieldset>
+                    <div>
+                        <input type="text" id="comment" name="commentToOrder" value="Enter your comment..." />
+                    </div>
 
-        <!-- Product Detail -->
-        <!--<div class="container col-sm-6 product-detail">-->
-            <!--<img src="../../resources/images/fein_kbh.jpg" alt="Detail photo" title="Detail photo" />-->
-        <!--</div>-->
+                    <p>
+                        <a href="#" th:href="@{/order/confirm/address}" class="button-buy-active"> <-- Back to Address</a>
+                        <button type="submit"  name="saveComment" class="btn-link">Confirm! </button>
+                    </p>
+                </fieldset>
+            </form>
 
-
-        <!--<div class="container col-sm-5 product-detail">-->
-
-            <!--<h2> Manufacturer Name-of-Model </h2>-->
-
-            <!--<hr/>-->
-
-            <!--<p id="price-title">Price:</p>-->
-
-            <!--<div class="container row col-md-12 price-block">-->
-                <!--<div class="col-md-7 ">-->
-                    <!--<h3>$ 1999.99</h3>-->
-                <!--</div>-->
-                <!--<div class=" col-md-5">-->
-
-                    <!--<a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} < 1"-->
-                       <!--id="button-grey-light" class="btn btn-default btn-sm" role="button">Out of stock...</a>-->
-
-                    <!--<a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} > 0" th:attr="ng-click='addToCart('+ *{id} +')'"-->
-                       <!--id="button-green" class="btn btn-default btn-sm" role="button" >-->
-                        <!--<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> <span style="margin-left: 6px">Add to Cart!</span> </a>-->
-
-                    <!--<a href="#" sec:authorize="isAnonymous()" th:href="@{/login}"-->
-                       <!--id="button-grey-light"  class="btn btn-default btn-sm" role="button">-->
-                        <!--<i class="fa fa-sign-in" aria-hidden="true"></i> SignIN!</a>-->
+            <br/>
+            <a href="#" th:href="@{/order/detail}" class="button-delete"> Back to Order page !</a>
+            </p>
 
 
-                    <!--<a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">-->
-                        <!--<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>  Add to Cart</a>-->
-                <!--</div>-->
-            <!--</div>-->
 
-            <!--<p><strong>Condition:</strong> Brand NEW!!!</p>-->
-            <!--<p><strong>Unit:</strong> several left\large\huge</p>-->
 
-            <!--<hr/>-->
 
-            <!--<h3>Description</h3>-->
-            <!--<div class="product-description">-->
-            <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
-                <!--Aliquam cupiditate dicta expedita harum hic illo iusto laudantium nesciunt nostrum,-->
-                <!--quam! Accusamus adipisci corporis eligendi est expedita id iure numquam ratione.-->
-            <!--</p>-->
-            <!--</div>-->
 
-            <!--<hr/>-->
 
-            <!--&lt;!&ndash;Attributes - title, body, attribute&ndash;&gt;-->
-            <!--<div class="product-characterictic">-->
-                <!--<h3 style="padding-bottom: 16px">Characteristic: </h3>-->
 
-                <!--<ul class="fa-ul">-->
-                    <!--<li><i class="fa-li fa fa-caret-right"></i>Power 600 wt</li>-->
-                    <!--<li><i class="fa-li fa fa-caret-right"></i>Voltage: 220 V</li>-->
-                    <!--<li><i class="fa-li fa fa-caret-right"></i>Color: Orange</li>-->
-                <!--</ul>-->
 
-            <!--</div>-->
+        </div>
 
-        <!--</div>-->
-        <!-- END Product-detail-->
+
+
+
+
+
+
+
 
 
 
@@ -346,78 +336,13 @@
         <!--</div>-->
 
 
-        <!-- **************************************************************************************************** -->
-
-
-        <!--<div class="col-xs-18 col-sm-6 col-md-3">-->
-            <!--<div class="thumbnail">-->
-                <!--<img src="../../../WEB-INF/resources/images/fein_kbh.jpg" alt="">-->
-                <!--<div class="caption">-->
-                    <!--<h3>Fein</h3>-->
-                    <!--<h4>Name</h4>-->
-                    <!--<p class="thumbnail-price">90.99 $</p>-->
-                    <!--<p class="thumbnail-description">-->
-                        <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
-                        <!--Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat.-->
-                        <!--Consectetur, culpa itaque odio similique suscipit-->
-                    <!--</p>-->
-
-                    <!--<p class="thumbnail-buttons">-->
-                        <!--<a href="#" id="btn-add-to-basket" class="btn btn-info btn-sm" role="button">Add to basket!</a>-->
-                        <!--<a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>-->
-                    <!--</p>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="label-image">-->
-                <!--<span class="fa-stack fa-lg" id="action">-->
-                        <!--<i class="fa fa-circle fa-stack-2x" id="label-icon" ></i>-->
-                         <!--&lt;!&ndash;<i class="fa-bookmark-o"  aria-hidden="true" id="label-icon"></i>&ndash;&gt;-->
-                        <!--<i class="fa fa-flag fa-stack-1x fa-inverse" id="label-icon" ></i>-->
-                <!--</span>-->
-
-                <!--&lt;!&ndash;<a href="#"> </a>&ndash;&gt;-->
-                <!--&lt;!&ndash;<a href="#"> <i id="label-icon" aria-hidden="true">T</i></a>&ndash;&gt;-->
-            <!--</div>-->
-
-        <!--</div>-->
-
-        <!--<div class="col-xs-18 col-sm-6 col-md-3">-->
-            <!--<div class="thumbnail">-->
-                <!--<img src="../../../WEB-INF/resources/images/kjelberg.jpg" alt="">-->
-                <!--<div class="caption">-->
-                    <!--<h3>Kjelberg</h3>-->
-                    <!--<h4>Name</h4>-->
-                    <!--<p class="thumbnail-price">90.99 $</p>-->
-                    <!--<p class="thumbnail-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>-->
-
-                    <!--<p class="thumbnail-buttons">-->
-                        <!--<a href="#" id="btn-add-to-basket-lock" class="btn btn-info btn-sm" role="button">Add to basket!</a>-->
-                        <!--<a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>-->
-                    <!--</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-
 
         <!-- **************************************************************************************************** -->
 
 
+    </div><!-- End Main content -->
 
-    </div><!-- End row -->
 
-    <!--PAGINATION example-->
-    <!--<div class="container col-sm-10" id="pagination-products">-->
-    <!--<ul class="pagination">-->
-        <!--<li class="disabled"><a href="#">&laquo;</a></li>-->
-        <!--<li class="active"><a href="#">&lsaquo; Prev</a></li>-->
-        <!--<li><a href="#">2</a></li>-->
-        <!--<li><a href="#">3</a></li>-->
-        <!--<li><a href="#">4</a></li>-->
-        <!--<li><a href="#">Next</a></li>-->
-        <!--<li><a href="#">&raquo;</a></li>-->
-    <!--</ul>-->
-<!--</div>-->
 
 
 
@@ -437,70 +362,329 @@
 
 
 
+<!-- **************************************************************************************************** -->
+
+
+<!-- Order Detail -->
+<!--<div class="row col-md-8 col-sm-offset-1 order-detail">-->
+
+<!--<h2>Order items</h2>-->
+<!--<hr/>-->
+
+<!--<div class="order-brief-info">-->
+<!--<p>-->
+
+<!--<strong><i class="fa-li fa fa-caret-right" aria-hidden="true"></i> Shipping Address:</strong> Ukraine, Kiev, Shevchenka 88-->
+<!--</p>-->
+<!--<p>-->
+
+<!--<strong ><i class="fa-li fa fa-caret-right" aria-hidden="true"></i> Total items:</strong> <span style="color: #843534; font-weight: bold" >66</span>-->
+<!--</p>-->
+<!--</div>-->
+
+<!--<div th:if="${#lists.isEmpty(activeOrder.lineItems)} ">-->
+<!--<h4>You order is Empty!</h4>-->
+<!--</div>-->
+
+
+<!--<h4>List of items in current order</h4>-->
+
+<!--<table class="table table-bordered compact-font filled-head" id="aligned">-->
+<!--<tr style="background-color: cornflowerblue">-->
+<!--<th>Photo</th>-->
+<!--<th>Name</th>-->
+<!--<th>Manufacturer</th>-->
+<!--<th>Category</th>-->
+<!--<th>Amount</th>-->
+<!--<th>Price</th>-->
+<!--<th>Delete</th>-->
+<!--</tr>-->
+<!--<tr th:each="item : ${activeOrder.lineItems}">-->
+<!--<td>-->
+<!--<img src="../../resources/images/kjelberg.jpg" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}" />-->
+<!--</td>-->
+<!--<td>Drill</td>-->
+<!--<td>DUSS</td>-->
+<!--<td>ELECTRO</td>-->
+<!--<td>amount</td>-->
+<!--<td>$ 50</td>-->
+<!--<td><a href="#" id="button-orange" class="btn btn-default btn-xs" >-->
+<!--<i class="fa fa-times" aria-hidden="true"></i> Remove</a>-->
+<!--</td>-->
+
+<!--</tr>-->
+<!--<tr >-->
+<!--<td colspan="4"><strong>Total Amount and Sum of Order:</strong></td>-->
+<!--<td>-->
+<!--<span th:text="${activeOrder.getItemsAmount()}" style="color: darkgreen; font-size: 14px; ">4</span>-->
+<!--</td>-->
+<!--<td>-->
+<!--<span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px; text-align: center" >66</span>-->
+<!--</td>-->
+<!--<td>-->
+<!--<a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id}) }"-->
+<!--id="button-red" class="btn btn-default btn-xs">-->
+<!--<i class="fa fa-window-close-o" aria-hidden="true"></i>-->
+<!--Clear Order</a>-->
+<!--</td>-->
+<!--</tr>-->
+<!--</table>-->
+
+<!--<hr/>-->
+
+<!--<div class="row col-sm-offset-10">-->
+<!--<a href="#" th:href="@{/order/confirm/address}" id="button-green" class="btn btn-default btn-sm" >-->
+<!--Confirm Order <i class="fa fa-arrow-right" aria-hidden="true"></i>-->
+<!--</a>-->
+<!--</div>-->
+
+<!--</div>-->
+<!-- END Order Detail -->
 
 
 
-<!--
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
 
-            &lt;!&ndash; Shop Logo &ndash;&gt;
-            <a class="brand" href="/" th:href="@{/home}">e-ToolStore</a>
 
-            &lt;!&ndash; Search block&ndash;&gt;
-            <form action="#" th:action="@{/product/search}" method="post" class="navbar-form form-search pull-left">
-                <input type="text" id="comment" name="searchTerm" value="Search product..." class="input-medium"/>
-                <button type="submit" name="startSearch" class="btn">Search!</button>
-            </form>
+<!-- **************************************************************************************************** -->
 
-            &lt;!&ndash;Admin manage&ndash;&gt;
-            <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-                <div class="nav-collapse collapse pull-right">
-                    <ul class="nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin-manage <b
-                                    class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" th:href="@{/product/admin/manage/all/page/0}">Product manage</a></li>
-                                <li><a href="#" th:href="@{/order/admin/manage/all/page/0}">Order manage</a></li>
 
-<span sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-menu-admin">
-<li><a href="#" th:href="@{/user/admin/manager}">User manage</a></li>
-</span>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<!-- Order Confirm Address-->
+<!--<div class="row col-md-8 col-sm-offset-1 order-detail">-->
 
-            &lt;!&ndash; Sign Out&ndash;&gt;
-            <div sec:authorize="isAuthenticated()">
-                <ul class="nav pull-right">
-                    <li><a href="#" th:href="@{/logout}">SignOut</a></li>
-                </ul>
-            </div>
+<!--<h2> Address for delivery: </h2>-->
 
-            &lt;!&ndash; Login - Register &ndash;&gt;
-            <div sec:authorize="isAnonymous()">
-                <div class="nav-collapse collapse pull-right">
-                    <ul class="nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">SignIn<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" th:href="@{/login}">Login</a></li>
-                                <li><a href="#" th:href="@{/user/register}">Register</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<!--<hr/>-->
 
-            &lt;!&ndash; Order &ndash;&gt;
-            <ul class="nav pull-right">
-                <li><a href="#" th:href="@{/order/detail}">Order</a></li>
-            </ul>
 
-        </div>
-    </div>
-</div>-->
+<!--<form action="#" th:action="@{/order/confirm/address}" th:object="${address}" method="post">-->
+<!--<fieldset>-->
+<!--<input type="hidden" th:field="*{id}" />-->
+
+
+<!--<div class="form-group">-->
+<!--<label for="country">-->
+<!--<span th:text="#{user.country}">Country: </span>-->
+<!--</label>-->
+<!--<input type="text" th:field="*{country}" id="country"  th:value="*{country}" class="form-control"/>-->
+<!--</div>-->
+
+<!--<div class="form-group">-->
+<!--<label for="state">-->
+<!--<span th:text="#{user.state}">State: </span>-->
+<!--</label>-->
+<!--<input type="text" th:field="*{state}" id="state" th:value="*{state}" class="form-control"/>-->
+<!--</div>-->
+
+<!--<div class="form-group">-->
+<!--<label for="city">-->
+<!--<span th:text="#{user.city}">City: </span>-->
+<!--</label>-->
+<!--<input type="text" th:field="*{city}" id="city" th:value="*{city}" class="form-control"/>-->
+<!--</div>-->
+
+<!--<div class="form-group">-->
+<!--<label for="street">-->
+<!--<span th:text="#{user.street}">Street: </span>-->
+<!--</label>-->
+<!--<input type="text" th:field="*{street}" id="street" th:value="*{street}" class="form-control"/>-->
+<!--</div>-->
+
+<!--<div class="form-group">-->
+<!--<label for="apartment">-->
+<!--<span th:text="#{user.apartment}">Apartment:</span>-->
+<!--</label>-->
+<!--<input type="text" th:field="*{apartment}" id="apartment" th:value="*{apartment}" class="form-control"/>-->
+<!--</div>-->
+
+<!--<div class="form-group">-->
+<!--<label for="zipCode">-->
+<!--<span th:text="#{user.zipCode}">ZIP Code: </span>-->
+<!--</label>-->
+<!--<input type="text" th:field="*{zipCode}" id="zipCode" th:value="*{zipCode}" class="form-control"/>-->
+<!--</div>-->
+
+<!--<div class="submit">-->
+<!--<button type="submit" name="save" class="btn btn-sm btn-primary" >-->
+<!--<i class="fa fa-edit" aria-hidden="true"></i>-->
+<!--Change Address!</button>-->
+<!--</div>-->
+
+
+<!--</fieldset>-->
+<!--</form>-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<hr/>-->
+
+
+<!--<div class="row">-->
+<!--<div class="col-md-4">-->
+<!--<a href="#" th:href="@{/order/detail}" id="button-green"  class="btn btn-default btn-sm" >-->
+<!--<i class="fa fa-arrow-left" aria-hidden="true"></i>-->
+<!--Back (to Order detail)-->
+<!--</a>-->
+<!--</div>-->
+
+<!--<div class="col-md-2 col-md-offset-6">-->
+<!--<a href="#" th:href="@{/order/confirm/comment}" id="button-green"  class="btn btn-default btn-sm" >-->
+<!--Next Step-->
+<!--<i class="fa fa-arrow-right" aria-hidden="true"></i>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--</div>-->
+<!--END Order Confirm Address-->
+
+
+<!--************************************************************************************************************-->
+
+<!-- **************************************************************************************************** -->
+
+
+<!-- Product Detail -->
+<!--<div class="container col-sm-6 product-detail">-->
+<!--<img src="../../resources/images/fein_kbh.jpg" alt="Detail photo" title="Detail photo" />-->
+<!--</div>-->
+
+
+<!--<div class="container col-sm-5 product-detail">-->
+
+<!--<h2> Manufacturer Name-of-Model </h2>-->
+
+<!--<hr/>-->
+
+<!--<p id="price-title">Price:</p>-->
+
+<!--<div class="container row col-md-12 price-block">-->
+<!--<div class="col-md-7 ">-->
+<!--<h3>$ 1999.99</h3>-->
+<!--</div>-->
+<!--<div class=" col-md-5">-->
+
+<!--<a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} < 1"-->
+<!--id="button-grey-light" class="btn btn-default btn-sm" role="button">Out of stock...</a>-->
+
+<!--<a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} > 0" th:attr="ng-click='addToCart('+ *{id} +')'"-->
+<!--id="button-green" class="btn btn-default btn-sm" role="button" >-->
+<!--<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> <span style="margin-left: 6px">Add to Cart!</span> </a>-->
+
+<!--<a href="#" sec:authorize="isAnonymous()" th:href="@{/login}"-->
+<!--id="button-grey-light"  class="btn btn-default btn-sm" role="button">-->
+<!--<i class="fa fa-sign-in" aria-hidden="true"></i> SignIN!</a>-->
+
+
+<!--<a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">-->
+<!--<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>  Add to Cart</a>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<p><strong>Condition:</strong> Brand NEW!!!</p>-->
+<!--<p><strong>Unit:</strong> several left\large\huge</p>-->
+
+<!--<hr/>-->
+
+<!--<h3>Description</h3>-->
+<!--<div class="product-description">-->
+<!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
+<!--Aliquam cupiditate dicta expedita harum hic illo iusto laudantium nesciunt nostrum,-->
+<!--quam! Accusamus adipisci corporis eligendi est expedita id iure numquam ratione.-->
+<!--</p>-->
+<!--</div>-->
+
+<!--<hr/>-->
+
+<!--&lt;!&ndash;Attributes - title, body, attribute&ndash;&gt;-->
+<!--<div class="product-characterictic">-->
+<!--<h3 style="padding-bottom: 16px">Characteristic: </h3>-->
+
+<!--<ul class="fa-ul">-->
+<!--<li><i class="fa-li fa fa-caret-right"></i>Power 600 wt</li>-->
+<!--<li><i class="fa-li fa fa-caret-right"></i>Voltage: 220 V</li>-->
+<!--<li><i class="fa-li fa fa-caret-right"></i>Color: Orange</li>-->
+<!--</ul>-->
+
+<!--</div>-->
+
+<!--</div>-->
+<!-- END Product-detail-->
+
+<!-- **************************************************************************************************** -->
+
+<!-- THUMBNAILS example
+  http://bootsnipp.com/snippets/featured/thumbnail-with-caption-amp-buttons
+  -->
+
+
+<!--<div class="col-xs-18 col-sm-6 col-md-3">-->
+<!--<div class="thumbnail">-->
+<!--<img src="../../../WEB-INF/resources/images/fein_kbh.jpg" alt="">-->
+<!--<div class="caption">-->
+<!--<h3>Fein</h3>-->
+<!--<h4>Name</h4>-->
+<!--<p class="thumbnail-price">90.99 $</p>-->
+<!--<p class="thumbnail-description">-->
+<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
+<!--Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat.-->
+<!--Consectetur, culpa itaque odio similique suscipit-->
+<!--</p>-->
+
+<!--<p class="thumbnail-buttons">-->
+<!--<a href="#" id="btn-add-to-basket" class="btn btn-info btn-sm" role="button">Add to basket!</a>-->
+<!--<a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="label-image">-->
+<!--<span class="fa-stack fa-lg" id="action">-->
+<!--<i class="fa fa-circle fa-stack-2x" id="label-icon" ></i>-->
+<!--&lt;!&ndash;<i class="fa-bookmark-o"  aria-hidden="true" id="label-icon"></i>&ndash;&gt;-->
+<!--<i class="fa fa-flag fa-stack-1x fa-inverse" id="label-icon" ></i>-->
+<!--</span>-->
+
+<!--&lt;!&ndash;<a href="#"> </a>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#"> <i id="label-icon" aria-hidden="true">T</i></a>&ndash;&gt;-->
+<!--</div>-->
+
+<!--</div>-->
+
+<!--<div class="col-xs-18 col-sm-6 col-md-3">-->
+<!--<div class="thumbnail">-->
+<!--<img src="../../../WEB-INF/resources/images/kjelberg.jpg" alt="">-->
+<!--<div class="caption">-->
+<!--<h3>Kjelberg</h3>-->
+<!--<h4>Name</h4>-->
+<!--<p class="thumbnail-price">90.99 $</p>-->
+<!--<p class="thumbnail-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>-->
+
+<!--<p class="thumbnail-buttons">-->
+<!--<a href="#" id="btn-add-to-basket-lock" class="btn btn-info btn-sm" role="button">Add to basket!</a>-->
+<!--<a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+
+<!-- **************************************************************************************************** -->
+
+
+<!--PAGINATION example-->
+<!--<div class="container col-sm-10" id="pagination-products">-->
+<!--<ul class="pagination">-->
+<!--<li class="disabled"><a href="#">&laquo;</a></li>-->
+<!--<li class="active"><a href="#">&lsaquo; Prev</a></li>-->
+<!--<li><a href="#">2</a></li>-->
+<!--<li><a href="#">3</a></li>-->
+<!--<li><a href="#">4</a></li>-->
+<!--<li><a href="#">Next</a></li>-->
+<!--<li><a href="#">&raquo;</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+
+
+
+
+

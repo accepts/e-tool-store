@@ -220,6 +220,18 @@ html {
     color: #eeeeee;
 }
 
+#btn-link{
+    border: 1px solid #333333;
+    outline:none;
+    background:#c7254e;
+    cursor:pointer;
+    color:#f0ad4e;
+    padding:0;
+    /*text-decoration:underline;*/
+    font-family:inherit;
+    font-size:inherit;
+}
+
 
 /* -------------- Table for Admin manager-------------------*/
 
