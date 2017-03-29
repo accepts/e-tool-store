@@ -1,29 +1,102 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="template/header :: head">
+<head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
-    <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
+    <title th:text="#{title.application}">_Store_test_title_</title>
+
+    <!-- JS-->
+    <script src="../resources/js/jquery-3.1.1.min.js"
+            th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+    <script src="../resources/component/bootstrap/js/bootstrap.js"
+            th:src="@{/resources/component/bootstrap/js/bootstrap.min.js}"></script>
+
+    <!-- Custom CSS styles-->
+    <link rel="stylesheet" href="../resources/css/style.css" th:href="@{/css/style.css}"/>
+
+    <!-- Bootstrap styles-->
+    <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/resources/component/bootstrap/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap.min.css"
+          th:href="@{/resources/component/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../resources/component/font-awesome/css/font-awesome.min.css"
+          th:href="@{/resources/component/font-awesome/css/font-awesome.min.css}"/>
+
+    <!-- AngularJS-->
+    <script src="../resources/js/angular.js" th:src="@{/js/angular.js}"></script>
+    <script src="../resources/js/formApp.js" th:src="@{/js/formApp.js}"></script>
+    <script src="../resources/js/orderApp.js" th:src="@{/js/orderApp.js}"></script>
 </head>
 <body>
-<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
-<div class="main-content">
-
-
-
-    <h3 th:if="${errorMsg} ne null" >
-       Message:  <span th:text="${errorMsg}" style="color: crimson"></span>
-    </h3>
-
-    <h3 th:if="${errorMsg} eq null" >
-        Something is going wrong...
-    </h3>
-
+<div th:replace="template/fragments :: header">
+    <p>_test_header_</p>
 </div>
 
+<div th:replace="template/fragments :: sidebar" class="col-sm-1">
+    <div id="sidebar-wrapper">
+        <nav id="spy">
+            <ul class="sidebar-nav nav">
+                <li class="sidebar-brand">
+                    <a href="#home"><span class="fa fa-home solo">All</span></a>
+                </li>
+                <li>
+                    <a href="#anch1" data-scroll>
+                        <span class="fa fa-anchor solo">Hand Tool</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch2" data-scroll>
+                        <span class="fa fa-anchor solo">Electric </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch3" data-scroll>
+                        <span class="fa fa-anchor solo">Hydraulic </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch4" data-scroll>
+                        <span class="fa fa-anchor solo">Pneumatic </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 
-<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+<div id="main-content" class="row col-sm-10">
+
+    <!-- Error-->
+    <div class="center">
+        <p>
+            <i class="fa fa-blind" aria-hidden="true" id="error-occur"></i>
+        </p>
+
+        <h2>
+            Some problem arise. <br/>
+            Click on button for back to home page...
+        </h2>
+        <p th:if="${errorMsg} ne null">
+            Message:  <span th:text="${errorMsg}" style="color: #8c8c8c">Error message from controller</span>
+        </p>
+
+        <hr/>
+        <a href="#" th:href="@{/home}" id="button-green" class="btn btn-default btn-sm">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            Back to Home page
+        </a>
+
+    </div>
+    <!--END Error -->
+
+</div>
+<!--END main Content-->
+
+
+<div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
+
+
 </body>
 </html>
+

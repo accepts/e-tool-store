@@ -402,6 +402,11 @@ html {
     color: #36ad1e;
 }
 
+#error-occur{
+    font-size: 76px;
+    color: #ac2925;
+}
+
 /* ====================== Sidebar ===================== */
 
 #sidebar-wrapper {

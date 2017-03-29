@@ -173,21 +173,29 @@
         <!-- Order Confirm Comment-->
         <div class="center">
             <p>
-                <i class="fa fa-handshake-o" aria-hidden="true" id="hand-shake" ></i>
+                <i class="fa fa-ban" aria-hidden="true" id="error-occur"></i>
             </p>
 
             <h2>
-                You Order confirmed. We will call you! :)
+                Access denied.
             </h2>
+            <p>
+                Dear <span th:text="${user_name} eq null ? 'Visitor' : ${user_name} " style="color: firebrick">visitor</span>
+                You are not authorized to access this page.
+            </p>
 
             <hr/>
-            <a href="#" th:href="@{/order/detail}" id="button-green"  class="btn btn-default btn-sm" >
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                Back (to Order detail)
+            <a href="#" th:href="@{/home}" id="button-green" class="btn btn-default btn-sm">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                Back to Home page
             </a>
+
 
         </div>
         <!--END Order Confirm Comment -->
+
+
+
 
 
 
