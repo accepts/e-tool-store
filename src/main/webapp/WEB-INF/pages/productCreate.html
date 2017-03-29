@@ -1,234 +1,510 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="template/header :: head">
+<head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
-    <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+    <title th:text="#{title.application}">_Store_test_title_</title>
+
 </head>
 <body>
-<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
 
+<div th:replace="template/fragments :: header"><p>_test_header_</p></div>
 
-<div class="main-content">
+<div th:replace="template/fragments :: sidebar" class="col-sm-1" >
+    <div id="sidebar-wrapper">
+        <nav id="spy">
+            <ul class="sidebar-nav nav">
+                <li class="sidebar-brand">
+                    <a href="#home"><span class="fa fa-home solo">All</span></a>
+                </li>
+                <li>
+                    <a href="#anch1" data-scroll>
+                        <span class="fa fa-anchor solo">Hand Tool</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch2" data-scroll>
+                        <span class="fa fa-anchor solo">Electric </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch3" data-scroll>
+                        <span class="fa fa-anchor solo">Hydraulic </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#anch4" data-scroll>
+                        <span class="fa fa-anchor solo">Pneumatic </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 
-    <!-- ************************************** Site menu  ****************************************** -->
+<div id="main-content" class="row col-sm-10">
 
-<div th:replace="template/menu :: tablecontroller" class="table-controller" >
-    <table border="2">
-        <tbody>
-        <tr style="background-color: darkturquoise">
-            <th>Test_title_1</th>
-            <th>TestTitle_2</th>
-            <th>reserv</th>
+    <h3 id="title-product-create">Product Create</h3>
+    <br/>
+
+    <h4 id="title-product-create" style="color: #737373" th:text="#{product.table.title.list}">List of last added product </h4>
+
+    <!-- Table of 3 last added products-->
+    <table class="table table-bordered compact-font filled-head">
+        <thead>
+        <tr style="background-color: dodgerblue">
+            <th>Pic</th>
+            <th>Brand</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Units</th>
+
+            <th>Condition</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Attributes</th>
+            <th style="background-color: #28a4c9">Edit</th>
+            <th style="background-color: #99cc33">Detail</th>
         </tr>
-        <tr>
-            <td><a href="#">_test_Link1</a></td>
-            <td><a href="#">_test_Link2</a></td>
-            <td>reserv</td>
+        </thead>
+
+        <tbody>
+        <tr th:each="p : ${allProducts}">
+            <td>
+                <img src="../../resources/images/fein_kbh.jpg" alt="STSM logo"
+                     title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 40px"/>
+            </td>
+            <td th:text="${{p.manufacturer}}">product_manufact</td>
+            <td th:text="${{p.name}}">name_product</td>
+            <td th:text="${{p.description}}" id="short-text">12345678910111213141516171819202122</td>
+            <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">$ 900</td>
+            <td th:text="${{p.unitInStock}}">55</td>
+
+            <td th:text="#{|product.condition.${p.condition}|}">NEW</td>
+            <td th:text="#{|product.category.${p.category}|}">prod_category</td>
+            <td th:text="#{|product.status.${p.status}|}">prod_status</td>
+
+            <td>
+                <table class="no-border">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <th:block th:each="f, rowStat : ${p.features}">
+                            <span th:text="${rowStat.count} + ') ' + ${f.title} + ' '+ ${f.body} + ' '+ ${f.attribute}" style="max-width: 10px">1) Title Body</span>
+                                <br/>
+                            </th:block>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+
+            <td>
+                <a href="#" th:href="@{/product/manage/edit/{productId} (productId=${p.id}) }"
+                   id="button-blue" class="btn btn-default btn-xs">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                    Edit
+                </a>
+
+            </td>
+
+            <td>
+                <a href="#"
+                   th:href="@{/product/detail/{productId} (productId=${p.id}) }"
+                   id="button-green-lite" class="btn btn-default btn-xs">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    Detail
+                </a>
+            </td>
+
         </tr>
         </tbody>
     </table>
-    <br/>
-    <br/>
-</div>
-    <!-- ***************************************** Table with all products  ************************************** -->
+    <!-- END table of 3 last added products-->
 
-    <div >
-    <!--<div th:unless="${#lists.isEmpty(allProducts)}">-->
+    <hr/>
 
-        <h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>
 
-        <table border="1">
-            <thead>
-            <tr style="background-color: dodgerblue">
-                <th>Pic</th>
-                <th>Name</th>
-                <th>description</th>
-                <th>manufact</th>
-                <th>price</th>
-                <th>unit</th>
+    <!-- *******************************************************-->
 
-                <th>condition</th>
-                <th>category</th>
-                <th>status</th>
-                <th>Attributes</th>
-                <!--<th style="background-color: crimson">Delete</th>-->
-                <th style="background-color: #99cc33">Edit</th>
-                <th style="background-color: blueviolet">View</th>
-            </tr>
-            </thead>
+    <h4 id="title-product-create" style="color: #737373">Fill fields of new product: </h4>
 
-            <tbody>
-            <tr th:each="p : ${allProducts}">
-                <td>
-                    <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 80px" />
-                </td>
-                <td th:text="${{p.name}}">name_product</td>
-                <td th:text="${{p.description}}">description_product</td>
-                <td th:text="${{p.manufacturer}}">product_manufact</td>
-                <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>
-                <td th:text="${{p.unitInStock}}">product_quantity</td>
 
-                <td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>
-                <td th:text="#{|product.category.${p.category}|}">prod_category</td>
-                <td th:text="#{|product.status.${p.status}|}">prod_status</td>
-
-                <td >
-                    <table>
-                        <tbody style="background-color: deepskyblue">
-                            <tr th:each="f, rowStat : ${p.features}">
-                                <td th:text="${rowStat.count}">1</td>
-                                <td th:text="${f.title}">_title_</td>
-                                <td th:text="${f.body}">_body_</td>
-                                <!--<td th:text="${f.attrib ute}">_attributes_map_</td>-->
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-
-                <!--<td><a href="#" th:href="@{/product/manage/delete/{productId} (productId=${p.id}) }">Delete</a></td>-->
-                <td><a href="#" th:href="@{/product/manage/edit/{productId} (productId=${p.id}) }">Edit</a></td>
-                <td><a href="#" th:href="@{/product/detail/{productId} (productId=${p.id}) }">View</a></td>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <br/><br/>
-
-    <!-- ************************************** Form for creating product ************************************** -->
-
-    <form action="#" th:action="@{/product/manage/create}" th:object="${product}" method="post" enctype="multipart/form-data">
+    <!-- Form for creating product-->
+    <form action="#" th:action="@{/product/manage/create}" th:object="${product}" method="post"
+          enctype="multipart/form-data" id="productForm">
         <fieldset>
 
             <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
             </ul>
 
-            <input type="hidden" th:field="*{id}" />
-            <input type="hidden" th:field="*{picture}" />
+            <!-- Prime fields-->
+            <div class="row">
+
+                <!-- Info + Address-->
+                <div class="col-md-6">
+
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{picture}"/>
 
 
-            <div>
-                <label for="name">
-                    <span th:text="#{product.name}">_test_Name_</span>
-                </label>
-                <input type="text" th:field="*{name}" id="name" th:errorclass="fieldError" />
+                    <div class="form-group">
+                        <label for="manufacturer" >
+                            <span th:text="#{product.manufacturer}">Manufacturer: </span>
+                        </label>
+                        <input type="text" th:field="*{manufacturer}" id="manufacturer" th:errorclass="fieldError" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">
+                            <span th:text="#{product.name}">Model Name: </span>
+                        </label>
+                        <input type="text" th:field="*{name}" id="name" th:errorclass="fieldError" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category" th:text="#{product.category}">Category: </label>
+                        <select th:field="*{category}" class="form-control">
+                            <option th:each="category : ${allProductCategory}" th:value="${category}"
+                                    id="category" th:text="#{${'product.category.' + category}}">ELECTRO instrument
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="form-group">
+                            <span th:text="#{product.description}">Description: </span>
+                        </label>
+                        <textarea class="form-control" rows="3" name="description" form="productForm" id="description"
+                                  placeholder="Enter description here..." th:errorclass="fieldError" th:field="*{description}"></textarea>
+                        <!--<input type="text" th:field="*{description}" id="description" th:errorclass="fieldError" class="form-control"/>-->
+                    </div>
+
+                </div>
+                <!-- END Info + Address-->
+
+
+                <!-- Price + Amount -->
+                <div class="col-md-4">
+
+                    <div class="form-group">
+                        <label for="price">
+                            <span th:text="#{product.price}">Price: </span>
+                        </label>
+                        <input th:field="*{price}" id="price" th:errorclass="fieldError" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="unitInStock">
+                            <span th:text="#{product.unitInStock}">Units in stock: </span>
+                        </label>
+                        <input type="number" th:field="*{unitInStock}" id="unitInStock" th:errorclass="fieldError" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status" th:text="#{product.status}">Status</label>
+                        <select th:field="*{status}" class="form-control">
+                            <option th:each="status : ${allProductStatus}" th:value="${status}" id="status"
+                                    th:text="#{${'product.status.' + status}}">ACTIVE</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label th:text="#{product.condition}">Condition</label>
+                        <input th:field="*{condition}" type="radio" th:each="condition : ${allProductConditions}"
+                               th:value="${condition}" th:text="#{${'product.condition.' + condition}}" class="radio">
+                    </div>
+
+                </div>
+                <!--END  Price + Amount -->
+
+                <!--Add and remove row with features-->
+                <div class="col-md-10 .form-group">
+
+                    <label>Attributes: </label>
+                    <table class="table table-bordered compact-font filled-head">
+                        <thead>
+                        <tr style="text-align: center">
+                            <th>Number:</th>
+                            <th>Title:</th>
+                            <th>Body:</th>
+                            <th>Attribute:</th>
+                            <th>
+                                <button type="submit" name="addRow" class="btn btn-success btn-sm" id="btn-add-row" >
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Add row</button>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="row,rowStat : *{features}" style="text-align: center" >
+                            <td th:text="${rowStat.count}">1</td>
+                            <td>
+                                <input type="text" th:field="*{features[__${rowStat.index}__].title}"
+                                       th:errorclass="fieldError" class="form-control"/>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{features[__${rowStat.index}__].body}"
+                                       th:errorclass="fieldError" class="form-control"/>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{features[__${rowStat.index}__].attribute}"
+                                       th:errorclass="fieldError" class="form-control" />
+                            </td>
+
+                            <td>
+                                <button type="submit" name="removeRow" th:value="${rowStat.index}"
+                                        class="btn btn-default btn-sm" id="btn-remove-row">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    Del row</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <!-- File picture field-->
+                    <div class="form-group">
+                        <label for="productImage">
+                            <span th:text="#{product.picture}">Picture file: </span>
+                        </label>
+                        <input type="file" th:field="*{productImage}" id="productImage" th:errorclass="fieldError"
+                               class="btn btn-default btn-file"/>
+                    </div>
+
+                    <hr/>
+
+                    <!--Save button-->
+                    <div class="col-md-2 col-md-offset-10">
+                        <div class="submit">
+                            <button type="submit" name="save" class="btn btn-default btn-md" id="btn-confirm-comment" >
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <span th:text="${product.id == null} ? 'Save!': 'Edit' ">Add product</span>
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- END Add and remove row with features -->
+
             </div>
+            <!--END Prime fields-->
 
-            <div>
-                <label for="description">
-                    <span th:text="#{product.description}">_test_Description_</span>
-                </label>
-                <input type="text" th:field="*{description}" id="description" th:errorclass="fieldError" />
-            </div>
-
-            <div>
-                <label for="manufacturer">
-                    <span th:text="#{product.manufacturer}">_test_manufacturer_</span>
-                </label>
-                <input type="text" th:field="*{manufacturer}" id="manufacturer" th:errorclass="fieldError" />
-            </div>
-
-            <div>
-                <label for="unitInStock">
-                    <span th:text="#{product.unitInStock}">_test_unit_inStock_</span>
-                </label>
-                <input type="number" th:field="*{unitInStock}" id="unitInStock" th:errorclass="fieldError" />
-            </div>
-
-            <div>
-                <label for="price">
-                    <span th:text="#{product.price}">_test_price_</span>
-                </label>
-                <input th:field="*{price}" id="price" th:errorclass="fieldError" />
-            </div>
-
-            <div>
-                <label for="category" th:text="#{product.category}">Category</label>
-                <select th:field="*{category}">
-                    <option th:each="category : ${allProductCategory}" th:value="${category}" id="category" th:text="#{${'product.category.' + category}}">test_category_</option>
-                </select>
-            </div>
-
-            <div >
-                <label th:text="#{product.condition}">_test_Condition_</label>
-                <input  th:field="*{condition}" type="radio" th:each="condition : ${allProductConditions}"
-                        th:value="${condition}" th:text="#{${'product.condition.' + condition}}" />
-            </div>
-
-            <div>
-                <label for="status" th:text="#{product.status}">Status</label>
-                <select th:field="*{status}">
-                    <option th:each="status : ${allProductStatus}" th:value="${status}" id="status" th:text="#{${'product.status.' + status}}">test_status_</option>
-                </select>
-            </div>
-
-            <!--Add and remove row with features-->
-
-            <br/> <br/> <br/>
-
-            <div>
-                <label>Attributes</label>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Number:</th>
-                        <th>Title:</th>
-                        <th>Body:</th>
-                        <th>Atribute:</th>
-                        <th>
-                            <button type="submit" name="addRow">Add row</button>
-                        </th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <tr th:each="row,rowStat : *{features}">
-                        <td th:text="${rowStat.count}">1</td>
-                        <td>
-                            <input type="text" th:field="*{features[__${rowStat.index}__].title}" th:errorclass="fieldError" />
-                        </td>
-                        <td>
-                            <input type="text" th:field="*{features[__${rowStat.index}__].body}" th:errorclass="fieldError" />
-                        </td>
-                        <td>
-                            <input type="text" th:field="*{features[__${rowStat.index}__].attribute}" th:errorclass="fieldError" />
-                        </td>
-
-                        <td>
-                            <button type="submit" name="removeRow" th:value="${rowStat.index}">Remove row</button>
-                        </td>
-                    </tr>
-                    </tbody>
-
-                </table>
-            </div>
-
-            <!-- File picture field-->
-            <div>
-                <label for="productImage">
-                    <span th:text="#{product.picture}">_test_Description_</span>
-                </label>
-                <input type="file" th:field="*{productImage}" id="productImage" th:errorclass="fieldError" />
-            </div>
-
-
-            <!--Save button-->
-
-            <div class="submit">
-                <button type="submit" name="save" th:text="${product.id == null} ? 'Save!': 'Edit' " >Add product</button>
-            </div>
 
         </fieldset>
     </form>
+    <!--END Form for creating product-->
+
+
+
 
 
 
 </div>
 
-
-<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
+<div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
 </body>
 </html>
+
+
+
+
+
+
+
+<!--&lt;!&ndash; ***************************************** Table with all products  ************************************** &ndash;&gt;-->
+
+<!--<div>-->
+<!--&lt;!&ndash;<div th:unless="${#lists.isEmpty(allProducts)}">&ndash;&gt;-->
+
+<!--<h2 th:text="#{product.table.title.list}">_test_List of Products_</h2>-->
+
+<!--<table border="1">-->
+<!--<thead>-->
+<!--<tr style="background-color: dodgerblue">-->
+<!--<th>Pic</th>-->
+<!--<th>Name</th>-->
+<!--<th>description</th>-->
+<!--<th>manufact</th>-->
+<!--<th>price</th>-->
+<!--<th>unit</th>-->
+
+<!--<th>condition</th>-->
+<!--<th>category</th>-->
+<!--<th>status</th>-->
+<!--<th>Attributes</th>-->
+<!--&lt;!&ndash;<th style="background-color: crimson">Delete</th>&ndash;&gt;-->
+<!--<th style="background-color: #99cc33">Edit</th>-->
+<!--<th style="background-color: blueviolet">View</th>-->
+<!--</tr>-->
+<!--</thead>-->
+
+<!--<tbody>-->
+<!--<tr th:each="p : ${allProducts}">-->
+<!--<td>-->
+<!--<img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 80px" />-->
+<!--</td>-->
+<!--<td th:text="${{p.name}}">name_product</td>-->
+<!--<td th:text="${{p.description}}">description_product</td>-->
+<!--<td th:text="${{p.manufacturer}}">product_manufact</td>-->
+<!--<td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">product_price</td>-->
+<!--<td th:text="${{p.unitInStock}}">product_quantity</td>-->
+
+<!--<td th:text="#{|product.condition.${p.condition}|}">prod_confition</td>-->
+<!--<td th:text="#{|product.category.${p.category}|}">prod_category</td>-->
+<!--<td th:text="#{|product.status.${p.status}|}">prod_status</td>-->
+
+<!--<td >-->
+<!--<table>-->
+<!--<tbody style="background-color: deepskyblue">-->
+<!--<tr th:each="f, rowStat : ${p.features}">-->
+<!--<td th:text="${rowStat.count}">1</td>-->
+<!--<td th:text="${f.title}">_title_</td>-->
+<!--<td th:text="${f.body}">_body_</td>-->
+<!--&lt;!&ndash;<td th:text="${f.attrib ute}">_attributes_map_</td>&ndash;&gt;-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</td>-->
+
+<!--&lt;!&ndash;<td><a href="#" th:href="@{/product/manage/delete/{productId} (productId=${p.id}) }">Delete</a></td>&ndash;&gt;-->
+<!--<td><a href="#" th:href="@{/product/manage/edit/{productId} (productId=${p.id}) }">Edit</a></td>-->
+<!--<td><a href="#" th:href="@{/product/detail/{productId} (productId=${p.id}) }">View</a></td>-->
+
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--<br/><br/>-->
+
+<!--&lt;!&ndash; ************************************** Form for creating product ************************************** &ndash;&gt;-->
+
+<!--<form action="#" th:action="@{/product/manage/create}" th:object="${product}" method="post" enctype="multipart/form-data">-->
+<!--<fieldset>-->
+
+<!--<ul th:if="${#fields.hasErrors('*')}" class="errorlist">-->
+<!--<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>-->
+<!--</ul>-->
+
+<!--<input type="hidden" th:field="*{id}" />-->
+<!--<input type="hidden" th:field="*{picture}" />-->
+
+
+<!--<div>-->
+<!--<label for="name">-->
+<!--<span th:text="#{product.name}">_test_Name_</span>-->
+<!--</label>-->
+<!--<input type="text" th:field="*{name}" id="name" th:errorclass="fieldError" />-->
+<!--</div>-->
+
+<!--<div>-->
+<!--<label for="description">-->
+<!--<span th:text="#{product.description}">_test_Description_</span>-->
+<!--</label>-->
+<!--<input type="text" th:field="*{description}" id="description" th:errorclass="fieldError" />-->
+<!--</div>-->
+
+<!--<div>-->
+<!--<label for="manufacturer">-->
+<!--<span th:text="#{product.manufacturer}">_test_manufacturer_</span>-->
+<!--</label>-->
+<!--<input type="text" th:field="*{manufacturer}" id="manufacturer" th:errorclass="fieldError" />-->
+<!--</div>-->
+
+<!--<div>-->
+<!--<label for="unitInStock">-->
+<!--<span th:text="#{product.unitInStock}">_test_unit_inStock_</span>-->
+<!--</label>-->
+<!--<input type="number" th:field="*{unitInStock}" id="unitInStock" th:errorclass="fieldError" />-->
+<!--</div>-->
+
+<!--<div>-->
+<!--<label for="price">-->
+<!--<span th:text="#{product.price}">_test_price_</span>-->
+<!--</label>-->
+<!--<input th:field="*{price}" id="price" th:errorclass="fieldError" />-->
+<!--</div>-->
+
+<!--<div>-->
+<!--<label for="category" th:text="#{product.category}">Category</label>-->
+<!--<select th:field="*{category}">-->
+<!--<option th:each="category : ${allProductCategory}" th:value="${category}" id="category" th:text="#{${'product.category.' + category}}">test_category_</option>-->
+<!--</select>-->
+<!--</div>-->
+
+<!--<div >-->
+<!--<label th:text="#{product.condition}">_test_Condition_</label>-->
+<!--<input  th:field="*{condition}" type="radio" th:each="condition : ${allProductConditions}"-->
+<!--th:value="${condition}" th:text="#{${'product.condition.' + condition}}" />-->
+<!--</div>-->
+
+<!--<div>-->
+<!--<label for="status" th:text="#{product.status}">Status</label>-->
+<!--<select th:field="*{status}">-->
+<!--<option th:each="status : ${allProductStatus}" th:value="${status}" id="status" th:text="#{${'product.status.' + status}}">test_status_</option>-->
+<!--</select>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;Add and remove row with features&ndash;&gt;-->
+
+<!--<br/> <br/> <br/>-->
+
+<!--<div>-->
+<!--<label>Attributes</label>-->
+<!--<table>-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th>Number:</th>-->
+<!--<th>Title:</th>-->
+<!--<th>Body:</th>-->
+<!--<th>Atribute:</th>-->
+<!--<th>-->
+<!--<button type="submit" name="addRow">Add row</button>-->
+<!--</th>-->
+<!--</tr>-->
+<!--</thead>-->
+
+<!--<tbody>-->
+<!--<tr th:each="row,rowStat : *{features}">-->
+<!--<td th:text="${rowStat.count}">1</td>-->
+<!--<td>-->
+<!--<input type="text" th:field="*{features[__${rowStat.index}__].title}" th:errorclass="fieldError" />-->
+<!--</td>-->
+<!--<td>-->
+<!--<input type="text" th:field="*{features[__${rowStat.index}__].body}" th:errorclass="fieldError" />-->
+<!--</td>-->
+<!--<td>-->
+<!--<input type="text" th:field="*{features[__${rowStat.index}__].attribute}" th:errorclass="fieldError" />-->
+<!--</td>-->
+
+<!--<td>-->
+<!--<button type="submit" name="removeRow" th:value="${rowStat.index}">Remove row</button>-->
+<!--</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+
+<!--</table>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; File picture field&ndash;&gt;-->
+<!--<div>-->
+<!--<label for="productImage">-->
+<!--<span th:text="#{product.picture}">_test_Description_</span>-->
+<!--</label>-->
+<!--<input type="file" th:field="*{productImage}" id="productImage" th:errorclass="fieldError" />-->
+<!--</div>-->
+
+
+<!--&lt;!&ndash;Save button&ndash;&gt;-->
+
+<!--<div class="submit">-->
+<!--<button type="submit" name="save" th:text="${product.id == null} ? 'Save!': 'Edit' " >Add product</button>-->
+<!--</div>-->
+
+<!--</fieldset>-->
+<!--</form>-->
+

@@ -12,15 +12,15 @@
             th:src="@{/resources/component/bootstrap/js/bootstrap.min.js}"></script>
 
     <!-- Custom CSS styles-->
-    <link rel="stylesheet" href="../../resources/css/style.css"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet" href="../../resources/css/style.css" th:href="@{/css/style.css}"/>
 
     <!-- Bootstrap styles-->
     <link rel="stylesheet" href="../../resources/component/bootstrap/css/bootstrap-theme.min.css"
-          th:href="@{/resources/component/bootstrap/css/bootstrap-theme.min.css}" />
+          th:href="@{/resources/component/bootstrap/css/bootstrap-theme.min.css}"/>
     <link rel="stylesheet" href="../../resources/component/bootstrap/css/bootstrap.min.css"
-          th:href="@{/resources/component/bootstrap/css/bootstrap.min.css}" />
+          th:href="@{/resources/component/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="../../resources/component/font-awesome/css/font-awesome.min.css"
-          th:href="@{/resources/component/font-awesome/css/font-awesome.min.css}" />
+          th:href="@{/resources/component/font-awesome/css/font-awesome.min.css}"/>
 
     <!-- AngularJS-->
     <script src="../../resources/js/angular.js" th:src="@{/js/angular.js}"></script>
@@ -31,223 +31,243 @@
 
 <body>
 
-    <!-- HEADER FRAGMENT-->
-    <div id="header" class="row col-sm-12" th:fragment="header" >
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+<!-- HEADER FRAGMENT-->
+<div id="header" class="row col-sm-12" th:fragment="header">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <!-- Shop Logo -->
-                    <a class="navbar-brand" href="#" th:href="@{/home}">eTool-Store</a>
-                </div>
-
-                <!-- Login - Register -->
-                <div  sec:authorize="isAnonymous()">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a id="navbar-log-in" href="#"  class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                SignIn<b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" th:href="@{/login}">
-                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                    Login</a>
-                                </li>
-                                <li><a href="#" th:href="@{/user/register}">
-                                    <i class="fa fa-address-card-o" aria-hidden="true"></i>
-                                    Register</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-
-
-                <!-- Sign Out -->
-                <div id="log-out" sec:authorize="isAuthenticated()">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#" th:href="@{/logout}">
-                            SignOut
-                            <i class="fa fa-sign-out" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Order -->
-                        <li><a href="#" th:href="@{/order/detail}">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            Order</a>
-                        </li>
-
-                        <!--Admin manage-->
-                        <li class="dropdown" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">
-                                <i class="fa fa-cogs" aria-hidden="true"></i>
-                                Admin-manage<span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" th:href="@{/product/admin/manage/all/page/0}">
-                                    <i class="fa fa-futbol-o" aria-hidden="true"></i>
-                                    Product manage</a>
-                                </li>
-                                <li><a href="#" th:href="@{/order/admin/manage/all/page/0}">
-                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                    Order manage</a>
-                                </li>
-                                <li role="separator" class="divider"></li>
-                                <li><a sec:authorize="hasRole('ROLE_ADMIN')"  href="#" th:href="@{/user/admin/manage/page/0}">
-                                    <i class="fa fa-user-o" aria-hidden="true"></i>
-                                    User manage</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <!-- Search block-->
-                    <form action="#" th:action="@{/product/search}" method="post" class="navbar-form navbar-left">
-                        <input type="text" id="comment" name="searchTerm" value="Search product..." class="form-control"/>
-                        <button type="submit" name="startSearch" class="btn">
-                            <i class="fa fa-search" aria-hidden="true"></i> Search!</button>
-                    </form>
-                </div>
-
+                <!-- Shop Logo -->
+                <a class="navbar-brand" href="#" th:href="@{/home}">eTool-Store</a>
             </div>
-        </nav>
-    </div>
-    <!-- Header END -->
 
-    <!-- SIDEBAR FRAGMENT
-    http://bootsnipp.com/snippets/featured/sidebar-navigation-with-scrollspy
-    -->
-    <div class="col-sm-1" th:fragment="sidebar">
-        <div id="sidebar-wrapper">
-            <nav id="spy">
-                <ul class="sidebar-nav nav">
-                    <li class="sidebar-brand">
-                        <a href="#" th:href="@{/product/all/page/0}"><span class="fa fa-home solo">~ ALL ~</span></a>
-                    </li>
-                    <li>
-                        <a href="#" th:href="@{/product/hand_tool/page/0}" data-scroll>
-                            <span class="fa fa-anchor solo">Hand Tool</span>
+            <!-- Login - Register -->
+            <div sec:authorize="isAnonymous()">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a id="navbar-log-in" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            SignIn<b class="caret"></b>
                         </a>
-                    </li>
-                    <li>
-                        <a href="#" th:href="@{/product/electric/page/0}" data-scroll>
-                            <span class="fa fa-anchor solo">Electric </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" th:href="@{/product/hydraulic/page/0}" data-scroll>
-                            <span class="fa fa-anchor solo">Hydraulic </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" th:href="@{/product/pneumatic/page/0}" data-scroll>
-                            <span class="fa fa-anchor solo">Pneumatic </span>
-                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{/login}">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                Login</a>
+                            </li>
+                            <li><a href="#" th:href="@{/user/register}">
+                                <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                Register</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-            </nav>
+            </div>
+
+
+            <!-- Sign Out -->
+            <div id="log-out" sec:authorize="isAuthenticated()">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" th:href="@{/logout}">
+                        SignOut
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Order -->
+                    <li><a href="#" th:href="@{/order/detail}">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        Order</a>
+                    </li>
+
+                    <!--Admin manage-->
+                    <li class="dropdown" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                            Admin-manage<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" th:href="@{/product/manage/create}">
+                                <i class="fa fa-motorcycle" aria-hidden="true"></i>
+                                Product create</a>
+                            </li>
+                            <li><a href="#" th:href="@{/product/admin/manage/all/page/0}">
+                                <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                                Product manage</a>
+                            </li>
+                            <li><a href="#" th:href="@{/order/admin/manage/all/page/0}">
+                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                Order manage</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a sec:authorize="hasRole('ROLE_ADMIN')" href="#"
+                                   th:href="@{/user/admin/manage/page/0}">
+                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                                User manage</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- Search block-->
+                <form action="#" th:action="@{/product/search}" method="post" class="navbar-form navbar-left">
+                    <input type="text" id="comment" name="searchTerm" value="Search product..." class="form-control"/>
+                    <button type="submit" name="startSearch" class="btn">
+                        <i class="fa fa-search" aria-hidden="true"></i> Search!
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </nav>
+</div>
+<!-- Header END -->
+
+<!-- SIDEBAR FRAGMENT
+http://bootsnipp.com/snippets/featured/sidebar-navigation-with-scrollspy
+-->
+<div class="col-sm-1" th:fragment="sidebar">
+    <div id="sidebar-wrapper">
+        <nav id="spy">
+            <ul class="sidebar-nav nav">
+                <li class="sidebar-brand">
+                    <a href="#" th:href="@{/product/all/page/0}"><span class="fa fa-home solo">~ ALL ~</span></a>
+                </li>
+                <li>
+                    <a href="#" th:href="@{/product/hand_tool/page/0}" data-scroll>
+                        <span class="fa fa-anchor solo">Hand Tool</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" th:href="@{/product/electric/page/0}" data-scroll>
+                        <span class="fa fa-anchor solo">Electric </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" th:href="@{/product/hydraulic/page/0}" data-scroll>
+                        <span class="fa fa-anchor solo">Hydraulic </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" th:href="@{/product/pneumatic/page/0}" data-scroll>
+                        <span class="fa fa-anchor solo">Pneumatic </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<!-- MAIN CONTENT -->
+<div id="main-content" class="row col-sm-10">
+
+
+    <div class="col-xs-18 col-sm-6 col-md-3">
+        <div class="thumbnail">
+            <img src="../../../WEB-INF/resources/images/cloos.jpg" alt="">
+
+            <div class="caption">
+                <h3>Fein</h3>
+                <h4>Name</h4>
+
+                <p class="thumbnail-price">90.99 $</p>
+
+                <p class="thumbnail-description">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat.
+                    Consectetur, culpa itaque odio similique suscipit
+                </p>
+
+                <p class="thumbnail-buttons">
+                    <a href="#" id="btn-add-to-basket" class="btn btn-info btn-sm" role="button">Add to basket!</a>
+                    <a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="label-image">
+    <span class="fa-stack fa-lg" id="action">
+    <i class="fa fa-circle fa-stack-2x" id="label-icon"></i>
+    <!--<i class="fa-bookmark-o"  aria-hidden="true" id="label-icon"></i>-->
+    <i class="fa fa-flag fa-stack-1x fa-inverse" id="label-icon"></i>
+    </span>
+
+            <!--<a href="#"> </a>-->
+            <!--<a href="#"> <i id="label-icon" aria-hidden="true">T</i></a>-->
+        </div>
+
+    </div>
+
+    <div class="col-xs-18 col-sm-6 col-md-3">
+        <div class="thumbnail">
+            <img src="../../../WEB-INF/resources/images/kjelberg.jpg" alt="">
+
+            <div class="caption">
+                <h3>Kjelberg</h3>
+                <h4>Name</h4>
+
+                <p class="thumbnail-price">90.99 $</p>
+
+                <p class="thumbnail-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere,
+                    soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio
+                    similique suscipit</p>
+
+                <p class="thumbnail-buttons">
+                    <a href="#" id="btn-add-to-basket-lock" class="btn btn-info btn-sm" role="button">Add to basket!</a>
+                    <a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>
+                </p>
+            </div>
         </div>
     </div>
 
 
-
-    <!-- MAIN CONTENT -->
-    <div id="main-content" class="row col-sm-10">
+    <!-- **************************************************************************************************** -->
 
 
-
-        <!-- Order Confirm Comment-->
-        <div class="center">
-            <p>
-                <i class="fa fa-ban" aria-hidden="true" id="error-occur"></i>
-            </p>
-
-            <h2>
-                Access denied.
-            </h2>
-            <p>
-                Dear <span th:text="${user_name} eq null ? 'Visitor' : ${user_name} " style="color: firebrick">visitor</span>
-                You are not authorized to access this page.
-            </p>
-
-            <hr/>
-            <a href="#" th:href="@{/home}" id="button-green" class="btn btn-default btn-sm">
-                <i class="fa fa-home" aria-hidden="true"></i>
-                Back to Home page
-            </a>
+    <!--<div id="sort-button-block" >-->
+    <!--<a href="#" id="button-red"  class="btn btn-default btn-sm" role="button">Red</a>-->
+    <!--<a href="#" id="button-blue-light"  class="btn btn-default btn-sm" role="button">Blue-light</a>-->
+    <!--<a href="#" id="button-orange"  class="btn btn-default btn-sm" role="button">Orange</a>-->
+    <!--<a href="#" id="button-yellow"  class="btn btn-default btn-sm" role="button">Yellow</a>-->
+    <!--<a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">Green</a>-->
+    <!--<a href="#" id="button-green-lite"  class="btn btn-default btn-sm" role="button">Green-lite</a>-->
+    <!--<a href="#" id="button-grey"  class="btn btn-default btn-sm" role="button">Grey</a>-->
+    <!--<a href="#" id="button-blue"  class="btn btn-default btn-xs" role="button">Blue</a>-->
+    <!--<a href="#" id="button-blue"  class="btn btn-default btn-sm" role="button">Blue</a>-->
+    <!--<a href="#" id="button-blue-active" class="btn btn-default btn-sm" role="button">Blue-Active</a>-->
+    <!--</div>-->
 
 
-        </div>
-        <!--END Order Confirm Comment -->
+    <!-- **************************************************************************************************** -->
 
 
+</div>
+<!-- End Main content -->
 
 
-
-
-
-
-
-
-
-
-
-        <!-- **************************************************************************************************** -->
-
-
-
-        <!--<div id="sort-button-block" >-->
-            <!--<a href="#" id="button-red"  class="btn btn-default btn-sm" role="button">Red</a>-->
-            <!--<a href="#" id="button-blue-light"  class="btn btn-default btn-sm" role="button">Blue-light</a>-->
-            <!--<a href="#" id="button-orange"  class="btn btn-default btn-sm" role="button">Orange</a>-->
-            <!--<a href="#" id="button-yellow"  class="btn btn-default btn-sm" role="button">Yellow</a>-->
-            <!--<a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">Green</a>-->
-            <!--<a href="#" id="button-green-lite"  class="btn btn-default btn-sm" role="button">Green-lite</a>-->
-            <!--<a href="#" id="button-grey"  class="btn btn-default btn-sm" role="button">Grey</a>-->
-            <!--<a href="#" id="button-blue"  class="btn btn-default btn-xs" role="button">Blue</a>-->
-            <!--<a href="#" id="button-blue"  class="btn btn-default btn-sm" role="button">Blue</a>-->
-            <!--<a href="#" id="button-blue-active" class="btn btn-default btn-sm" role="button">Blue-Active</a>-->
-        <!--</div>-->
-
-
-
-        <!-- **************************************************************************************************** -->
-
-
-    </div><!-- End Main content -->
-
-
-
-
-
-    <!-- FOOTER FRAGMENT-->
-    <footer class="footer" th:fragment="footer">
-        <div class="container col-md-5 col-md-offset-7">
-            <p class="text-muted ">Created: 2017, Ukraine, obeletc.sergey@gmail.com</p>
-        </div>
-    </footer>
+<!-- FOOTER FRAGMENT-->
+<footer class="footer" th:fragment="footer">
+    <div class="container col-md-5 col-md-offset-7">
+        <p class="text-muted ">Created: 2017, Ukraine, obeletc.sergey@gmail.com</p>
+    </div>
+</footer>
 
 
 </body>
 </html>
-
-
-
-
 
 
 <!-- **************************************************************************************************** -->
@@ -328,9 +348,6 @@
 
 <!--</div>-->
 <!-- END Order Detail -->
-
-
-
 
 
 <!-- **************************************************************************************************** -->
@@ -553,7 +570,6 @@
 <!--</div>-->
 <!--</div>-->
 <!--</div>-->
-
 
 
 <!-- **************************************************************************************************** -->

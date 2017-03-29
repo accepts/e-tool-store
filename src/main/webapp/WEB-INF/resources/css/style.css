@@ -56,14 +56,12 @@ html {
 }
 
 .thumbnail img {
-    /*max-width: 100%;*/
-    /*max-height: 150px;*/
-    /*overflow: hidden;*/
-
     max-width: 300px;
-    min-width: 150px;
+    /*min-width: 150px;*/
     max-height: 150px;
-    min-height: 150px;
+    /*min-height: 150px;*/
+    width: auto;
+    height: auto;
     overflow: hidden;
 }
 
@@ -73,9 +71,6 @@ html {
 }
 
 .thumbnail-description{
-    /*max-height: 40px;*/
-    /*overflow: hidden;*/
-
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -252,12 +247,24 @@ html {
 
 .filled-head th{
     border: #737373 solid 1px !important;
+    text-align: center;
 }
 
 #aligned td{
     vertical-align: middle;
     align-content: center;
 }
+
+.no-border td{
+    border: #ffffff solid 1px !important;
+}
+
+.no-border th{
+    border: #ffffff solid 1px !important;
+    text-align: center;
+}
+
+
 
 
 
@@ -276,10 +283,6 @@ html {
 }
 
 /*===================== Product Detail ====================== */
-.product-detail{
-    /*border: #d4d4d4 solid 1px;*/
-    /*border-radius: 3%;*/
-}
 
 .product-detail img{
     padding-top: 66px;
@@ -386,6 +389,13 @@ html {
     text-shadow: none;
 }
 
+#title-product-create{
+    color: #2e6da4;
+    text-align: center;
+    font-family: Consolas;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
 
 .center{
     position: fixed; /* or absolute */
@@ -406,6 +416,66 @@ html {
     font-size: 76px;
     color: #ac2925;
 }
+
+
+/*===================== Create product page ====================== */
+
+
+#short-text{
+    /*max-height: 40px;*/
+    /*overflow: hidden;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*line-height: 20px;     /!* fallback *!/*/
+    max-width: 10px;      /* fallback */
+    -webkit-line-clamp: 1; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+#btn-add-row{
+    background-color: #b2dba1;
+    color: #080808;
+    border-color: #080808;
+    font-weight: normal;
+    text-shadow: none;
+}
+
+#btn-remove-row{
+    background-color: #dc5f5b;
+    color: #fed84f;
+    border-color: #080808;
+    font-weight: normal;
+    text-shadow: none;
+}
+
+
+
+
+.fieldError {
+    border: 1px solid red;
+}
+
+ul.errorlist, p.errorlist {
+    border: 1px dotted #333;
+    margin: 10px 10px 50px 10px;
+    padding: 10px;
+}
+
+ul.errorlist li, p.errorlist {
+    list-style: none;
+    background-color: #f2d768;
+    padding: 5px;
+    margin: 3px 1px;
+    color: brown;
+}
+
+
+
+
+
+
+
 
 /* ====================== Sidebar ===================== */
 
