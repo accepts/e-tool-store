@@ -1,205 +1,255 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="template/header :: head">
+<head th:fragment="head">
     <meta charset="UTF-8">
-    <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+    <title th:text="#{title.application}">_Store_test_title_</title>
+
+    <!-- JS-->
+    <script src="../resources/js/jquery-3.1.1.min.js"
+            th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+    <script src="../resources/component/bootstrap/js/bootstrap.js"
+            th:src="@{/resources/component/bootstrap/js/bootstrap.min.js}"></script>
+
+    <!-- Custom CSS styles-->
+    <link rel="stylesheet" href="../resources/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../resources/css/register.css" th:href="@{/css/register.css}"/>
+
+    <!-- Bootstrap styles-->
+    <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/resources/component/bootstrap/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap.min.css"
+          th:href="@{/resources/component/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../resources/component/font-awesome/css/font-awesome.min.css"
+          th:href="@{/resources/component/font-awesome/css/font-awesome.min.css}"/>
 
     <!-- AngularJS -->
     <script src="../resources/js/angular.js" th:src="@{/js/angular.js}">
     </script>
     <script src="../resources/js/formApp.js" th:src="@{/js/formApp.js}">
     </script>
-
 </head>
 
 <body>
-<div th:replace="template/header :: header" class="header"><p>_test_header_</p></div>
+
+<div class="container" ng-app="myApp">
 
 
-<div ng-app="myApp" class="main-content">
-
-    <div th:replace="template/menu :: tablecontroller" class="table-controller">
-        <table border="2">
-            <tbody>
-            <tr style="background-color: cornflowerblue">
-                <th>Home</th>
-                <th>Product</th>
-                <th>reserv</th>
-            </tr>
-            <tr>
-                <td><a href="#">Home</a></td>
-                <td><a href="#">_test_dao</a></td>
-                <td>reserv</td>
-            </tr>
-            </tbody>
-        </table>
-        <br/>
-        <br/>
-    </div>
+<div class="card card-container">
 
 
-    <h2>
-        <span th:text="#{user.register.title}">_test_title_</span>
-    </h2>
+    <h4 th:text="#{user.register.title}">
+        Welcome! Fill following fields for registration.
+    </h4>
 
     <!-- ************************************** Form for user register ************************************** -->
 
     <form action="#" th:action="@{/user/register}" th:object="${user}" method="post"
           ng-controller="AppController as ctrl" name="myForm">
-        <fieldset>
 
-            <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
-                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
-            </ul>
+
 
             <!-- **************** USER system fields block (name, email, password )*********************** -->
 
-            <fieldset>
+        <img id="profile-img" class="profile-img-card" src="../resources/images/register.png"
+             th:src="@{/pic/register.png}"/>
 
-                <span th:text="#{user.form.msg}" class="msg-for-customer">_test_message_</span>
-                <br/><br/>
+        <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+        </ul>
 
-                <div>
-                    <label for="name">
-                        <span th:text="#{user.nickname}">_test_nick-Name_</span>
-                    </label>
-                    <input type="text" th:field="*{name}" id="name" th:errorclass="fieldError"
-                           ng-model="ctrl.user.username" class="username" placeholder="Enter your name" name="uname"
-                           ng-minlength="3" required/>
-                    <span ng-show="myForm.$dirty && myForm.uname.$error.required">This is a required field</span>
-                    <span ng-show="myForm.$dirty && myForm.uname.$error.minlength">Minimum length required is 4</span>
-                    <span ng-show="myForm.$dirty && myForm.uname.$invalid">This field is invalid </span><br/><br/>
+
+                <div class="row">
+                    <!-- Nickname, email, password -->
+                    <div class="col-md-5 ">
+
+
+
+                        <p th:text="#{user.form.msg}" class="msg-for-customer">
+                            Enter your registration data: nickname, e-mail and password:
+                        </p>
+                        <hr/>
+
+                        <div class="form-group" style="margin-bottom: -6px;">
+                            <label for="name">
+                                <span th:text="#{user.nickname}">Nick name</span>
+                            </label>
+
+                            <input type="text" th:field="*{name}" id="name" th:errorclass="fieldError"
+                                   ng-model="ctrl.user.username" class="username form-control" placeholder="Nick name" name="uname"
+                                   ng-minlength="3" required/>
+                            <span ng-show="myForm.$dirty && myForm.uname.$error.required" id="mistake-field">This is a required field</span>
+                            <span ng-show="myForm.$dirty && myForm.uname.$error.minlength" id="mistake-field">Minimum length required is 4</span>
+                            <span ng-show="myForm.$dirty && myForm.uname.$invalid" id="mistake-field">This field is invalid </span><br/>
+                        </div>
+
+
+                        <div class="form-group" >
+                            <label for="email">
+                                <span th:text="#{user.email}">Email: </span>
+                            </label>
+
+                            <input type="email" th:field="*{email}" id="email" th:errorclass="fieldError"
+                                   ng-model="ctrl.user.email" class="email form-control" placeholder="Email" name="email"
+                                   pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$" required/>
+                            <span ng-show="myForm.$dirty && myForm.email.$error.required" id="mistake-field">Enter some email address!</span>
+                            <span ng-show="myForm.$dirty && myForm.email.$error.pattern" id="mistake-field">Wrong Pattern!!!</span>
+                            <span ng-show="myForm.$dirty && myForm.email.$invalid" id="mistake-field">Email is invalid </span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="password">
+                                <span th:text="#{user.password}">Password: </span>
+                            </label>
+
+                            <input type="password" th:field="*{password}" id="password" th:errorclass="fieldError"
+                                   ng-model="ctrl.user.password" class="password form-control" placeholder="Password"
+                                   name="password" pattern="^(?=.*\d)(?=.*[a-z]).{3,15}$" required/>
+                            <span ng-show="myForm.$dirty && myForm.password.$error.required" id="mistake-field">Enter Password!</span>
+                            <span ng-show="myForm.$dirty && myForm.password.$error.pattern" id="mistake-field">No secure: (from 3 to 15 symbol, with 1 number)</span>
+                            <span ng-show="myForm.$dirty && myForm.password.$invalid " id="mistake-field">!!! Password is invalid </span>
+                        </div>
+
+                        <!--<hr/>-->
+
+                        <!--<p th:text="#{user.personal.info.msg}" class="msg-for-customer">Enter your personal data</p>-->
+
+                        <div class="form-group">
+                            <label for="firstName">
+                                <span th:text="#{user.firstName}">First Name</span>
+                            </label>
+                            <input type="text" th:field="*{firstName}" id="firstName" th:errorclass="fieldError" class="form-control" placeholder="First Name"/>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="lastName">
+                                <span th:text="#{user.lastName}">Last Name</span>
+                            </label>
+                            <input type="text" th:field="*{lastName}" id="lastName" th:errorclass="fieldError" class="form-control" placeholder="Last Name"/>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="phone">
+                                <span th:text="#{user.phone}">Phone number:</span>
+                            </label>
+                            <input type="text" th:field="*{phone}" id="phone" th:errorclass="fieldError" class="form-control" placeholder="Phone" />
+                        </div>
+
+                    </div>
+                    <!-- END Nickname, email, password -->
+
+
+                    <!-- Address-->
+                    <div class="col-md-6 col-md-offset-1">
+
+                        <span th:text="#{user.address.msg}" class="msg-for-customer">
+                            Enter your current Address for delivery service:
+                        </span>
+                        <hr/>
+
+                        <th:block th:object="${user.address}">
+
+                        <div class="form-group">
+                            <label for="country">
+                                <span th:text="#{user.country}">Country:</span>
+                            </label>
+                            <input type="text" id="country" th:field="*{country}" th:errorclass="fieldError"  class="form-control" placeholder="Country"/>
+                        </div>
+
+                            <div class="form-group">
+                                <label for="state">
+                                    <span th:text="#{user.state}">State:</span>
+                                </label>
+                                <input type="text" id="state" th:field="*{state}" th:errorclass="fieldError"  class="form-control" placeholder="State"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="city">
+                                    <span th:text="#{user.city}">City:</span>
+                                </label>
+                                <input type="text" id="city" th:field="*{city}" th:errorclass="fieldError"  class="form-control" placeholder="City"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="street">
+                                    <span th:text="#{user.street}">Street:</span>
+                                </label>
+                                <input type="text" id="street" th:field="*{street}" th:errorclass="fieldError"  class="form-control" placeholder="Street"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="apartment">
+                                    <span th:text="#{user.apartment}">Apartment:</span>
+                                </label>
+                                <input type="text" id="apartment" th:field="*{apartment}" th:errorclass="fieldError"  class="form-control" placeholder="Apartment"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="zipCode">
+                                    <span th:text="#{user.zipCode}">ZIP Code:</span>
+                                </label>
+                                <input type="text" id="zipCode" th:field="*{zipCode}" th:errorclass="fieldError"  class="form-control" placeholder="ZIP Code"/>
+                            </div>
+
+
+
+                        </th:block>
+
+                    </div>
+                    <!-- END Address-->
+
                 </div>
+                <!-- END field block -->
+                <hr/>
 
-
-                <div>
-                    <label for="email">
-                        <span th:text="#{user.email}">_test_email_</span>
-                    </label>
-                    <input type="email" th:field="*{email}" id="email" th:errorclass="fieldError"
-                           ng-model="ctrl.user.email" class="email" placeholder="Enter your Email" name="email"
-                           pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$" required/>
-                    <span ng-show="myForm.$dirty && myForm.email.$error.required">Enter some email address!</span>
-                    <span ng-show="myForm.$dirty && myForm.email.$error.pattern">Wrong Pattern!!!</span>
-                    <span ng-show="myForm.$dirty && myForm.email.$invalid">Email is invalid </span><br/><br/>
-                </div>
-
-
-                <div>
-                    <label for="password">
-                        <span th:text="#{user.password}">_test_password_</span>
-                    </label>
-                    <input type="password" th:field="*{password}" id="password" th:errorclass="fieldError"
-                           ng-model="ctrl.user.password" class="password" placeholder="Enter your Password"
-                           name="password" pattern="^(?=.*\d)(?=.*[a-z]).{3,15}$" required/>
-                    <span ng-show="myForm.$dirty && myForm.password.$error.required">Enter Password!</span>
-                    <span ng-show="myForm.$dirty && myForm.password.$error.pattern">No secure: (from 3 to 15 symbol, with 1 number)</span>
-                    <span ng-show="myForm.$dirty && myForm.password.$invalid ">!!! Password is invalid </span><br/><br/>
-                </div>
-
-            </fieldset>
-
-            <br/>
-
-            <!-- ******* USER (Customer) personal info block (firstName, lastName, phone)************* -->
-
-            <fieldset>
-
-                <span th:text="#{user.personal.info.msg}" class="msg-for-customer">_test_personalInfo_message_</span>
-                <br/><br/>
-
-                <div>
-                    <label for="firstName">
-                        <span th:text="#{user.firstName}">_test_first_Name_</span>
-                    </label>
-                    <input type="text" th:field="*{firstName}" id="firstName" th:errorclass="fieldError"/>
-                </div>
-
-                <div>
-                    <label for="lastName">
-                        <span th:text="#{user.lastName}">_test_lastName_</span>
-                    </label>
-                    <input type="text" th:field="*{lastName}" id="lastName" th:errorclass="fieldError"/>
-                </div>
-
-                <div>
-                    <label for="phone">
-                        <span th:text="#{user.phone}">_test_phone_</span>
-                    </label>
-                    <input type="text" th:field="*{phone}" id="phone" th:errorclass="fieldError"/>
-                </div>
-
-            </fieldset>
-
-            <br/>
-
-            <!-- ****** USER (customer) Address block (country, state, city, street, apartment, zipCode)********* -->
-
-            <fieldset>
-
-                <span th:text="#{user.address.msg}" class="msg-for-customer">_test_address_message_</span>
-                <br/><br/>
-
-                <div>
-                    <label>Address: </label>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th th:text="#{user.country}">_test_country:</th>
-                            <th th:text="#{user.state}">_test_state:</th>
-                            <th th:text="#{user.city}">_test_city:</th>
-                            <th th:text="#{user.street}">_test_street:</th>
-                            <th th:text="#{user.apartment}">_test_apartment:</th>
-                            <th th:text="#{user.zipCode}">_test_zipCode:</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr th:object="${user.address}">
-                            <td>
-                                <input type="text" th:field="*{country}" th:errorclass="fieldError"/>
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{state}" th:errorclass="fieldError"/>
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{city}" th:errorclass="fieldError"/>
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{street}" th:errorclass="fieldError"/>
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{apartment}" th:errorclass="fieldError"/>
-                            </td>
-                            <td>
-                                <input type="text" th:field="*{zipCode}" th:errorclass="fieldError"/>
-                            </td>
-                        </tr>
-                        </tbody>
-
-                    </table>
-                </div>
-
-            </fieldset>
-
-            <br/><br/>
 
             <!--Save button-->
+        <div class="row">
+            <div class="col-md-5">
 
-            <div class="submit">
-                <button type="submit" name="save" ng-disabled="myForm.$invalid">Register</button>
+                <a href="#" th:href="@{/home}" id="button-green-lite" class="btn btn-default n-md" style="background-color: #6f8645">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    Home
+                </a>
+
+                <a href="#" th:href="@{/login}" id="button-green-lite" class="btn btn-default" >
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    SignIn
+                </a>
+
             </div>
 
-        </fieldset>
+            <div class="col-md-2 col-md-offset-4">
+                <button type="submit" name="save" ng-disabled="myForm.$invalid" class="btn btn-default btn-sm"
+                        id="btn-confirm-comment">
+                    <i class="fa fa-check-square-o" aria-hidden="true" style="padding-right: 5px"></i>
+                    Register!
+                </button>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+            <!--<div class="submit">-->
+                <!--<button type="submit" name="save" ng-disabled="myForm.$invalid">Register</button>-->
+            <!--</div>-->
+
+        <!--</fieldset>-->
     </form>
 
 
 </div>
+</div>
 
 
 
-<div th:replace="template/footer :: footer" class="footer"><p>_test_footer</p></div>
 </body>
 </html>
