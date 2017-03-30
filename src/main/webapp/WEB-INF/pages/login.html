@@ -1,17 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="template/fragments :: head">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:fragment="head">
     <meta charset="UTF-8">
-    <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />
+    <title th:text="#{title.application}">_Store_test_title_</title>
+
+    <!-- JS-->
+    <script src="../resources/js/jquery-3.1.1.min.js"
+            th:src="@{/resources/js/jquery-3.1.1.min.js}"></script>
+    <script src="../resources/component/bootstrap/js/bootstrap.js"
+            th:src="@{/resources/component/bootstrap/js/bootstrap.min.js}"></script>
+
+    <!-- Custom CSS styles-->
+    <link rel="stylesheet" href="../resources/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../resources/css/login.css" th:href="@{/css/login.css}"/>
+
+    <!-- Bootstrap styles-->
+    <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/resources/component/bootstrap/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap.min.css"
+          th:href="@{/resources/component/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../resources/component/font-awesome/css/font-awesome.min.css"
+          th:href="@{/resources/component/font-awesome/css/font-awesome.min.css}"/>
+
 </head>
 
 <body>
 
-<div th:replace="template/fragments :: header" class="header"><p>_test_header_</p></div>
+    <div class="container">
+        <div class="card card-container">
+            <img id="profile-img" class="profile-img-card" src="../resources/images/login.png"
+                 th:src="@{/pic/login.png}"/>
+            <p id="profile-name" class="profile-name-card"></p>
 
 
+            <form class="form-signin" th:action="@{/login}" method="post" >
+                <p th:if="${loginError}" class="errorlist" th:text="${loginError}">Wrong credential!</p>
+
+                <span id="reauth-email" class="reauth-email"></span>
+
+                <input name="username" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+
+                <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" value="Login">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    Sign in</button>
+
+                <a href="#" class="btn btn-lg btn-primary btn-block btn-register" th:href="@{/user/register}">
+                    <span id="register-text"><i class="fa fa-key" aria-hidden="true"></i> Register</span>
+                </a>
+
+                <a href="#" class="btn btn-lg btn-primary btn-block btn-register" th:href="@{/home}"
+                   style="background-color: #6f8645">
+                    <span id="register-text"><i class="fa fa-home" aria-hidden="true"></i> Home</span>
+                </a>
+            </form><!-- /form -->
+
+
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+
+</body>
+</html>
+
+
+<!--
 <div class="content">
 
     <div>
@@ -21,24 +75,20 @@
 
     <h2>Log in</h2>
 
-<p th:if="${loginError}" class="errorlist" th:text="${loginError}">_temp_Wrong_e-mail_or_password!_ </p>
-<br/>
-<form th:action="@{/login}" method="post">
-    <label for="username">Email </label>:
-    <input type="text" id="username" name="username" autofocus="autofocus"/> <br />
-    <label for="password">Password </label>:
-    <input type="password" id="password" name="password" /> <br />
-    <input type="submit" value="Login" />
-</form>
+    <p th:if="${loginError}" class="errorlist" th:text="${loginError}">_temp_Wrong_e-mail_or_password!_ </p>
+    <br/>
+    <form th:action="@{/login}" method="post">
+        <label for="username">Email </label>:
+        <input type="text" id="username" name="username" autofocus="autofocus"/> <br />
+        <label for="password">Password </label>:
+        <input type="password" id="password" name="password" /> <br />
+        <input type="submit" value="Login" />
+    </form>
 
 
-<p><a href="#" th:href="@{/home}">Back to home </a></p>
-<p><a href="#" th:href="@{/user/register}">Register</a></p>
+    <p><a href="#" th:href="@{/home}">Back to home </a></p>
+    <p><a href="#" th:href="@{/user/register}">Register</a></p>
 
-    </div>
+</div>
 
-
-<div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
-
-</body>
-</html>
+-->
