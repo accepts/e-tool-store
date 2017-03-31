@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
-    <title th:text="#{title.application}">_test_title_</title>
+    <title th:text="#{title.application}">eToolStore</title>
 
 
     <!-- JS-->
@@ -13,7 +13,7 @@
             th:src="@{/resources/component/bootstrap/js/bootstrap.min.js}"></script>
 
 
-    <!--<link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}" />-->
+    <!--<link rel="stylesheet" type="text/css" media="all" href="../resources/css/del______main.css" th:href="@{/css/del______main.css}" />-->
     <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap-theme.min.css"
           th:href="@{/resources/component/bootstrap/css/bootstrap-theme.min.css}" />
     <link rel="stylesheet" href="../resources/component/bootstrap/css/bootstrap.min.css"
@@ -67,11 +67,51 @@
 
 
     <div id="main-content" class="row col-sm-10">
-        <div>
-            #main-content Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad
-            asperiores ea esse harum laboriosam magni molestiae, nam nemo perfe rendis
-            quae quam recusandae repellat saepe vero. Accusantium libero pariatur suscipit?
+
+
+
+        <h1 th:text="#{title.headline}" id="home-headline">eTool-Store - the shop of all kinds of tools</h1>
+
+        <p id="home-description">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet corporis dolores, ducimus eos laudantium minima molestias obcaecati odio placeat quam quas quibusdam rerum tempora totam unde ut voluptas voluptate voluptatibus.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab architecto atque autem corporis dolorem dolores eum exercitationem illo molestias, mollitia nesciunt officiis quos saepe suscipit tempore ut voluptates. Nobis, similique!
+        </p>
+
+        <h3 id="home-product-category">Chose category of products</h3>
+        <div class="row">
+            <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail short" th:href="@{/product/electric/page/0}">
+                    <img src="../resources/images/electric.jpg" th:src="@{/pic/electric.jpg}" alt="...">
+                    <span id="thmb-title">ELECTRIC</span>
+                </a>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail short" th:href="@{/product/hand_tool/page/0}">
+                    <img src="../resources/images/hand.png" th:src="@{/pic/hand.png}" alt="...">
+                    <span id="thmb-title">HAND TOOL</span>
+                </a>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail short" th:href="@{/product/hydraulic/page/0}">
+                    <img src="../resources/images/hydraulic.jpg" th:src="@{/pic/hydraulic.jpg}" alt="...">
+                    <span id="thmb-title">HYDRAULIC</span>
+
+                </a>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail short" th:href="@{/product/pneumatic/page/0}">
+                    <img src="../resources/images/pneumatic.jpg" th:src="@{/pic/pneumatic.jpg}" alt="...">
+                    <span id="thmb-title">PNEUMATIC</span>
+
+                </a>
+            </div>
         </div>
+
+
+
     </div>
 
 

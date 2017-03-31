@@ -22,8 +22,6 @@ html {
 }
 
 
-
-
 /*================ FOOTER  ======================*/
 
 .footer {
@@ -79,6 +77,83 @@ html {
     -webkit-line-clamp: 2; /* number of lines to show */
     -webkit-box-orient: vertical;
 }
+
+/*=====================Home page================================*/
+
+#nav-logo{
+    color: #cf010d;
+    font-family: 'Anton', sans-serif;
+    font-size: 34px;
+    vertical-align: middle;
+    position: relative;
+    top: -5px;
+}
+
+
+#home-headline{
+    color: #155567;
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top:  2px;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+#home-product-category{
+    color: #41484c;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top:  20px;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+#home-description{
+    text-align: end;
+    margin-bottom: 40px;
+}
+
+
+#sidebar-item {
+    color: #eeeeee;
+    font-family: 'Acme', sans-serif;
+}
+
+#sidebar-item:hover{
+    color: #c12e2a;
+}
+
+.short{
+    max-height: 160px;
+    min-height: 160px;
+}
+
+
+#thmb-title{
+    position:absolute;
+    top: 20%;
+    left: 10%;
+    text-align: center;
+
+    color: #38383b;
+    font-family: 'Anton', sans-serif;
+    font-size: 40px;
+    /*text-shadow: 2px 2px 0 white, 1px 1px 0 white;*/
+    text-shadow: 0 0 5px #ffffff, 0 0 5px #ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .thumbnail-buttons{
     position:absolute;

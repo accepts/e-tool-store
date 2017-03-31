@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
+//    TODO delete Orders and Items for this user
     public void delete(Long id){
         repository.delete(id);
     }

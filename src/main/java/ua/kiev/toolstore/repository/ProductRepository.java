@@ -22,23 +22,19 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     Product findById(Long id);
 
-
     @Async
     @Query(value = "SELECT p.picture FROM products p WHERE p.id = ?1", nativeQuery = true)
     String findPictureByProductId(Long id);
-
 
     @Transactional
     @Modifying
     @Query(value = "UPDATE products SET unitinstock = ?2 WHERE id= ?1", nativeQuery = true)
     void setUnitInStock(Long id, int unitInStock);
 
-
     @Transactional
     @Modifying
     @Query(value = "UPDATE products p SET status = ?2 WHERE p.id = ?1", nativeQuery = true)
     void changeStatus(Long productId, String status);
-
 
     Page<Product> findAllByOrderByIdDesc(Pageable pageable);
 
@@ -61,27 +57,3 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     Page<Product> findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(String searchTerm, String searchTerm2, String searchTerm3, Collection<ProductStatus> status, Pageable pageable);
 
 }
-
-
-
-
-
-
-
-
-//  List<Product> findByCategory(ProductCategory category);
-
-//    Page<Product> findByStatusNotInOrderByManufacturerAsc(Collection<ProductStatus> status, Pageable pageable);
-
-//    Page<Product> findByCategoryAndStatusNotInOrderByManufacturer(ProductCategory category, Collection<ProductStatus> status, Pageable pageable);
-
-//    List<Product> findByNameOrStatus(String name, String status);
-//    Page<Product> findByNameContaining(@Param("searchTerm") String searchTerm, Pageable pageable);
-//    Page<Product> findAllByNameOrStatusContaining(@Param("searchTerm") String searchTerm, Pageable pageable);
-//    Page<Product> findAllByNameContainingOrDescriptionContainingOrManufacturerContaining(String searchTerm, String searchTerm2, String searchTerm3, Pageable pageable);
-//    Page<Product> findAllByNameContainingOrDescriptionContainingOrManufacturerContainingAndStatusNotIn(String searchTerm, String searchTerm2, String searchTerm3, Collection<ProductStatus> status, Pageable pageable);
-//    Page<Product> findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(String searchTerm, String searchTerm2, String searchTerm3, Collection<ProductStatus> status, Pageable pageable);
-
-
-
-

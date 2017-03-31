@@ -4,7 +4,7 @@
 <head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/main.css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/del______main.css" th:href="@{/css/main.css}"/>
 </head>
 <body>
 
@@ -42,16 +42,13 @@
     </div>
 </div>
 
-<!--TODO title of product depends of category displayed-->
-<!--<h4 th:text="#{product.table.title.list}">_test_List of Products_</h4>-->
+
+
+
 
 <div id="main-content" class="row col-sm-10">
 
-    <!-- TODO  If content is absent-->
-    <div th:if="${productsPage.hasContent()} eq false" id="product-content-absent">
-        <h4 th:text="#{searching.get.no.result}">test_There is no Product! </h4>
-    </div>
-
+    <h4 id="title-product-create">List of <span th:text="${productCategory} eq 'hand_tool' ? 'hand' : ${productCategory} ">electric</span> tools.</h4>
 
     <!-- Sort button -->
     <div id="sort-button-block"  >
@@ -75,6 +72,15 @@
            th:id="${sortBy} eq 'desc' and ${orderBy} eq 'manufacturer' ? 'button-blue-active' : 'button-blue'">
             Brand <i class="fa fa-sort-alpha-desc fa-lg" aria-hidden="true"></i> </a>
     </div>
+
+
+    <!-- If content is absent-->
+    <div th:if="${productsPage.hasContent()} eq false" id="product-content-absent">
+        <div class="center">
+            <h4 th:text="#{searching.get.no.result}" style="color: #737373">Sorry, there is no product's for your request. </h4>
+        </div>
+    </div>
+
 
 
     <!-- Products list-->
