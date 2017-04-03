@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @Order(Ordered.LOWEST_PRECEDENCE)
-    ModelAndView handleAllException(WebRequest req, Exception e){
+    ModelAndView handleAllException(WebRequest req, Exception e) {
         LOG.error("<<-Exception at request " + req.getContextPath() + " \n " + e.getMessage());
         ModelAndView model = new ModelAndView("error");
         model.addObject("errorMsg", e.getMessage());
@@ -26,9 +26,9 @@ public class GlobalExceptionHandler {
         AuthorizedUser authorizedUser = AuthorizedUser.safeGet();
         if (authorizedUser != null) {
             LOG.error("<<-Exception invoked by User with ID: (" + authorizedUser.getUserWrapper().getId()
-                            + " ) and email: " + authorizedUser.getUserWrapper().getEmail() + " ) "   );
+                    + " ) and email: " + authorizedUser.getUserWrapper().getEmail() + " ) ");
         } else {
-            LOG.error("<<-Exception invoked by Anonymous visitor" );
+            LOG.error("<<-Exception invoked by Anonymous visitor");
         }
 
         return model;
@@ -37,18 +37,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomGenericException.class)
     @Order(Ordered.LOWEST_PRECEDENCE)
-    ModelAndView handleCustomException(CustomGenericException e){
+    ModelAndView handleCustomException(CustomGenericException e) {
         LOG.error("<<-CustomGenericException occur" + " \n " + e.getErrorMsg() + "\n" +
-        e.getMessage() + " | Cause: " +e.getCause() );
+                e.getMessage() + " | Cause: " + e.getCause());
         ModelAndView model = new ModelAndView("error");
         model.addObject("errorMsg", e.getErrorMsg());
 
         AuthorizedUser authorizedUser = AuthorizedUser.safeGet();
         if (authorizedUser != null) {
             LOG.error("<<-Exception invoked by User with ID: (" + authorizedUser.getUserWrapper().getId()
-                    + " ) and email: " + authorizedUser.getUserWrapper().getEmail() + " ) "   );
+                    + " ) and email: " + authorizedUser.getUserWrapper().getEmail() + " ) ");
         } else {
-            LOG.error("<<-Exception invoked by Anonymous visitor" );
+            LOG.error("<<-Exception invoked by Anonymous visitor");
         }
 
         return model;

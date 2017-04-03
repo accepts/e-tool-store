@@ -36,8 +36,8 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
     }
 
 
-    public UserWrapper getUserWrapper(){
-      return userWrapper;
+    public UserWrapper getUserWrapper() {
+        return userWrapper;
     }
 
     @Override

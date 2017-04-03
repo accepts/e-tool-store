@@ -23,7 +23,7 @@ public class ServiceController {
 
     @RequestMapping(value = "/login")
     public String login(@RequestParam(value = "error", required = false) String error,
-                        ModelMap model){
+                        ModelMap model) {
         if (error != null) {
             model.addAttribute("loginError", "Invalid username or password!");
         }
@@ -31,10 +31,10 @@ public class ServiceController {
     }
 
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/home";

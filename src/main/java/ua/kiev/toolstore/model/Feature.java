@@ -9,7 +9,6 @@ public class Feature extends AbstractEntity {
     private String title, body, attribute;
 
 
-
     public Feature() {
     }
 

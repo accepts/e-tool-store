@@ -18,7 +18,4 @@ public class AuthenticationSuccessHandlerImpl implements ApplicationListener<Aut
                 + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
     }
 
-
-
-
 }

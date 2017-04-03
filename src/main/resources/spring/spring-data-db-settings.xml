@@ -4,35 +4,35 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 
-       <!-- **************************** Database **************************************-->
+    <!-- **************************** Database Settings *********************************-->
 
-       <!--DB connection-->
-       <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-              <property name="driverClassName" value="org.postgresql.Driver" />
-              <property name="url" value="${db.url}" />
-              <property name="username" value="${db.username}"/>
-              <property name="password" value="${db.password}" />
-       </bean>
+    <!--DB connection-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
 
-       <!-- JPA repository-->
-       <jpa:repositories base-package="ua.kiev.toolstore.repository"/>
+    <!-- JPA repository-->
+    <jpa:repositories base-package="ua.kiev.toolstore.repository"/>
 
-       <!-- Configure the entity manager bean -->
-       <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-              <property name="dataSource" ref="dataSource" />
-              <property name="packagesToScan" value="ua.kiev.toolstore" />
-              <property name="jpaVendorAdapter">
-                     <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                            <property name="database" value="POSTGRESQL" />
-                            <property name="generateDdl" value="true" />
-                            <property name="showSql" value="false" />
-                     </bean>
-              </property>
-       </bean>
+    <!-- Configure the entity manager bean -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="ua.kiev.toolstore"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="POSTGRESQL"/>
+                <property name="generateDdl" value="true"/>
+                <property name="showSql" value="false"/>
+            </bean>
+        </property>
+    </bean>
 
-       <!-- Configure the transaction manager bean -->
-       <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-              <property name="entityManagerFactory" ref="entityManagerFactory" />
-       </bean>
+    <!-- Configure the transaction manager bean -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
 
 </beans>

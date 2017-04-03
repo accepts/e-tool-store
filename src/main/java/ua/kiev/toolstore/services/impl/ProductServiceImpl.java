@@ -77,10 +77,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public Page<Product> findProductByCategory(String category, Integer pageNumber, Optional<String> orderBy, Optional<String> sortBy){
-        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.valueOf(sortBy.get().toUpperCase()), orderBy.get()));;
+    public Page<Product> findProductByCategory(String category, Integer pageNumber, Optional<String> orderBy, Optional<String> sortBy) {
+        PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.valueOf(sortBy.get().toUpperCase()), orderBy.get()));
+        ;
 
-        if (category.equalsIgnoreCase("all")){
+        if (category.equalsIgnoreCase("all")) {
             return productRepository.findByStatusNotIn(EnumSet.of(ProductStatus.LOCKED, ProductStatus.OBSOLETE), request);
         }
 
@@ -90,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     // ----- Search user "Therm" method -----------
-    public Page<Product> findProduct(String searchTerm, Integer pageNumber){
+    public Page<Product> findProduct(String searchTerm, Integer pageNumber) {
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE, new Sort(Sort.Direction.ASC, SEARCH_SORT));
 
         return productRepository.findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(
@@ -98,12 +99,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
     // *****************************  For ADMIN purposes ********************************************
 
-    public Page<Product> findProductByStatus(String status, Integer pageNumber) throws IllegalArgumentException{
+    public Page<Product> findProductByStatus(String status, Integer pageNumber) throws IllegalArgumentException {
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
-        if (status.equalsIgnoreCase("all")){
+        if (status.equalsIgnoreCase("all")) {
             return productRepository.findAllByOrderByIdDesc(request);
         }
         return productRepository.findByStatus(ProductStatus.valueOf(status.toUpperCase()), request);
@@ -112,18 +112,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     public Page<Product> switchProductStatus(String status, Long productId,
-                                         String action, Integer pageNumber) throws IllegalArgumentException{
+                                             String action, Integer pageNumber) throws IllegalArgumentException {
         PageRequest request = null;
 
-        if (action.equalsIgnoreCase("delete")){
+        if (action.equalsIgnoreCase("delete")) {
             delete(productId);
-        } else{
+        } else {
             ProductStatus newStatus = ProductStatus.valueOf(action.toUpperCase());
             productRepository.changeStatus(productId, newStatus.toString());
             request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
         }
 
-        if (status.equalsIgnoreCase("all")){
+        if (status.equalsIgnoreCase("all")) {
             return productRepository.findAllByOrderByIdDesc(request);
         }
 

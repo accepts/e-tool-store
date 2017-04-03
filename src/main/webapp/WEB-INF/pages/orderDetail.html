@@ -10,7 +10,7 @@
 
 <div th:replace="template/fragments :: header"><p>_test_header_</p></div>
 
-<div th:replace="template/fragments :: sidebar" class="col-sm-1" >
+<div th:replace="template/fragments :: sidebar" class="col-sm-1">
     <div id="sidebar-wrapper">
         <nav id="spy">
             <ul class="sidebar-nav nav">
@@ -42,6 +42,7 @@
     </div>
 </div>
 
+
 <div id="main-content" class="row col-sm-10">
 
     <!-- Order Detail -->
@@ -56,9 +57,10 @@
                 <span th:text="${activeOrder.address.country} + ', ' + ${activeOrder.address.city} + ', '
                                 + ${activeOrder.address.street} + ', ' + ${activeOrder.address.apartment}">Ukraine, Kiev, Shevchenka 88</span>
             </p>
+
             <p>
-                <strong >Total items:</strong> <span th:text="${#lists.size(activeOrder.lineItems)}"
-                                                     style="color: #843534; font-weight: bold" >66</span>
+                <strong>Total items:</strong> <span th:text="${#lists.size(activeOrder.lineItems)}"
+                                                    style="color: #843534; font-weight: bold">66</span>
             </p>
         </div>
 
@@ -68,60 +70,60 @@
         </div>
 
 
-
         <th:block th:if="${#lists.size(activeOrder.lineItems) > 0}">
 
-        <h4>List of items in current order</h4>
+            <h4>List of items in current order</h4>
 
-        <table class="table table-bordered compact-font filled-head" id="aligned">
-            <tr>
-                <th>Photo</th>
-                <th>Name</th>
-                <th>Manufacturer</th>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Price</th>
-                <th>Delete</th>
-            </tr>
-            <tr th:each="item : ${activeOrder.lineItems}">
-                <td>
-                    <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}" />
-                </td>
-                <td th:text="${item.product.name}">Drill</td>
-                <td th:text="${item.product.manufacturer}">DUSS</td>
-                <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
-                <td th:text="${item.amount}">amount</td>
-                <td th:text="'$ ' + ${item.product.price}">$ 50</td>
-                <td><a href="#" th:href="@{/order/item/delete/{itemId} (itemId=${item.id}) }"
-                       id="button-orange" class="btn btn-default btn-xs" >
-                    <i class="fa fa-times" aria-hidden="true"></i> Remove</a>
-                </td>
+            <table class="table table-bordered compact-font filled-head" id="aligned">
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Manufacturer</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                    <th>Delete</th>
+                </tr>
+                <tr th:each="item : ${activeOrder.lineItems}">
+                    <td>
+                        <img src="#" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}"/>
+                    </td>
+                    <td th:text="${item.product.name}">Drill</td>
+                    <td th:text="${item.product.manufacturer}">DUSS</td>
+                    <td th:text="#{|product.category.${item.product.category}|}">ELECTRO</td>
+                    <td th:text="${item.amount}">amount</td>
+                    <td th:text="'$ ' + ${item.product.price}">$ 50</td>
+                    <td><a href="#" th:href="@{/order/item/delete/{itemId} (itemId=${item.id}) }"
+                           id="button-orange" class="btn btn-default btn-xs">
+                        <i class="fa fa-times" aria-hidden="true"></i> Remove</a>
+                    </td>
 
-            </tr>
-            <tr >
-                <td colspan="4"><strong>Total Amount and Sum of Order:</strong></td>
-                <td>
-                    <span th:text="${activeOrder.getItemsAmount()}" style="color: darkgreen; font-size: 14px;">4</span>
-                </td>
-                <td>
-                    <span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px" >66</span>
-                </td>
-                <td>
-                    <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id})}"
-                       id="button-red" class="btn btn-default btn-xs">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                        Clear Order</a>
-                </td>
-            </tr>
-        </table>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>Total Amount and Sum of Order:</strong></td>
+                    <td>
+                        <span th:text="${activeOrder.getItemsAmount()}"
+                              style="color: darkgreen; font-size: 14px;">4</span>
+                    </td>
+                    <td>
+                        <span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px">66</span>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id})}"
+                           id="button-red" class="btn btn-default btn-xs">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            Clear Order</a>
+                    </td>
+                </tr>
+            </table>
 
-        <hr/>
+            <hr/>
 
-        <div class="row col-sm-offset-10">
-            <a href="#" th:href="@{/order/confirm/address}" id="button-green" class="btn btn-default btn-sm" >
-                Confirm Order <i class="fa fa-arrow-right" aria-hidden="true"></i>
-            </a>
-        </div>
+            <div class="row col-sm-offset-10">
+                <a href="#" th:href="@{/order/confirm/address}" id="button-green" class="btn btn-default btn-sm">
+                    Confirm Order <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
 
         </th:block>
 

@@ -33,9 +33,8 @@ public class User extends AbstractEntity {
 //    private Set<Address> addresses = new HashSet<Address>();
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name="address_id")
+    @JoinColumn(name = "address_id")
     private Address address;
-
 
 
 //    Constructors, Getter + Setter

@@ -25,17 +25,16 @@ public class OrderController {
 
     @ResponseBody
     @RequestMapping(value = "/add/{productId}", method = RequestMethod.PUT)
-    public void addProductToOrder(@PathVariable Long productId){
+    public void addProductToOrder(@PathVariable Long productId) {
         orderService.add(productId);
         LOG.debug("<===REST+Angular=== Order Saved to DB");
     }
 
 
-
     @RequestMapping(value = {"/detail", "/detail/{id}"})
     public String showOrder(@PathVariable(value = "id") Optional<Long> id,
-                            ModelMap model){
-        if (id.isPresent()){
+                            ModelMap model) {
+        if (id.isPresent()) {
             model.addAttribute("activeOrder", orderService.findById(id.get()));
         } else {
             model.addAttribute("activeOrder", orderService.getActiveOrder());
@@ -45,14 +44,14 @@ public class OrderController {
 
 
     @RequestMapping(value = "/item/delete/{itemId}")
-    public String deleteItem(@PathVariable Long itemId){
+    public String deleteItem(@PathVariable Long itemId) {
         orderService.deleteLineItem(itemId);
         return "redirect:/order/detail";
     }
 
 
     @RequestMapping(value = "/clear/{orderId}")
-    public String clearOrder(@PathVariable Long orderId){
+    public String clearOrder(@PathVariable Long orderId) {
         orderService.clearOrder(orderId);
         return "redirect:/order/detail";
     }
@@ -61,11 +60,11 @@ public class OrderController {
     // ===================== Confirm ORDER methods ===========================
 
     @RequestMapping(value = "/confirm/address")
-    public String confirmOrder(ModelMap model){
+    public String confirmOrder(ModelMap model) {
         Order order = orderService.getActiveOrder();
 
-        if (order.getLineItems().size() == 0){
-            return  "redirect:/order/detail";
+        if (order.getLineItems().size() == 0) {
+            return "redirect:/order/detail";
         }
 
         model.addAttribute("address", order.getAddress());
@@ -74,7 +73,7 @@ public class OrderController {
 
 
     @RequestMapping(value = "/confirm/address", method = RequestMethod.POST, params = {"save"})
-    public String confirmOrdersAddress(Address address){
+    public String confirmOrdersAddress(Address address) {
         LOG.debug("<---order change address info {}");
         orderService.changeOrderAddress(address, null);
         return "redirect:/order/confirm/address";
@@ -82,11 +81,11 @@ public class OrderController {
 
 
     @RequestMapping(value = "/confirm/comment", method = RequestMethod.GET)
-    public String confirmedOrder(ModelMap model){
+    public String confirmedOrder(ModelMap model) {
         Order order = orderService.getActiveOrder();
 
-        if (order.getLineItems().size() == 0){
-            return  "redirect:/order/detail";
+        if (order.getLineItems().size() == 0) {
+            return "redirect:/order/detail";
         }
 
         model.addAttribute("order", order);
@@ -95,7 +94,7 @@ public class OrderController {
 
 
     @RequestMapping(value = "/confirm/comment", method = RequestMethod.POST, params = {"saveComment"})
-    public String confirmOrderComment(HttpServletRequest req){
+    public String confirmOrderComment(HttpServletRequest req) {
         String comment = String.valueOf(req.getParameter("commentToOrder"));
         LOG.debug("<---Comment to confirmed order: " + comment);
         orderService.confirmOrder(null, comment);
@@ -106,13 +105,13 @@ public class OrderController {
     // ================== Admin methods: order manager =============================================
 
     @RequestMapping(value = {"/admin/manage/{status}/page/{pageNumber}",
-                            "/admin/manage/{status}/page/{pageNumber}/{action}/{id}"})
+            "/admin/manage/{status}/page/{pageNumber}/{action}/{id}"})
     public String adminOrderOperate(@PathVariable(value = "status") String status,
                                     @PathVariable(value = "pageNumber") Integer pageNumber,
                                     @PathVariable(value = "action") Optional<String> action,
                                     @PathVariable(value = "id") Optional<Long> id,
                                     ModelMap model) throws IllegalArgumentException {
-        if (action.isPresent() && id.isPresent()){
+        if (action.isPresent() && id.isPresent()) {
             model.addAttribute("ordersPage", orderService.switchOrderStatus(status, id.get(), action.get(), pageNumber));
         } else {
             model.addAttribute("ordersPage", orderService.findOrderByStatus(status, pageNumber));

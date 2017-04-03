@@ -7,29 +7,29 @@
     http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/" access="permitAll" />
-        <intercept-url pattern="/home" access="permitAll" />
-        <intercept-url pattern="/user/register" access="permitAll" />
-        <intercept-url pattern="/**/order/admin/**" access="hasRole('ROLE_ADMIN')" />
-        <intercept-url pattern="/order/**" access="isAuthenticated()" />
-        <intercept-url pattern="/**/product/manage/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
-        <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/" access="permitAll"/>
+        <intercept-url pattern="/home" access="permitAll"/>
+        <intercept-url pattern="/user/register" access="permitAll"/>
+        <intercept-url pattern="/**/order/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/order/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/**/product/manage/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <access-denied-handler error-page="/denied"/>
         <csrf disabled="true"/>
-        <http-basic />
+        <http-basic/>
 
         <form-login
-            login-page="/login"
-            default-target-url="/home"
-            authentication-failure-url="/login?error"
-            username-parameter="username"
-            password-parameter="password" />
+                login-page="/login"
+                default-target-url="/home"
+                authentication-failure-url="/login?error"
+                username-parameter="username"
+                password-parameter="password"/>
 
-        <logout logout-success-url="/home" />
+        <logout logout-success-url="/home"/>
 
     </http>
 
-    <authentication-manager >
+    <authentication-manager>
         <authentication-provider user-service-ref="userService"/>
     </authentication-manager>
 

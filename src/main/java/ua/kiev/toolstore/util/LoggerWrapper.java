@@ -6,12 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /*
-Example of usage:
-
-protected static final LoggerWrapper LOG = LoggerWrapper.get(XXXXX.class);
-LOG.info("Some info: {} \n", objectForPrint);
-
- */
+* Example of usage:
+* protected static final LoggerWrapper LOG = LoggerWrapper.get(XXXXX.class);
+* LOG.info("Some info: {} \n", objectForPrint);
+*/
 public class LoggerWrapper {
 
     private Logger logger;

@@ -6,7 +6,7 @@ public enum ProductCondition {
     USED("USED");
 
 
-    public static final ProductCondition[] ALL = { NEW, USED };
+    public static final ProductCondition[] ALL = {NEW, USED};
 
 
     private final String name;

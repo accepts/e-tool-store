@@ -27,14 +27,8 @@ public class LineItem extends AbstractEntity {
         this.product = product;
         this.amount = 1;
         this.price = product.getPrice();
-//        this(product, 1);
     }
 
-//    public LineItem(Product product, int amount) {
-//        this.product = product;
-//        this.amount = amount;
-//        this.price = product.getPrice();
-//    }
 
     public BigDecimal getTotal() {
         return price.multiply(BigDecimal.valueOf(amount));

@@ -20,9 +20,9 @@ public class ProductValidator {
     protected static final LoggerWrapper LOG = LoggerWrapper.get(ProductValidator.class);
 
 
-    public boolean productFieldsValidator(Product product){
+    public boolean productFieldsValidator(Product product) {
         if (product.getName().trim().isEmpty()) return false;
-        if (product.getPrice() == null ||product.getPrice().compareTo(BigDecimal.ZERO) <= 0) return false;
+        if (product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) return false;
         return true;
     }
 
@@ -30,16 +30,17 @@ public class ProductValidator {
     // ******************  File validators (size + extension) ********************************
 
     //-------------- Validate file extension (jpg, gif, png... etc.)
-    public boolean photoNameValidate(MultipartFile uploadedFile){
-        Pattern pattern = Pattern.compile(IMAGE_PATTERN);;
+    public boolean photoNameValidate(MultipartFile uploadedFile) {
+        Pattern pattern = Pattern.compile(IMAGE_PATTERN);
+        ;
         String name = uploadedFile.getOriginalFilename();
         return pattern.matcher(name).matches();
     }
 
 
     //-------------- Validate file size. Must be < 2 Mb
-    public boolean photoSizeValidate(MultipartFile uploadedFile){
-        return !(uploadedFile.getSize() > maxPictureFileSize*1024*1024);
+    public boolean photoSizeValidate(MultipartFile uploadedFile) {
+        return !(uploadedFile.getSize() > maxPictureFileSize * 1024 * 1024);
     }
 
 

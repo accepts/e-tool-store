@@ -15,7 +15,6 @@ public class Address extends AbstractEntity {
     private User user;
 
 
-
     // ------------------------ Getter + Setter------------------------
 
     public Address() {

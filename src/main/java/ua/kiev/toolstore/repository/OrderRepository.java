@@ -19,13 +19,16 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 
     List<Order> findByOrderStatus(OrderStatus orderStatus);
 
+
     @Transactional
     void deleteByUserId(Long id);
+
 
     @Transactional
     @Modifying
     @Query(value = "UPDATE orders o SET orderstatus = ?2 WHERE o.id = ?1", nativeQuery = true)
     void changeStatus(Long orderId, String status);
+
 
     Page<Order> findAllByOrderByIdDesc(Pageable pageable);
 

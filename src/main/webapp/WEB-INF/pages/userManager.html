@@ -4,13 +4,13 @@
 <head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/del______main.css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="#" th:href="@{/css/main.css}"/>
 </head>
 <body>
 
-<div th:replace="template/fragments :: header" ></div>
+<div th:replace="template/fragments :: header"></div>
 
-<div th:replace="template/fragments :: sidebar" ></div>
+<div th:replace="template/fragments :: sidebar"></div>
 
 <!--Main content-->
 <div id="main-content" class="row col-sm-10">
@@ -57,18 +57,21 @@
 
             <td th:switch="${u.enabled}">
                 <th:block th:case="true">
-                    <a href="#" th:href="@{/user/admin/manage/reset_user/{id}/false?pageNumber={pageNumber} (id=${u.id}, pageNumber=${usersPage.number})}"
+                    <a href="#"
+                       th:href="@{/user/admin/manage/reset_user/{id}/false?pageNumber={pageNumber} (id=${u.id}, pageNumber=${usersPage.number})}"
                        id="button-orange" class="btn btn-default btn-xs">Lock</a>
                 </th:block>
 
                 <th:block th:case="false">
-                    <a href="#" th:href="@{/user/admin/manage/reset_user/{id}/true?pageNumber={pageNumber} (id=${u.id}, pageNumber=${usersPage.number})}"
-                    id="button-green" class="btn btn-default btn-xs">Unlock</a>
+                    <a href="#"
+                       th:href="@{/user/admin/manage/reset_user/{id}/true?pageNumber={pageNumber} (id=${u.id}, pageNumber=${usersPage.number})}"
+                       id="button-green" class="btn btn-default btn-xs">Unlock</a>
                 </th:block>
             </td>
 
             <td>
-                <a href="#" th:href="@{/user/admin/manage/delete_user/{id}?pageNumber={pageNumber} (id=${u.id}, pageNumber=${usersPage.number})}"
+                <a href="#"
+                   th:href="@{/user/admin/manage/delete_user/{id}?pageNumber={pageNumber} (id=${u.id}, pageNumber=${usersPage.number})}"
                    id="button-red" class="btn btn-default btn-xs">Delete</a>
             </td>
         </tr>

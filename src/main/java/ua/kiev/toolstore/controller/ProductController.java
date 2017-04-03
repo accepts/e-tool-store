@@ -59,7 +59,7 @@ public class ProductController {
     //  ---------------------------------------------------------------------------------------
 
 
-    @RequestMapping(value = "/manage/create", method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "/manage/create", method = {RequestMethod.GET, RequestMethod.POST})
     public String createProduct(Product product) {
         product.setCondition(ProductCondition.NEW);
         return "productCreate";
@@ -86,7 +86,7 @@ public class ProductController {
         // Validate attached picture file
         if (!product.getProductImage().isEmpty() &&
                 (!productValidator.photoSizeValidate(product.getProductImage()) ||
-                !productValidator.photoNameValidate(product.getProductImage()))) {
+                        !productValidator.photoNameValidate(product.getProductImage()))) {
 
             LOG.info("<-------Validation of the photo file is occur! File is Wrong!");
             bindingResult.reject("validation.error.photo.file.message");
@@ -136,7 +136,6 @@ public class ProductController {
     }
 
 
-
     //  **************************** EDIT Product ****************************
     @RequestMapping(value = "/manage/edit/{id}")
     public String editProduct(@PathVariable Long id, ModelMap model) {
@@ -155,29 +154,27 @@ public class ProductController {
     }
 
 
-
     // -------------------- Browse Product All and by Category ---------------------
     @RequestMapping(value = "/{category}/page/{pageNumber}")
     public String getProductList(@PathVariable String category,
                                  @PathVariable Integer pageNumber,
                                  @RequestParam(value = "orderBy", required = false, defaultValue = "price") Optional<String> orderBy,
                                  @RequestParam(value = "sortBy", required = false, defaultValue = "asc") Optional<String> sortBy,
-                                 ModelMap model){
-        if (category == null || category.trim().isEmpty()){
+                                 ModelMap model) {
+        if (category == null || category.trim().isEmpty()) {
             category = "all";
         }
-        if (pageNumber == null){
+        if (pageNumber == null) {
             pageNumber = 0;
         }
 
-        model.addAttribute("productsPage", productService.findProductByCategory(category, pageNumber,  orderBy, sortBy))
+        model.addAttribute("productsPage", productService.findProductByCategory(category, pageNumber, orderBy, sortBy))
                 .addAttribute("productCategory", category)
                 .addAttribute("orderBy", orderBy.get())
                 .addAttribute("sortBy", sortBy.get());
 
         return "productList";
     }
-
 
 
     // ---------------- Admin Product  manager page (Change ProductStatus, DELETE) --------------------------
@@ -187,9 +184,9 @@ public class ProductController {
                                        @PathVariable(value = "pageNumber") Integer pageNumber,
                                        @PathVariable(value = "action") Optional<String> action,
                                        @PathVariable(value = "id") Optional<Long> id,
-                                       ModelMap model) throws IllegalArgumentException{
+                                       ModelMap model) throws IllegalArgumentException {
 
-        if (action.isPresent() && id.isPresent()){
+        if (action.isPresent() && id.isPresent()) {
             model.addAttribute("productsPage", productService.switchProductStatus(status, id.get(), action.get(), pageNumber));
         } else {
             model.addAttribute("productsPage", productService.findProductByStatus(status, pageNumber));
@@ -199,9 +196,8 @@ public class ProductController {
     }
 
 
-
     @RequestMapping(value = "/search", method = RequestMethod.POST, params = {"startSearch"})
-    public String  searchProduct(ModelMap model, HttpServletRequest req) {
+    public String searchProduct(ModelMap model, HttpServletRequest req) {
         String searchTerm = String.valueOf(req.getParameter("searchTerm"));
         model.addAttribute("productsPage", productService.findProduct(searchTerm, 0))
                 .addAttribute("searchTerm", searchTerm);
@@ -209,12 +205,11 @@ public class ProductController {
     }
 
 
-
     @RequestMapping(value = "/search/page/{pageNumber}", method = RequestMethod.GET)
-    public String  searchProductBrowse(ModelMap model,
-                                       @PathVariable(value = "pageNumber") Integer pageNumber,
-                                       @RequestParam(value = "searchTerm", required = false) Optional<String> searchTerm) {
-        if (!searchTerm.isPresent()){
+    public String searchProductBrowse(ModelMap model,
+                                      @PathVariable(value = "pageNumber") Integer pageNumber,
+                                      @RequestParam(value = "searchTerm", required = false) Optional<String> searchTerm) {
+        if (!searchTerm.isPresent()) {
             return "redirect:/home";
         }
 

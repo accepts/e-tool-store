@@ -3,24 +3,23 @@ html {
     min-height: 100%;
 }
 
-#main-content{
+#main-content {
     margin-top: 80px;
     margin-bottom: 80px;
     margin-left: 150px;
 }
 
-#log-out li a{
+#log-out li a {
     color: #bd362f;
 }
 
-#navbar-log-in{
+#navbar-log-in {
     color: #99cc33;
 }
 
-#product-content-absent{
+#product-content-absent {
     font-style: italic;
 }
-
 
 /*================ FOOTER  ======================*/
 
@@ -32,11 +31,10 @@ html {
     background-color: #e0e0e0;
 }
 
-.footer p{
+.footer p {
     font-size: 12px;
     font-style: italic;
 }
-
 
 /* ====================== Thumbnails ===================== */
 
@@ -49,7 +47,7 @@ html {
     overflow: hidden;
 }
 
-.thumbnail h4{
+.thumbnail h4 {
     color: #444444;
 }
 
@@ -63,24 +61,24 @@ html {
     overflow: hidden;
 }
 
-.thumbnail-price{
+.thumbnail-price {
     border: 2px;
     color: #ac2925;
 }
 
-.thumbnail-description{
+.thumbnail-description {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    line-height: 20px;     /* fallback */
-    max-height: 40px;      /* fallback */
+    line-height: 20px; /* fallback */
+    max-height: 40px; /* fallback */
     -webkit-line-clamp: 2; /* number of lines to show */
     -webkit-box-orient: vertical;
 }
 
 /*=====================Home page================================*/
 
-#nav-logo{
+#nav-logo {
     color: #cf010d;
     font-family: 'Anton', sans-serif;
     font-size: 34px;
@@ -89,51 +87,47 @@ html {
     top: -5px;
 }
 
-
-#home-headline{
+#home-headline {
     color: #155567;
     text-align: center;
     margin-bottom: 40px;
-    margin-top:  2px;
+    margin-top: 2px;
     font-family: 'Titillium Web', sans-serif;
 }
 
-#home-product-category{
+#home-product-category {
     color: #41484c;
     text-align: center;
     margin-bottom: 20px;
-    margin-top:  20px;
+    margin-top: 20px;
     font-family: 'Titillium Web', sans-serif;
 }
 
-#home-description{
+#home-description {
     text-align: justify;
     margin-bottom: 40px;
 }
 
-
-#home-description ul{
+#home-description ul {
     margin-top: 20px;
-  }
-
+}
 
 #sidebar-item {
     color: #eeeeee;
     font-family: 'Acme', sans-serif;
 }
 
-#sidebar-item:hover{
+#sidebar-item:hover {
     color: #c12e2a;
 }
 
-.short{
+.short {
     max-height: 160px;
     min-height: 160px;
 }
 
-
-#thmb-title{
-    position:absolute;
+#thmb-title {
+    position: absolute;
     top: 20%;
     left: 10%;
     text-align: center;
@@ -145,43 +139,27 @@ html {
     text-shadow: 0 0 5px #ffffff, 0 0 5px #ffffff;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.thumbnail-buttons{
-    position:absolute;
+.thumbnail-buttons {
+    position: absolute;
     bottom: 0px;
     right: 12px;
     text-align: right;
 }
 
-#btn-add-to-basket{
+#btn-add-to-basket {
     background-color: #245269;
     border-color: #080808;
 }
 
-#btn-add-to-basket-lock{
+#btn-add-to-basket-lock {
     background-color: #999999;
     border-color: #080808;
 }
 
-#btn-detail{
+#btn-detail {
     background-color: #eeeceb;
     border-color: #999999;
 }
-
 
 /*---------------------- Thumbnails Label ---------------------------------*/
 
@@ -195,167 +173,151 @@ html {
     /*opacity: .55;*/
 }
 
-#label-image-text{
+#label-image-text {
     /*right: -2px;*/
     font-size: 12px;
 }
 
-.flash{
+.flash {
     top: 6px;
     right: 13px;
     color: #b92c28;
     font-size: 26px;
-
 }
-
-
-/*
-.labelimage #label-icon:hover{
-    font-size: 36px;
-    color: red;
-    opacity: 1;
-}*/
-
 
 /* -------------------Buttons sort -------------------------*/
 
-#sort-button-block{
+#sort-button-block {
     text-align: right;
     margin-bottom: 50px;
 }
 
-
-#button-blue-active{
+#button-blue-active {
     background-color: #155567;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#button-blue{
+#button-blue {
     background-color: #269abc;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#button-blue-light{
+#button-blue-light {
     background-color: #68c5e0;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#button-red{
+#button-red {
     background-color: #b92c28;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#button-orange{
+#button-orange {
     background-color: #f0631f;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#button-yellow{
+#button-yellow {
     background-color: #e5991c;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#button-grey{
+#button-grey {
     background-color: #7b8852;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#button-grey-light{
+#button-grey-light {
     background-color: #9d9d9d;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#button-green{
+#button-green {
     background-color: #36ad1e;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#button-green-lite{
+#button-green-lite {
     background-color: #99cc33;
     border-color: #080808;
     text-shadow: none;
     color: #eeeeee;
 }
 
-#btn-link{
+#btn-link {
     border: 1px solid #333333;
-    outline:none;
-    background:#c7254e;
-    cursor:pointer;
-    color:#f0ad4e;
-    padding:0;
+    outline: none;
+    background: #c7254e;
+    cursor: pointer;
+    color: #f0ad4e;
+    padding: 0;
     /*text-decoration:underline;*/
-    font-family:inherit;
-    font-size:inherit;
+    font-family: inherit;
+    font-size: inherit;
 }
-
 
 /* -------------- Table for Admin manager-------------------*/
 
-.compact-font{
+.compact-font {
     font-size: 12px;
     border-color: #555555;
 }
 
-.filled-head th{
+.filled-head th {
     /*background-color: #b2dba1;*/
     background-color: #9da695;
     font-size: 14px;
 }
 
-.filled-head td{
+.filled-head td {
     border: #737373 solid 1px !important;
 }
 
-.filled-head th{
+.filled-head th {
     border: #737373 solid 1px !important;
     text-align: center;
 }
 
-#aligned td{
+#aligned td {
     vertical-align: middle;
     align-content: center;
 }
 
-.no-border td{
+.no-border td {
     border: #ffffff solid 1px !important;
 }
 
-.no-border th{
+.no-border th {
     border: #ffffff solid 1px !important;
     text-align: center;
 }
 
-
-
-
-
 /* ------------- Pagination ------------------------------*/
 
-.pagination .disabled{
+.pagination .disabled {
     pointer-events: none;
 }
 
-#pagination-products{
-    position:absolute;
+#pagination-products {
+    position: absolute;
     bottom: 10px;
     left: 150px;
     margin-top: 40px;
@@ -364,19 +326,19 @@ html {
 
 /*===================== Product Detail ====================== */
 
-.product-detail img{
+.product-detail img {
     padding-top: 66px;
     width: 100%;
 }
 
-.product-detail h2{
+.product-detail h2 {
     color: #204d74;
     font-size: 30px;
     font-family: Arial;
 
 }
 
-.price-block{
+.price-block {
     /*text-align: center;*/
     display: inline-block;
     vertical-align: middle;
@@ -384,7 +346,7 @@ html {
     margin-bottom: 20px;
 }
 
-.price-block h3{
+.price-block h3 {
     color: #843534;
     font-family: Consolas;
 }
@@ -396,7 +358,7 @@ html {
     float: none;
 }
 
-#price-title{
+#price-title {
     font-style: normal;
     font-family: Consolas;
     color: #9d9d9d;
@@ -404,7 +366,7 @@ html {
     margin-bottom: -4px;
 }
 
-.product-description{
+.product-description {
     color: #737373;
     font-family: Arial;
     text-align: start;
@@ -414,54 +376,47 @@ html {
     box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.05);
 }
 
-.product-characterictic ul{
+.product-characterictic ul {
     padding: 6px;
     margin-left: 30px;
     margin-top: -12px;
 }
 
-.product-characterictic li{
+.product-characterictic li {
     padding-left: 10px;
     margin: -10px 0 4px -10px;
 }
 
-/*.product-characterictic li span{*/
-    /*padding-left: 10px;*/
-    /*margin: -10px 0 4px 0;*/
-/*}*/
-
-
 /*===================== Order Detail ====================== */
 
-.order-detail h2{
+.order-detail h2 {
     color: #204d74;
 }
 
-.order-brief-info{
-    border: 1px solid rgba(150,  100, 90, 0.1);
+.order-brief-info {
+    border: 1px solid rgba(150, 100, 90, 0.1);
     border-radius: 10px;
 }
 
-.order-brief-info p{
+.order-brief-info p {
     padding-top: 10px;
     padding-left: 20px;
 }
 
-.order-detail h4{
+.order-detail h4 {
     color: #2e6da4;
     text-align: center;
     font-family: Consolas;
 }
 
-.order-detail img{
+.order-detail img {
     max-width: 40px;
     max-height: 40px;
 }
 
-
 /*===================== Order Confirm Comment ====================== */
 
-#btn-confirm-comment{
+#btn-confirm-comment {
     background-color: #36ad1e;
     color: white;
     border-color: #080808;
@@ -469,7 +424,7 @@ html {
     text-shadow: none;
 }
 
-#title-product-create{
+#title-product-create {
     color: #2e6da4;
     text-align: center;
     font-family: Consolas;
@@ -477,7 +432,7 @@ html {
     margin-bottom: 10px;
 }
 
-.center{
+.center {
     position: fixed; /* or absolute */
     top: 40%;
     left: 50%;
@@ -487,33 +442,31 @@ html {
     color: #3c3c3c;
 }
 
-#hand-shake{
+#hand-shake {
     font-size: 66px;
     color: #36ad1e;
 }
 
-#error-occur{
+#error-occur {
     font-size: 76px;
     color: #ac2925;
 }
 
-
 /*===================== Create product page ====================== */
 
-
-#short-text{
+#short-text {
     /*max-height: 40px;*/
     /*overflow: hidden;*/
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     /*line-height: 20px;     /!* fallback *!/*/
-    max-width: 10px;      /* fallback */
+    max-width: 10px; /* fallback */
     -webkit-line-clamp: 1; /* number of lines to show */
     -webkit-box-orient: vertical;
 }
 
-#btn-add-row{
+#btn-add-row {
     background-color: #b2dba1;
     color: #080808;
     border-color: #080808;
@@ -521,16 +474,13 @@ html {
     text-shadow: none;
 }
 
-#btn-remove-row{
+#btn-remove-row {
     background-color: #dc5f5b;
     color: #fed84f;
     border-color: #080808;
     font-weight: normal;
     text-shadow: none;
 }
-
-
-
 
 .fieldError {
     border: 1px solid red;
@@ -549,13 +499,6 @@ ul.errorlist li, p.errorlist {
     margin: 3px 1px;
     color: brown;
 }
-
-
-
-
-
-
-
 
 /* ====================== Sidebar ===================== */
 

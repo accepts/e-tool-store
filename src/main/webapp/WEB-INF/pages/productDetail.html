@@ -10,7 +10,7 @@
 
 <div th:replace="template/fragments :: header"><p>_test_header_</p></div>
 
-<div th:replace="template/fragments :: sidebar" class="col-sm-1" >
+<div th:replace="template/fragments :: sidebar" class="col-sm-1">
     <div id="sidebar-wrapper">
         <nav id="spy">
             <ul class="sidebar-nav nav">
@@ -47,13 +47,13 @@
 
     <!-- Product Detail -->
     <div class="container col-sm-6 product-detail">
-        <img src="#" th:src="@{/photo/} + ${productDetailed.id}"  alt="Detail photo" title="Detail photo" />
+        <img src="#" th:src="@{/photo/} + ${productDetailed.id}" alt="Detail photo" title="Detail photo"/>
     </div>
 
 
     <div class="container col-sm-5 product-detail" th:object="${productDetailed}">
 
-        <h2> <span th:text="*{manufacturer}">Manufacturer</span>    <span th:text="*{name}">Name-of-Model</span> </h2>
+        <h2><span th:text="*{manufacturer}">Manufacturer</span> <span th:text="*{name}">Name-of-Model</span></h2>
 
         <hr/>
 
@@ -61,7 +61,7 @@
 
         <div class="container row col-md-12 price-block" ng-controller="orderCtrl">
             <div class="col-md-7 ">
-                <h3>$ <span th:text="*{#numbers.formatDecimal(price, 0, 2)}">1999.99 </span> </h3>
+                <h3>$ <span th:text="*{#numbers.formatDecimal(price, 0, 2)}">1999.99 </span></h3>
             </div>
 
             <div class=" col-md-5">
@@ -70,15 +70,16 @@
                     Out of stock...
                 </a>
 
-                <a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} > 0" th:attr="ng-click='addToCart('+ *{id} +')'"
-                   id="button-green" class="btn btn-default btn-sm" role="button" >
+                <a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} > 0"
+                   th:attr="ng-click='addToCart('+ *{id} +')'"
+                   id="button-green" class="btn btn-default btn-sm" role="button">
                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true">
                     <span style="margin-left: 3px ; font-family: Arial">Add to Cart!</span>
                 </a>
 
 
                 <a href="#" sec:authorize="isAnonymous()" th:href="@{/login}"
-                   id="button-grey-light"  class="btn btn-default btn-sm" role="button">
+                   id="button-grey-light" class="btn btn-default btn-sm" role="button">
                     <i class="fa fa-sign-in" aria-hidden="true"></i>
                     <span style="margin-left: 6px">SignIn for add to Cart</span>
                 </a>
@@ -87,34 +88,38 @@
         </div>
 
 
-        <p><strong>Category:</strong> <span th:text="#{|product.category.${productDetailed.category}|}">Hand tool</span></p>
-        <p><strong>Condition:</strong> <span th:text="#{|product.condition.${productDetailed.condition}|}">Brand NEW!!!</span></p>
+        <p><strong>Category:</strong> <span th:text="#{|product.category.${productDetailed.category}|}">Hand tool</span>
+        </p>
+
+        <p><strong>Condition:</strong> <span
+                th:text="#{|product.condition.${productDetailed.condition}|}">Brand NEW!!!</span></p>
 
         <p>
-        <strong>Units in stock:</strong>
-        <th:block>
-            <span th:text="*{unitInStock} < 1 ? #{product.units.none}"> 0 </span>
+            <strong>Units in stock:</strong>
+            <th:block>
+                <span th:text="*{unitInStock} < 1 ? #{product.units.none}"> 0 </span>
             <span th:text="*{unitInStock} >= 1 and *{unitInStock} <= 5 ?  #{product.units.couple.left}"
                   style="color: red; font-weight: bold"> 0 < u <= 5 </span>
-        </th:block>
-        <th:block>
+            </th:block>
+            <th:block>
             <span th:text="*{unitInStock} < 15 and *{unitInStock} >= 6 ?  #{product.units.several.left}"
                   style="color: #f0631f; font-weight: bold"> 5 < u < 15 </span>
             <span th:text="*{unitInStock} >= 15 ? #{product.units.in.stock}"
                   style="color: #3c763d; font-weight: bold"> u >= 15 </span>
-        </th:block>
+            </th:block>
         </p>
 
         <th:block th:switch="*{status}">
-        <p th:case="${T(ua.kiev.toolstore.model.enums.ProductStatus).SPECIAL}">
-            <strong>Additional info:</strong>
-            <span th:if="${productDetailed.status}" th:text="#{|product.status.special.${productDetailed.status}|}">Action! - 15% </span>
-        </p>
+            <p th:case="${T(ua.kiev.toolstore.model.enums.ProductStatus).SPECIAL}">
+                <strong>Additional info:</strong>
+                <span th:if="${productDetailed.status}" th:text="#{|product.status.special.${productDetailed.status}|}">Action! - 15% </span>
+            </p>
         </th:block>
 
         <hr/>
 
         <h3>Description</h3>
+
         <div class="product-description">
             <p th:text="*{{description}}">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Aliquam cupiditate dicta expedita harum hic illo iusto laudantium nesciunt nostrum,
@@ -125,6 +130,7 @@
         <hr/>
 
         <h3 style="padding-bottom: 16px">Characteristic: </h3>
+
         <div class="product-characterictic" th:each="f : *{features}">
             <ul class="fa-ul">
                 <li>
@@ -138,9 +144,9 @@
     </div>
     <!-- END Product-detail-->
 
-    </div>
+</div>
 
-    <div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
+<div th:replace="template/fragments :: footer" class="header"><p>_test_footer_</p></div>
 </body>
 </html>
 

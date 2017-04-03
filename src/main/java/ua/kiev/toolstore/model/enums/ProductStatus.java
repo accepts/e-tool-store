@@ -8,7 +8,7 @@ public enum ProductStatus {
     FRESH("FRESH"),
     OBSOLETE("OBSOLETE");
 
-    public static final ProductStatus[] ALL = {ACTIVE, LOCKED, SPECIAL, FRESH, OBSOLETE };
+    public static final ProductStatus[] ALL = {ACTIVE, LOCKED, SPECIAL, FRESH, OBSOLETE};
 
     private final String name;
 
@@ -20,11 +20,11 @@ public enum ProductStatus {
             return ACTIVE;
         } else if (name.toUpperCase().equals("LOCKED")) {
             return LOCKED;
-        }else if (name.toUpperCase().equals("SPECIAL")) {
+        } else if (name.toUpperCase().equals("SPECIAL")) {
             return SPECIAL;
-        }else if (name.toUpperCase().equals("FRESH")) {
+        } else if (name.toUpperCase().equals("FRESH")) {
             return FRESH;
-        }else if (name.toUpperCase().equals("OBSOLETE")) {
+        } else if (name.toUpperCase().equals("OBSOLETE")) {
             return OBSOLETE;
         }
         throw new IllegalArgumentException("Name \"" + name + "\" does not correspond to any ProductStatus");

@@ -46,13 +46,13 @@ public class UserController {
             return "userRegister";
         }
         //Validate user's inputs
-        if (!userValidator.userFieldsValidator(user)){
+        if (!userValidator.userFieldsValidator(user)) {
             LOG.info("<---Validation of the USER is occur! Fields has errors!");
             bindingResult.reject("validation.error.user.fields.message");
             return "userRegister";
         }
         // Validate duplicate (on email)
-        if (!userValidator.userDuplicateValidator(user)){
+        if (!userValidator.userDuplicateValidator(user)) {
             LOG.info("<---Validation of the USER is occur! Fields has errors!");
             bindingResult.reject("validation.error.user.duplicate.message");
             return "userRegister";
@@ -68,7 +68,7 @@ public class UserController {
 
     @RequestMapping(value = "/admin/manage/page/{pageNumber}")
     public String userManager(@PathVariable(value = "pageNumber") Integer pageNumber,
-                              ModelMap model){
+                              ModelMap model) {
         model.addAttribute("usersPage", userService.findAll(pageNumber));
         return "userManager";
     }
@@ -79,7 +79,7 @@ public class UserController {
     public String resetUser(@PathVariable Long id,
                             @PathVariable boolean value,
                             @RequestParam(value = "pageNumber", required = false, defaultValue = "0") Optional<Integer> pageNumber
-                            ){
+    ) {
         LOG.debug("<---BUTTON IS PRESS (User RESET)--- ID: ( " + id + " ) | Value : ( " + value + " );");
         userService.resetUser(id, value);
         return "redirect:/user/admin/manage/page/" + pageNumber.get();
@@ -90,12 +90,10 @@ public class UserController {
     @RequestMapping(value = "/admin/manage/delete_user/{id}")
     public String deleteUser(@PathVariable Long id,
                              @RequestParam(value = "pageNumber", required = false, defaultValue = "0") Optional<Integer> pageNumber
-                             ){
+    ) {
         LOG.debug("<---BUTTON IS PRESS (User DELETE ID: ( " + id + " )");
         userService.delete(id);
         return "redirect:/user/admin/manage/page/" + pageNumber.get();
     }
 
-
-
-    }
+}

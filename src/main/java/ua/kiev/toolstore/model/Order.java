@@ -35,7 +35,7 @@ public class Order extends AbstractEntity {
     }
 
 
-    public Order(User user){
+    public Order(User user) {
         this.user = user;
         this.address = user.getAddress();
         this.orderStatus = OrderStatus.ACTIVE;
@@ -58,7 +58,7 @@ public class Order extends AbstractEntity {
     }
 
 
-    public int getItemsAmount(){
+    public int getItemsAmount() {
         int total = 0;
 
         for (LineItem item : lineItems) {
@@ -110,7 +110,6 @@ public class Order extends AbstractEntity {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
 
 
 }

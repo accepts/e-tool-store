@@ -29,25 +29,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private OrderService orderService;
 
+
     public User findById(Long id) {
         return repository.findById(id);
     }
 
+
     public long countByEmail(String email) {
         return repository.countByEmail(email);
     }
+
 
     public Page<User> findAll(Integer pageNumber) {
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
         return repository.findAllByOrderByIdAsc(request);
     }
 
+
     public void save(User user) {
-        if (user.getRoles() == null || user.getRoles().isEmpty()){
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
             user.setRoles(EnumSet.of(Role.ROLE_CUSTOMER));
         }
         repository.save(user);
     }
+
 
     public void resetUser(Long id, boolean value) {
         repository.resetUser(id, value);
@@ -64,7 +69,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Transactional
-    public void delete(Long id){
+    public void delete(Long id) {
         orderService.deleteAllOrdersByUserId(id);
         repository.delete(id);
     }

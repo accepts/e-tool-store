@@ -4,13 +4,14 @@
 <head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/del______main.css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="#"
+          th:href="@{/css/main.css}"/>
 </head>
 <body>
 
-<div th:replace="template/fragments :: header" ></div>
+<div th:replace="template/fragments :: header"></div>
 
-<div th:replace="template/fragments :: sidebar" ></div>
+<div th:replace="template/fragments :: sidebar"></div>
 
 <!--Main content-->
 <div id="main-content" class="row col-sm-10">
@@ -136,10 +137,8 @@
         </tbody>
     </table>
 
-
 </div>
 <!-- END Main content-->
-
 
 
 <!-- Pagination -->
@@ -197,7 +196,6 @@
 
 
 <div th:replace="template/fragments :: footer"><p>_test_footer_</p></div>
-
 
 </body>
 </html>

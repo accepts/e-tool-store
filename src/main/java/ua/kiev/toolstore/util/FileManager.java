@@ -26,7 +26,7 @@ public class FileManager {
     private ProductService productService;
 
 
-    public String saveFileToLocalStorage(MultipartFile uploadedFile) throws IllegalArgumentException, IOException{
+    public String saveFileToLocalStorage(MultipartFile uploadedFile) throws IllegalArgumentException, IOException {
         String uniqueID = UUID.randomUUID().toString() + "__";
         File fileDest = new File(storageFolder + uniqueID + uploadedFile.getOriginalFilename());
         fileDest.mkdirs();
@@ -44,7 +44,7 @@ public class FileManager {
 
     // ******************  Retrieve picture file from DB and HDD ******************************
 
-    public String getContentType(Long id){
+    public String getContentType(Long id) {
         File file = new File(storageFolder + productService.findPictureByProductId(id));
         String contentType = new MimetypesFileTypeMap().getContentType(file);
 
@@ -56,7 +56,7 @@ public class FileManager {
     }
 
 
-    public long getFileLength(Long id){
+    public long getFileLength(Long id) {
         File file = new File(storageFolder + productService.findPictureByProductId(id));
         return file.length();
 
@@ -65,13 +65,13 @@ public class FileManager {
 
     public InputStreamResource getFileBody(Long id) throws IOException {
         File file = new File(storageFolder + productService.findPictureByProductId(id));
-        return new InputStreamResource( FileUtils.openInputStream(file));
+        return new InputStreamResource(FileUtils.openInputStream(file));
     }
 
 
     // ********************  Delete photo file from HDD storage   **********************************
 
-    public boolean deleteFile(Long id){
+    public boolean deleteFile(Long id) {
         File file = new File(storageFolder + productService.findPictureByProductId(id));
         return file.delete();
     }

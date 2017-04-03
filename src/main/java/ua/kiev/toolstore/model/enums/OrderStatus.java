@@ -12,7 +12,7 @@ public enum OrderStatus {
     COMPLETED("COMPLETED"); // Completed
 
 
-    public static final OrderStatus[] ALL = { ACTIVE, CONFIRMED, CANCELED, PROCESSED, DECLINED, SHIPPED, COMPLETED };
+    public static final OrderStatus[] ALL = {ACTIVE, CONFIRMED, CANCELED, PROCESSED, DECLINED, SHIPPED, COMPLETED};
 
     private final String name;
 
@@ -25,17 +25,15 @@ public enum OrderStatus {
             return ACTIVE;
         } else if (name.toUpperCase().equals("CONFIRMED")) {
             return CONFIRMED;
-        }else if (name.toUpperCase().equals("CANCELED")) {
+        } else if (name.toUpperCase().equals("CANCELED")) {
             return CANCELED;
-        }else if (name.toUpperCase().equals("PROCESSED")) {
+        } else if (name.toUpperCase().equals("PROCESSED")) {
             return PROCESSED;
-        }else if (name.toUpperCase().equals("DECLINED")) {
+        } else if (name.toUpperCase().equals("DECLINED")) {
             return DECLINED;
-        }
-        else if (name.toUpperCase().equals("SHIPPED")) {
+        } else if (name.toUpperCase().equals("SHIPPED")) {
             return SHIPPED;
-        }
-        else if (name.toUpperCase().equals("COMPLETED")) {
+        } else if (name.toUpperCase().equals("COMPLETED")) {
             return COMPLETED;
         }
         throw new IllegalArgumentException("Name \"" + name + "\" does not correspond to any OrderStatus");
@@ -55,7 +53,6 @@ public enum OrderStatus {
     public String toString() {
         return getName();
     }
-
 
 
 }

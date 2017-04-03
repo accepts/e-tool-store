@@ -8,7 +8,7 @@ public enum Role implements GrantedAuthority {
     ROLE_USER,
     ROLE_ADMIN;
 
-    public static final Role[] ALL = { ROLE_CUSTOMER, ROLE_USER, ROLE_ADMIN };
+    public static final Role[] ALL = {ROLE_CUSTOMER, ROLE_USER, ROLE_ADMIN};
 
     public String getAuthority() {
         return name();

@@ -62,21 +62,21 @@ public class OrderServiceImpl implements OrderService {
         Product product = productService.findById(productId);
         order.addItem(new LineItem(product));
         orderRepository.save(order);
-        productService.setUnitInStock(product.getId(), product.getUnitInStock() -1);
+        productService.setUnitInStock(product.getId(), product.getUnitInStock() - 1);
         LOG.debug("<---Add product to Order");
     }
 
     // Confirm Order
     @Transactional
-    public void confirmOrder(Long orderId, String comment){
+    public void confirmOrder(Long orderId, String comment) {
         Order order = null;
-        if (orderId == null){
+        if (orderId == null) {
             order = getActiveOrder();
         } else {
             order = orderRepository.findById(orderId);
         }
 
-        if (!("Enter your comment...".equals(comment) | comment.trim().isEmpty())){
+        if (!("Enter your comment...".equals(comment) | comment.trim().isEmpty())) {
             order.setComment(comment);
             LOG.debug("<---Confirm Order comment: ( " + comment + " )");
         }
@@ -103,7 +103,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
     // Find ALL ORDERS of ALL USERS with required STATUS
     public List<Order> findByOrderStatus(OrderStatus orderStatus) {
         return orderRepository.findByOrderStatus(orderStatus);
@@ -112,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
     // Get active order
     public Order getActiveOrder() {
         Order order = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE);
-        if (order == null){
+        if (order == null) {
             LOG.debug("<---Order does not exist, creating new order");
             order = new Order(userService.findById(userUtil.getUserId()));
             orderRepository.save(order);
@@ -122,10 +121,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    public Page<Order> findOrderByStatus(String status, Integer pageNumber) throws IllegalArgumentException{
+    public Page<Order> findOrderByStatus(String status, Integer pageNumber) throws IllegalArgumentException {
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
 
-        if (status.equalsIgnoreCase("all")){
+        if (status.equalsIgnoreCase("all")) {
             //return orderRepository.findAllByOrderByOrderStatusAsc(request);
             return orderRepository.findAllByOrderByIdDesc(request);
         }
@@ -142,13 +141,13 @@ public class OrderServiceImpl implements OrderService {
     // Administrator's Order manager switcher
     @Transactional
     public Page<Order> switchOrderStatus(String status, Long orderId,
-                                         String action, Integer pageNumber) throws IllegalArgumentException{
+                                         String action, Integer pageNumber) throws IllegalArgumentException {
 
-        if (action.equalsIgnoreCase("DECLINED") || action.equalsIgnoreCase("CANCELED")){
+        if (action.equalsIgnoreCase("DECLINED") || action.equalsIgnoreCase("CANCELED")) {
             Order order = orderRepository.findById(orderId);
             List<LineItem> lineItems = order.getLineItems();
             for (LineItem item : lineItems) {
-                item.getProduct().setUnitInStock(item.getProduct().getUnitInStock()+1);
+                item.getProduct().setUnitInStock(item.getProduct().getUnitInStock() + 1);
                 item.setAmount(item.getAmount() - 1);
             }
             order.setLineItems(lineItems);
@@ -158,7 +157,7 @@ public class OrderServiceImpl implements OrderService {
         changeStatus(orderId, OrderStatus.valueOf(action.toUpperCase()));
         PageRequest request = new PageRequest(pageNumber, PAGE_SIZE_ADMIN);
 
-        if (status.equalsIgnoreCase("all")){
+        if (status.equalsIgnoreCase("all")) {
             return orderRepository.findAllByOrderByIdDesc(request);
         }
 
@@ -166,22 +165,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
     /*    Get Address specific to Order
     *     (by default Address is the same that User entered on registration,
     *     after first modifying Address attain unique ID - different from User's address)
     */
     @Transactional
-    public void changeOrderAddress(Address address, Long orderId){
+    public void changeOrderAddress(Address address, Long orderId) {
         Order order = null;
 
-        if (orderId == null){
+        if (orderId == null) {
             order = getActiveOrder();
         } else {
             order = orderRepository.findById(orderId);
         }
 
-        if (address.getId().equals(order.getUser().getAddress().getId())){
+        if (address.getId().equals(order.getUser().getAddress().getId())) {
             address.setId(null);
         }
 
@@ -196,15 +194,15 @@ public class OrderServiceImpl implements OrderService {
     // Clear all items in particular Order
     @Transactional
     public void clearOrder(Long orderId) {
-        if (orderId == null){
+        if (orderId == null) {
             orderId = getActiveOrderId();
         }
 
-        Order order =  getActiveOrder();
+        Order order = getActiveOrder();
         List<LineItem> lineItems = order.getLineItems();
 
         for (LineItem item : lineItems) {
-            item.getProduct().setUnitInStock(item.getProduct().getUnitInStock()+1);
+            item.getProduct().setUnitInStock(item.getProduct().getUnitInStock() + 1);
         }
 
         order.setLineItems(lineItems);
@@ -215,7 +213,7 @@ public class OrderServiceImpl implements OrderService {
 
     // Sum all items in order
     public Double sumAllItemsInOrder(Long orderId) {
-        if (orderId == null){
+        if (orderId == null) {
             orderId = getActiveOrderId();
         }
         return lineItemRepository.sumAllItemsInOrder(orderId);
@@ -224,7 +222,7 @@ public class OrderServiceImpl implements OrderService {
 
     // Count all item's in Order
     public Long countLineItemByOrderId(Long orderId) {
-        if (orderId == null){
+        if (orderId == null) {
             orderId = getActiveOrderId();
         }
         return lineItemRepository.countLineItemByOrderId(orderId);
@@ -248,9 +246,9 @@ public class OrderServiceImpl implements OrderService {
 
     // ================= Private methods =================================
 
-    private Long getActiveOrderId(){
+    private Long getActiveOrderId() {
         Long activeOrderID = orderRepository.findByUserIdAndOrderStatus(userUtil.getUserId(), OrderStatus.ACTIVE).getId();
-        if (activeOrderID == null){
+        if (activeOrderID == null) {
             activeOrderID = getActiveOrder().getId();
         }
         return activeOrderID;

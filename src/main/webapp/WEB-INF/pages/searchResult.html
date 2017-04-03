@@ -4,13 +4,13 @@
 <head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/del______main.css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="#" th:href="@{/css/main.css}"/>
 </head>
 <body>
 
 <div th:replace="template/fragments :: header"><p>_test_header_</p></div>
 
-<div th:replace="template/fragments :: sidebar" class="col-sm-1" >
+<div th:replace="template/fragments :: sidebar" class="col-sm-1">
     <div id="sidebar-wrapper">
         <nav id="spy">
             <ul class="sidebar-nav nav">
@@ -56,15 +56,16 @@
 <div class="container col-sm-10" id="pagination-products">
     <ul class="pagination" th:if="${productsPage.hasContent()} eq true">
 
-        <th:block th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
+        <th:block
+                th:with="firstPage=0, lastPage=${productsPage.totalPages -1}, arrayOfPages=${#numbers.sequence(firstPage, lastPage)}">
 
             <!-- First arrow -->
-            <li th:class ="${productsPage.isFirst()} eq true ? 'disabled' : '' ">
+            <li th:class="${productsPage.isFirst()} eq true ? 'disabled' : '' ">
                 <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=0)}">&laquo; First</a>
             </li>
 
             <!--Previous arrow -->
-            <li th:class ="${productsPage.hasPrevious()} eq false ? 'disabled' : '' ">
+            <li th:class="${productsPage.hasPrevious()} eq false ? 'disabled' : '' ">
                 <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} - 1)}">
                     &lsaquo; Prev</a>
             </li>
@@ -77,13 +78,13 @@
             </li>
 
             <!-- Next  arrow -->
-            <li th:class ="${productsPage.hasNext()} eq false ? 'disabled' : '' ">
+            <li th:class="${productsPage.hasNext()} eq false ? 'disabled' : '' ">
                 <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.number} + 1)}">
                     Next &rsaquo;</a>
             </li>
 
             <!--Last arrow-->
-            <li th:class ="${productsPage.isLast()} eq true ? 'disabled' : '' ">
+            <li th:class="${productsPage.isLast()} eq true ? 'disabled' : '' ">
                 <a href="#" th:href="@{/product/search/page/{pageNumber} (pageNumber=${productsPage.totalPages} -1) }">
                     Last &raquo; </a>
             </li>

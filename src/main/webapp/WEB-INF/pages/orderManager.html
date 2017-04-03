@@ -4,19 +4,21 @@
 <head th:replace="template/fragments :: head">
     <meta charset="UTF-8">
     <title th:text="#{title.application}">_test_title_</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/del______main.css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/del______main.css"
+          th:href="@{/css/main.css}"/>
 </head>
 <body>
 
-<div th:replace="template/fragments :: header" ></div>
+<div th:replace="template/fragments :: header"></div>
 
-<div th:replace="template/fragments :: sidebar" ></div>
+<div th:replace="template/fragments :: sidebar"></div>
 
 <!--Main content-->
 <div id="main-content" class="row col-sm-10">
 
     <h2>Order manager</h2>
-    <strong>Total elements: </strong> <span th:text="${ordersPage.totalElements}" style="color: brown">_test_</span><br/>
+    <strong>Total elements: </strong> <span th:text="${ordersPage.totalElements}"
+                                            style="color: brown">_test_</span><br/>
     <strong>Order Status: </strong> <span th:text="${orderStatus}">_test_</span><br/>
 
     <hr>
@@ -44,25 +46,24 @@
 
         <a href="#" th:href="@{/order/admin/manage/processed/page/0}" class="btn btn-default btn-sm"
            th:id="${orderStatus} eq 'processed' ? 'button-blue-active' : 'button-blue'">
-             <i class="fa fa-eye" aria-hidden="true"></i> PROCESSED
+            <i class="fa fa-eye" aria-hidden="true"></i> PROCESSED
         </a>
 
         <a href="#" th:href="@{/order/admin/manage/declined/page/0}" class="btn btn-default btn-sm"
            th:id="${orderStatus} eq 'declined' ? 'button-blue-active' : 'button-blue'">
-             <i class="fa fa-times" aria-hidden="true"></i> DECLINED
+            <i class="fa fa-times" aria-hidden="true"></i> DECLINED
         </a>
 
         <a href="#" th:href="@{/order/admin/manage/shipped/page/0}" class="btn btn-default btn-sm"
            th:id="${orderStatus} eq 'shipped' ? 'button-blue-active' : 'button-blue'">
-             <i class="fa fa-car" aria-hidden="true"></i> SHIPPED
+            <i class="fa fa-car" aria-hidden="true"></i> SHIPPED
         </a>
 
         <a href="#" th:href="@{/order/admin/manage/completed/page/0}" class="btn btn-default btn-sm"
            th:id="${orderStatus} eq 'completed' ? 'button-blue-active' : 'button-blue'">
-             <i class="fa fa-check-square-o" aria-hidden="true"></i> COMPLETED
+            <i class="fa fa-check-square-o" aria-hidden="true"></i> COMPLETED
         </a>
     </div>
-
 
 
     <table class="table table-bordered compact-font filled-head">
@@ -87,10 +88,10 @@
         <tbody>
         <tr th:each="o : ${ordersPage.content}">
 
-            <td >
+            <td>
                 <a href="#"
                    th:href="@{/order/detail/{id} (id=${o.id})}"
-                   id="button-blue" class="btn btn-default btn-xs"  th:text="${{o.id}}"> id</a>
+                   id="button-blue" class="btn btn-default btn-xs" th:text="${{o.id}}"> id</a>
             </td>
 
             <td th:text="${{o.user.email}}">user_email</td>
@@ -110,7 +111,7 @@
                 <a href="#"
                    th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}/declined/{id}
                    (id=${o.id}, orderStatus=${orderStatus}, pageNumber=${ordersPage.number})}"
-                   id="button-red" class="btn btn-default btn-xs" >Decline</a>
+                   id="button-red" class="btn btn-default btn-xs">Decline</a>
             </td>
 
             <td>
@@ -174,7 +175,7 @@
             <!-- Numerated List of all pages-->
             <li th:each="ap : ${arrayOfPages}" th:class="${ap eq ordersPage.number} ? 'active' : ''">
                 <a href="#" th:href="@{/order/admin/manage/{orderStatus}/page/{pageNumber}
-                   (pageNumber=${ap}, orderStatus=${orderStatus})}" th:text="${ap}+1">  55 </a>
+                   (pageNumber=${ap}, orderStatus=${orderStatus})}" th:text="${ap}+1"> 55 </a>
             </li>
 
             <!-- Next  arrow -->
