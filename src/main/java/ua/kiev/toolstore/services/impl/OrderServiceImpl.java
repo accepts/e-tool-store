@@ -97,6 +97,12 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.delete(id);
     }
 
+    // Delete Orders by UserId - used when admin delete a particular user
+    public void deleteAllOrdersByUserId(Long userId) {
+        orderRepository.deleteByUserId(userId);
+    }
+
+
 
     // Find ALL ORDERS of ALL USERS with required STATUS
     public List<Order> findByOrderStatus(OrderStatus orderStatus) {
@@ -160,10 +166,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-/*    Get Address specific to Order
-*     (by default Address is the same that User entered on registration,
-*     after first modifying Address attain unique ID - different from User's address)
-*/
+
+    /*    Get Address specific to Order
+    *     (by default Address is the same that User entered on registration,
+    *     after first modifying Address attain unique ID - different from User's address)
+    */
     @Transactional
     public void changeOrderAddress(Address address, Long orderId){
         Order order = null;

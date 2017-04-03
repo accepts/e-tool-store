@@ -31,6 +31,8 @@ public interface OrderService {
 
     Page<Order> switchOrderStatus(String status, Long orderId, String action, Integer pageNumber);
 
+    void deleteAllOrdersByUserId(Long userId);
+
     // ==================== LineItem Repository =============================
 
     void clearOrder(Long orderId);

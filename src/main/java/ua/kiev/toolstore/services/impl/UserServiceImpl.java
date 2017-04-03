@@ -7,10 +7,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.toolstore.model.enums.Role;
 import ua.kiev.toolstore.model.security.AuthorizedUser;
 import ua.kiev.toolstore.model.security.User;
 import ua.kiev.toolstore.repository.UserRepository;
+import ua.kiev.toolstore.services.OrderService;
 import ua.kiev.toolstore.services.UserService;
 
 import java.util.EnumSet;
@@ -23,6 +25,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private OrderService orderService;
 
     public User findById(Long id) {
         return repository.findById(id);
@@ -58,8 +63,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-//    TODO delete Orders and Items for this user
+    @Transactional
     public void delete(Long id){
+        orderService.deleteAllOrdersByUserId(id);
         repository.delete(id);
     }
 }

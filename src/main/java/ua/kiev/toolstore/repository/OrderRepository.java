@@ -19,7 +19,6 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 
     List<Order> findByOrderStatus(OrderStatus orderStatus);
 
-//    TODO this method
     @Transactional
     void deleteByUserId(Long id);
 
@@ -28,21 +27,8 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     @Query(value = "UPDATE orders o SET orderstatus = ?2 WHERE o.id = ?1", nativeQuery = true)
     void changeStatus(Long orderId, String status);
 
-
-//    Page<Order> findAllByOrderByOrderStatusAsc(Pageable pageable);
-
     Page<Order> findAllByOrderByIdDesc(Pageable pageable);
 
     Page<Order> findByOrderStatus(OrderStatus orderStatus, Pageable pageable);
-
-
-//    Page<Order> findAllByOrderByOrderStatusAsc(Pageable pageable);
-
-
-
-
-
-
-
 
 }

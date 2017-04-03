@@ -107,9 +107,14 @@ html {
 }
 
 #home-description{
-    text-align: end;
+    text-align: justify;
     margin-bottom: 40px;
 }
+
+
+#home-description ul{
+    margin-top: 20px;
+  }
 
 
 #sidebar-item {
