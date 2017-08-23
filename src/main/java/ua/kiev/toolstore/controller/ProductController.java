@@ -158,8 +158,10 @@ public class ProductController {
     @RequestMapping(value = "/{category}/page/{pageNumber}")
     public String getProductList(@PathVariable String category,
                                  @PathVariable Integer pageNumber,
-                                 @RequestParam(value = "orderBy", required = false, defaultValue = "price") Optional<String> orderBy,
-                                 @RequestParam(value = "sortBy", required = false, defaultValue = "asc") Optional<String> sortBy,
+                                 @RequestParam(value = "orderBy", required = false,
+                                         defaultValue = "price") Optional<String> orderBy,
+                                 @RequestParam(value = "sortBy", required = false,
+                                         defaultValue = "asc") Optional<String> sortBy,
                                  ModelMap model) {
         if (category == null || category.trim().isEmpty()) {
             category = "all";
@@ -168,7 +170,8 @@ public class ProductController {
             pageNumber = 0;
         }
 
-        model.addAttribute("productsPage", productService.findProductByCategory(category, pageNumber, orderBy, sortBy))
+        model.addAttribute("productsPage", productService.findProductByCategory(category,
+                pageNumber, orderBy, sortBy))
                 .addAttribute("productCategory", category)
                 .addAttribute("orderBy", orderBy.get())
                 .addAttribute("sortBy", sortBy.get());
@@ -187,7 +190,8 @@ public class ProductController {
                                        ModelMap model) throws IllegalArgumentException {
 
         if (action.isPresent() && id.isPresent()) {
-            model.addAttribute("productsPage", productService.switchProductStatus(status, id.get(), action.get(), pageNumber));
+            model.addAttribute("productsPage", productService.switchProductStatus(status, id.get(),
+                    action.get(), pageNumber));
         } else {
             model.addAttribute("productsPage", productService.findProductByStatus(status, pageNumber));
         }
@@ -208,7 +212,8 @@ public class ProductController {
     @RequestMapping(value = "/search/page/{pageNumber}", method = RequestMethod.GET)
     public String searchProductBrowse(ModelMap model,
                                       @PathVariable(value = "pageNumber") Integer pageNumber,
-                                      @RequestParam(value = "searchTerm", required = false) Optional<String> searchTerm) {
+                                      @RequestParam(value = "searchTerm",
+                                              required = false) Optional<String> searchTerm) {
         if (!searchTerm.isPresent()) {
             return "redirect:/home";
         }

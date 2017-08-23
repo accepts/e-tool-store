@@ -112,7 +112,8 @@ public class OrderController {
                                     @PathVariable(value = "id") Optional<Long> id,
                                     ModelMap model) throws IllegalArgumentException {
         if (action.isPresent() && id.isPresent()) {
-            model.addAttribute("ordersPage", orderService.switchOrderStatus(status, id.get(), action.get(), pageNumber));
+            model.addAttribute("ordersPage", orderService.switchOrderStatus(status, id.get(),
+                    action.get(), pageNumber));
         } else {
             model.addAttribute("ordersPage", orderService.findOrderByStatus(status, pageNumber));
         }

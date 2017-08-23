@@ -78,7 +78,8 @@ public class UserController {
     @RequestMapping(value = "/admin/manage/reset_user/{id}/{value}")
     public String resetUser(@PathVariable Long id,
                             @PathVariable boolean value,
-                            @RequestParam(value = "pageNumber", required = false, defaultValue = "0") Optional<Integer> pageNumber
+                            @RequestParam(value = "pageNumber", required = false,
+                                    defaultValue = "0") Optional<Integer> pageNumber
     ) {
         LOG.debug("<---BUTTON IS PRESS (User RESET)--- ID: ( " + id + " ) | Value : ( " + value + " );");
         userService.resetUser(id, value);
@@ -89,7 +90,8 @@ public class UserController {
     // Delete user
     @RequestMapping(value = "/admin/manage/delete_user/{id}")
     public String deleteUser(@PathVariable Long id,
-                             @RequestParam(value = "pageNumber", required = false, defaultValue = "0") Optional<Integer> pageNumber
+                             @RequestParam(value = "pageNumber", required = false,
+                                     defaultValue = "0") Optional<Integer> pageNumber
     ) {
         LOG.debug("<---BUTTON IS PRESS (User DELETE ID: ( " + id + " )");
         userService.delete(id);

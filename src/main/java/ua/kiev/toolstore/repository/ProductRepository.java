@@ -53,7 +53,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     )
     List<Product> findBySearchTermNative(@Param("searchTerm") String searchTerm);
 */
-
+    //searchTerm = name, description, manufacturer
     Page<Product> findAllByNameIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrManufacturerIgnoreCaseContainingAndStatusNotIn(String searchTerm, String searchTerm2, String searchTerm3, Collection<ProductStatus> status, Pageable pageable);
 
 }

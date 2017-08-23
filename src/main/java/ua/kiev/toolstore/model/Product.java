@@ -49,7 +49,9 @@ public class Product extends AbstractEntity {
     public Product() {
     }
 
-    public Product(String name, String description, String manufacturer, ProductCondition condition, ProductCategory category, ProductStatus status, BigDecimal price, int unitInStock) {
+    public Product(String name, String description, String manufacturer,
+                   ProductCondition condition, ProductCategory category,
+                   ProductStatus status, BigDecimal price, int unitInStock) {
         this.name = name;
         this.description = description;
         this.manufacturer = manufacturer;

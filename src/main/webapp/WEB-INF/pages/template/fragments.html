@@ -192,6 +192,85 @@ http://bootsnipp.com/snippets/featured/sidebar-navigation-with-scrollspy
 <!-- MAIN CONTENT -->
 <div id="main-content" class="row col-sm-10">
 
+    <!-- Table of 3 last added products-->
+    <table class="table table-bordered compact-font filled-head">
+        <thead>
+        <tr style="background-color: dodgerblue">
+            <th>Pic</th>
+            <th>Brand</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Units</th>
+
+            <th>Condition</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Attributes</th>
+            <th style="background-color: #28a4c9">Edit</th>
+            <th style="background-color: #99cc33">Detail</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="p : ${allProducts}">
+            <td>
+                <img src="../../resources/images/fein_kbh.jpg" alt="STSM logo"
+                     title="STSM logo" th:src="@{/photo/} + ${p.id}" style="width: 40px"/>
+            </td>
+            <td th:text="${{p.manufacturer}}">product_manufact</td>
+            <td th:text="${{p.name}}">name_product</td>
+            <td><p th:text="${{p.description}}" id="short-text">1234567891011121 3141516171819202122 3141516171819202122 3141516171819202122</p></td>
+            <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">$ 900</td>
+            <td th:text="${{p.unitInStock}}">55</td>
+
+            <td th:text="#{|product.condition.${p.condition}|}">NEW</td>
+            <td th:text="#{|product.category.${p.category}|}">prod_category</td>
+            <td th:text="#{|product.status.${p.status}|}">prod_status</td>
+
+            <td>
+                <table class="no-border">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <th:block th:each="f, rowStat : ${p.features}">
+                                <span th:text="${rowStat.count} + ') ' + ${f.title} + ' '+ ${f.body} + ' '+ ${f.attribute}"
+                                      style="max-width: 10px">1) Title Body</span>
+                                <br/>
+                            </th:block>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+
+            <td>
+                <a href="#" th:href="@{/product/manage/edit/{productId} (productId=${p.id}) }"
+                   id="button-blue" class="btn btn-default btn-xs">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                    Edit
+                </a>
+
+            </td>
+
+            <td>
+                <a href="#"
+                   th:href="@{/product/detail/{productId} (productId=${p.id}) }"
+                   id="button-green-lite" class="btn btn-default btn-xs">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    Detail
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+    <!-- END table of 3 last added products-->
+
+
+
+
+
 
     <h1 th:text="#{title.headline}" id="home-headline">eTool-Store - the shop of all kinds of tools</h1>
 
@@ -263,8 +342,6 @@ http://bootsnipp.com/snippets/featured/sidebar-navigation-with-scrollspy
 
 
     <!-- **************************************************************************************************** -->
-
-
     <!--<div id="sort-button-block" >-->
     <!--<a href="#" id="button-red"  class="btn btn-default btn-sm" role="button">Red</a>-->
     <!--<a href="#" id="button-blue-light"  class="btn btn-default btn-sm" role="button">Blue-light</a>-->
@@ -277,8 +354,6 @@ http://bootsnipp.com/snippets/featured/sidebar-navigation-with-scrollspy
     <!--<a href="#" id="button-blue"  class="btn btn-default btn-sm" role="button">Blue</a>-->
     <!--<a href="#" id="button-blue-active" class="btn btn-default btn-sm" role="button">Blue-Active</a>-->
     <!--</div>-->
-
-
     <!-- **************************************************************************************************** -->
 
 
@@ -296,327 +371,3 @@ http://bootsnipp.com/snippets/featured/sidebar-navigation-with-scrollspy
 
 </body>
 </html>
-
-
-<!-- **************************************************************************************************** -->
-
-
-<!-- Order Detail -->
-<!--<div class="row col-md-8 col-sm-offset-1 order-detail">-->
-
-<!--<h2>Order items</h2>-->
-<!--<hr/>-->
-
-<!--<div class="order-brief-info">-->
-<!--<p>-->
-
-<!--<strong><i class="fa-li fa fa-caret-right" aria-hidden="true"></i> Shipping Address:</strong> Ukraine, Kiev, Shevchenka 88-->
-<!--</p>-->
-<!--<p>-->
-
-<!--<strong ><i class="fa-li fa fa-caret-right" aria-hidden="true"></i> Total items:</strong> <span style="color: #843534; font-weight: bold" >66</span>-->
-<!--</p>-->
-<!--</div>-->
-
-<!--<div th:if="${#lists.isEmpty(activeOrder.lineItems)} ">-->
-<!--<h4>You order is Empty!</h4>-->
-<!--</div>-->
-
-
-<!--<h4>List of items in current order</h4>-->
-
-<!--<table class="table table-bordered compact-font filled-head" id="aligned">-->
-<!--<tr style="background-color: cornflowerblue">-->
-<!--<th>Photo</th>-->
-<!--<th>Name</th>-->
-<!--<th>Manufacturer</th>-->
-<!--<th>Category</th>-->
-<!--<th>Amount</th>-->
-<!--<th>Price</th>-->
-<!--<th>Delete</th>-->
-<!--</tr>-->
-<!--<tr th:each="item : ${activeOrder.lineItems}">-->
-<!--<td>-->
-<!--<img src="../../resources/images/kjelberg.jpg" alt="STSM logo" title="STSM logo" th:src="@{/photo/} + ${item.product.id}" />-->
-<!--</td>-->
-<!--<td>Drill</td>-->
-<!--<td>DUSS</td>-->
-<!--<td>ELECTRO</td>-->
-<!--<td>amount</td>-->
-<!--<td>$ 50</td>-->
-<!--<td><a href="#" id="button-orange" class="btn btn-default btn-xs" >-->
-<!--<i class="fa fa-times" aria-hidden="true"></i> Remove</a>-->
-<!--</td>-->
-
-<!--</tr>-->
-<!--<tr >-->
-<!--<td colspan="4"><strong>Total Amount and Sum of Order:</strong></td>-->
-<!--<td>-->
-<!--<span th:text="${activeOrder.getItemsAmount()}" style="color: darkgreen; font-size: 14px; ">4</span>-->
-<!--</td>-->
-<!--<td>-->
-<!--<span th:text="${activeOrder.getSumOfItems()}" style="color: brown; font-size: 14px; text-align: center" >66</span>-->
-<!--</td>-->
-<!--<td>-->
-<!--<a href="#" th:href="@{/order/clear/{orderId} (orderId=${activeOrder.id}) }"-->
-<!--id="button-red" class="btn btn-default btn-xs">-->
-<!--<i class="fa fa-window-close-o" aria-hidden="true"></i>-->
-<!--Clear Order</a>-->
-<!--</td>-->
-<!--</tr>-->
-<!--</table>-->
-
-<!--<hr/>-->
-
-<!--<div class="row col-sm-offset-10">-->
-<!--<a href="#" th:href="@{/order/confirm/address}" id="button-green" class="btn btn-default btn-sm" >-->
-<!--Confirm Order <i class="fa fa-arrow-right" aria-hidden="true"></i>-->
-<!--</a>-->
-<!--</div>-->
-
-<!--</div>-->
-<!-- END Order Detail -->
-
-
-<!-- **************************************************************************************************** -->
-
-
-<!-- Order Confirm Address-->
-<!--<div class="row col-md-8 col-sm-offset-1 order-detail">-->
-
-<!--<h2> Address for delivery: </h2>-->
-
-<!--<hr/>-->
-
-
-<!--<form action="#" th:action="@{/order/confirm/address}" th:object="${address}" method="post">-->
-<!--<fieldset>-->
-<!--<input type="hidden" th:field="*{id}" />-->
-
-
-<!--<div class="form-group">-->
-<!--<label for="country">-->
-<!--<span th:text="#{user.country}">Country: </span>-->
-<!--</label>-->
-<!--<input type="text" th:field="*{country}" id="country"  th:value="*{country}" class="form-control"/>-->
-<!--</div>-->
-
-<!--<div class="form-group">-->
-<!--<label for="state">-->
-<!--<span th:text="#{user.state}">State: </span>-->
-<!--</label>-->
-<!--<input type="text" th:field="*{state}" id="state" th:value="*{state}" class="form-control"/>-->
-<!--</div>-->
-
-<!--<div class="form-group">-->
-<!--<label for="city">-->
-<!--<span th:text="#{user.city}">City: </span>-->
-<!--</label>-->
-<!--<input type="text" th:field="*{city}" id="city" th:value="*{city}" class="form-control"/>-->
-<!--</div>-->
-
-<!--<div class="form-group">-->
-<!--<label for="street">-->
-<!--<span th:text="#{user.street}">Street: </span>-->
-<!--</label>-->
-<!--<input type="text" th:field="*{street}" id="street" th:value="*{street}" class="form-control"/>-->
-<!--</div>-->
-
-<!--<div class="form-group">-->
-<!--<label for="apartment">-->
-<!--<span th:text="#{user.apartment}">Apartment:</span>-->
-<!--</label>-->
-<!--<input type="text" th:field="*{apartment}" id="apartment" th:value="*{apartment}" class="form-control"/>-->
-<!--</div>-->
-
-<!--<div class="form-group">-->
-<!--<label for="zipCode">-->
-<!--<span th:text="#{user.zipCode}">ZIP Code: </span>-->
-<!--</label>-->
-<!--<input type="text" th:field="*{zipCode}" id="zipCode" th:value="*{zipCode}" class="form-control"/>-->
-<!--</div>-->
-
-<!--<div class="submit">-->
-<!--<button type="submit" name="save" class="btn btn-sm btn-primary" >-->
-<!--<i class="fa fa-edit" aria-hidden="true"></i>-->
-<!--Change Address!</button>-->
-<!--</div>-->
-
-
-<!--</fieldset>-->
-<!--</form>-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--<hr/>-->
-
-
-<!--<div class="row">-->
-<!--<div class="col-md-4">-->
-<!--<a href="#" th:href="@{/order/detail}" id="button-green"  class="btn btn-default btn-sm" >-->
-<!--<i class="fa fa-arrow-left" aria-hidden="true"></i>-->
-<!--Back (to Order detail)-->
-<!--</a>-->
-<!--</div>-->
-
-<!--<div class="col-md-2 col-md-offset-6">-->
-<!--<a href="#" th:href="@{/order/confirm/comment}" id="button-green"  class="btn btn-default btn-sm" >-->
-<!--Next Step-->
-<!--<i class="fa fa-arrow-right" aria-hidden="true"></i>-->
-<!--</a>-->
-<!--</div>-->
-<!--</div>-->
-
-
-<!--</div>-->
-<!--END Order Confirm Address-->
-
-
-<!--************************************************************************************************************-->
-
-<!-- **************************************************************************************************** -->
-
-
-<!-- Product Detail -->
-<!--<div class="container col-sm-6 product-detail">-->
-<!--<img src="../../resources/images/fein_kbh.jpg" alt="Detail photo" title="Detail photo" />-->
-<!--</div>-->
-
-
-<!--<div class="container col-sm-5 product-detail">-->
-
-<!--<h2> Manufacturer Name-of-Model </h2>-->
-
-<!--<hr/>-->
-
-<!--<p id="price-title">Price:</p>-->
-
-<!--<div class="container row col-md-12 price-block">-->
-<!--<div class="col-md-7 ">-->
-<!--<h3>$ 1999.99</h3>-->
-<!--</div>-->
-<!--<div class=" col-md-5">-->
-
-<!--<a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} < 1"-->
-<!--id="button-grey-light" class="btn btn-default btn-sm" role="button">Out of stock...</a>-->
-
-<!--<a href="#" sec:authorize="isAuthenticated()" th:if="*{unitInStock} > 0" th:attr="ng-click='addToCart('+ *{id} +')'"-->
-<!--id="button-green" class="btn btn-default btn-sm" role="button" >-->
-<!--<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> <span style="margin-left: 6px">Add to Cart!</span> </a>-->
-
-<!--<a href="#" sec:authorize="isAnonymous()" th:href="@{/login}"-->
-<!--id="button-grey-light"  class="btn btn-default btn-sm" role="button">-->
-<!--<i class="fa fa-sign-in" aria-hidden="true"></i> SignIN!</a>-->
-
-
-<!--<a href="#" id="button-green"  class="btn btn-default btn-sm" role="button">-->
-<!--<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>  Add to Cart</a>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<p><strong>Condition:</strong> Brand NEW!!!</p>-->
-<!--<p><strong>Unit:</strong> several left\large\huge</p>-->
-
-<!--<hr/>-->
-
-<!--<h3>Description</h3>-->
-<!--<div class="product-description">-->
-<!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
-<!--Aliquam cupiditate dicta expedita harum hic illo iusto laudantium nesciunt nostrum,-->
-<!--quam! Accusamus adipisci corporis eligendi est expedita id iure numquam ratione.-->
-<!--</p>-->
-<!--</div>-->
-
-<!--<hr/>-->
-
-<!--&lt;!&ndash;Attributes - title, body, attribute&ndash;&gt;-->
-<!--<div class="product-characterictic">-->
-<!--<h3 style="padding-bottom: 16px">Characteristic: </h3>-->
-
-<!--<ul class="fa-ul">-->
-<!--<li><i class="fa-li fa fa-caret-right"></i>Power 600 wt</li>-->
-<!--<li><i class="fa-li fa fa-caret-right"></i>Voltage: 220 V</li>-->
-<!--<li><i class="fa-li fa fa-caret-right"></i>Color: Orange</li>-->
-<!--</ul>-->
-
-<!--</div>-->
-
-<!--</div>-->
-<!-- END Product-detail-->
-
-<!-- **************************************************************************************************** -->
-
-<!-- THUMBNAILS example
-  http://bootsnipp.com/snippets/featured/thumbnail-with-caption-amp-buttons
-  -->
-
-
-<!--<div class="col-xs-18 col-sm-6 col-md-3">-->
-<!--<div class="thumbnail">-->
-<!--<img src="../../../WEB-INF/resources/images/fein_kbh.jpg" alt="">-->
-<!--<div class="caption">-->
-<!--<h3>Fein</h3>-->
-<!--<h4>Name</h4>-->
-<!--<p class="thumbnail-price">90.99 $</p>-->
-<!--<p class="thumbnail-description">-->
-<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
-<!--Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat.-->
-<!--Consectetur, culpa itaque odio similique suscipit-->
-<!--</p>-->
-
-<!--<p class="thumbnail-buttons">-->
-<!--<a href="#" id="btn-add-to-basket" class="btn btn-info btn-sm" role="button">Add to basket!</a>-->
-<!--<a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>-->
-<!--</p>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="label-image">-->
-<!--<span class="fa-stack fa-lg" id="action">-->
-<!--<i class="fa fa-circle fa-stack-2x" id="label-icon" ></i>-->
-<!--&lt;!&ndash;<i class="fa-bookmark-o"  aria-hidden="true" id="label-icon"></i>&ndash;&gt;-->
-<!--<i class="fa fa-flag fa-stack-1x fa-inverse" id="label-icon" ></i>-->
-<!--</span>-->
-
-<!--&lt;!&ndash;<a href="#"> </a>&ndash;&gt;-->
-<!--&lt;!&ndash;<a href="#"> <i id="label-icon" aria-hidden="true">T</i></a>&ndash;&gt;-->
-<!--</div>-->
-
-<!--</div>-->
-
-<!--<div class="col-xs-18 col-sm-6 col-md-3">-->
-<!--<div class="thumbnail">-->
-<!--<img src="../../../WEB-INF/resources/images/kjelberg.jpg" alt="">-->
-<!--<div class="caption">-->
-<!--<h3>Kjelberg</h3>-->
-<!--<h4>Name</h4>-->
-<!--<p class="thumbnail-price">90.99 $</p>-->
-<!--<p class="thumbnail-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>-->
-
-<!--<p class="thumbnail-buttons">-->
-<!--<a href="#" id="btn-add-to-basket-lock" class="btn btn-info btn-sm" role="button">Add to basket!</a>-->
-<!--<a href="#" id="btn-detail" class="btn btn-default btn-sm" role="button">Detail...</a>-->
-<!--</p>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-
-<!-- **************************************************************************************************** -->
-
-
-<!--PAGINATION example-->
-<!--<div class="container col-sm-10" id="pagination-products">-->
-<!--<ul class="pagination">-->
-<!--<li class="disabled"><a href="#">&laquo;</a></li>-->
-<!--<li class="active"><a href="#">&lsaquo; Prev</a></li>-->
-<!--<li><a href="#">2</a></li>-->
-<!--<li><a href="#">3</a></li>-->
-<!--<li><a href="#">4</a></li>-->
-<!--<li><a href="#">Next</a></li>-->
-<!--<li><a href="#">&raquo;</a></li>-->
-<!--</ul>-->
-<!--</div>-->
-
-
-
-
-

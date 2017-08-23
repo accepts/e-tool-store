@@ -78,7 +78,7 @@
             </td>
             <td th:text="${{p.manufacturer}}">product_manufact</td>
             <td th:text="${{p.name}}">name_product</td>
-            <td th:text="${{p.description}}" id="short-text">12345678910111213141516171819202122</td>
+            <td> <p th:text="${{p.description}}" id="short-text"> descript1 sdfsdfsdfs </p> </td>
             <td th:text="${#numbers.formatDecimal(p.price, 0, 2)}">$ 900</td>
             <td th:text="${{p.unitInStock}}">55</td>
 

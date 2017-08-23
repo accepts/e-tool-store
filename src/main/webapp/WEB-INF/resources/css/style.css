@@ -454,16 +454,31 @@ html {
 
 /*===================== Create product page ====================== */
 
+
+
+
+
 #short-text {
-    /*max-height: 40px;*/
-    /*overflow: hidden;*/
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    /*line-height: 20px;     /!* fallback *!/*/
-    max-width: 10px; /* fallback */
-    -webkit-line-clamp: 1; /* number of lines to show */
+    /*max-width: 10px; /!* fallback *!/*/
+    -webkit-line-clamp: 2; /* number of lines to show */
     -webkit-box-orient: vertical;
+    line-height: 12px;
+    max-height: 24px;
+
+
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*display: -webkit-box;*/
+    /*line-height: 20px; /!* fallback *!/*/
+    /*max-height: 40px; /!* fallback *!/*/
+    /*-webkit-line-clamp: 2; /!* number of lines to show *!/*/
+    /*-webkit-box-orient: vertical;*/
+
+
+
 }
 
 #btn-add-row {
