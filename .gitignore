@@ -1,0 +1,18 @@
+# IntellijIdea files
+
+*.iml
+.idea
+out
+
+# Working tempoprary trash.
+target
+log
+src/main/webapp/WEB-INF/classes
+src/main/webapp/WEB-INF/lib
+src/test
+src/main/webapp/META-INF/ 
+
+# Resources
+#src/main/webapp/WEB-INF/resources/photo_cars
+#src/main/webapp/WEB-INF/resources/photo_person
+#src/main/webapp/WEB-INF/resources/fonts
